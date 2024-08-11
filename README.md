@@ -47,7 +47,7 @@ CREATE TABLE product (
 "name": "Sample Product",
 "description": "This is a sample product description.",
 "price": 19.99
-},
+}
 ---
 
 This description provides an overview of the project's purpose, features, technologies, and structure.
