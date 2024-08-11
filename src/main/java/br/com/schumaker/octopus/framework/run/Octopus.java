@@ -26,24 +26,38 @@ public class Octopus {
     }
 
     public static void run(Class<?> clazz, String[] args) throws Exception {
-            OctopusApp app = clazz.getAnnotation(OctopusApp.class);
-            var packageName = app.root();
+        printBanner();
+        OctopusApp app = clazz.getAnnotation(OctopusApp.class);
+        var packageName = app.root();
 
-            List<Class<?>> globalExceptionHandler = ClassScanner.getClassesWithAnnotation(packageName, GlobalExceptionHandler.class);
-            container.registerGlobalExceptionHandler(globalExceptionHandler);
+        List<Class<?>> globalExceptionHandler = ClassScanner.getClassesWithAnnotation(packageName, GlobalExceptionHandler.class);
+        container.registerGlobalExceptionHandler(globalExceptionHandler);
 
-            List<Class<?>> serviceClasses = ClassScanner.getClassesWithAnnotation(packageName, Service.class);
-            container.registerService(serviceClasses);
+        List<Class<?>> serviceClasses = ClassScanner.getClassesWithAnnotation(packageName, Service.class);
+        container.registerService(serviceClasses);
 
-            List<Class<?>> controllerClasses = ClassScanner.getClassesWithAnnotation(packageName, Controller.class);
-            container.registerController(controllerClasses);
+        List<Class<?>> controllerClasses = ClassScanner.getClassesWithAnnotation(packageName, Controller.class);
+        container.registerController(controllerClasses);
 
-            for (Class<?> clazzz : controllerClasses) {
-                System.out.println(clazzz.getName());
-                var ann = clazzz.getAnnotation(Controller.class);
-                System.out.println(ann.value());
+        ws.start();
+    }
 
-            }
-            ws.start();
+    private static void printBanner() {
+        System.out.println("Octopus");
+        System.out.println("Version: 0.5.17");
+        System.out.println("""
+                      ___           ___           ___           ___           ___           ___           ___    \s
+                     /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\__\\         /\\  \\   \s
+                    /::\\  \\       /::\\  \\        \\:\\  \\       /::\\  \\       /::\\  \\       /:/  /        /::\\  \\  \s
+                   /:/\\:\\  \\     /:/\\:\\  \\        \\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/  /        /:/\\ \\  \\ \s
+                  /:/  \\:\\  \\   /:/  \\:\\  \\       /::\\  \\   /:/  \\:\\  \\   /::\\~\\:\\  \\   /:/  /  ___   _\\:\\~\\ \\  \\\s
+                 /:/__/ \\:\\__\\ /:/__/ \\:\\__\\     /:/\\:\\__\\ /:/__/ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/__/  /\\__\\ /\\ \\:\\ \\ \\__\\
+                 \\:\\  \\ /:/  / \\:\\  \\  \\/__/    /:/  \\/__/ \\:\\  \\ /:/  / \\/__\\:\\/:/  / \\:\\  \\ /:/  / \\:\\ \\:\\ \\/__/
+                  \\:\\  /:/  /   \\:\\  \\         /:/  /       \\:\\  /:/  /       \\::/  /   \\:\\  /:/  /   \\:\\ \\:\\__\\ \s
+                   \\:\\/:/  /     \\:\\  \\        \\/__/         \\:\\/:/  /         \\/__/     \\:\\/:/  /     \\:\\/:/  / \s
+                    \\::/  /       \\:\\__\\                      \\::/  /                     \\::/  /       \\::/  /  \s
+                     \\/__/         \\/__/                       \\/__/                       \\/__/         \\/__/   \s
+                
+                """);
     }
 }

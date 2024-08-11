@@ -1,13 +1,16 @@
 package br.com.schumaker.octopus.framework.exception;
 
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
+import br.com.schumaker.octopus.framework.reflection.Pair;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 
 public class GlobalExceptionHandler {
 
     private static final GlobalExceptionHandler INSTANCE = new GlobalExceptionHandler();
     private static final IoCContainer container = IoCContainer.getInstance();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private GlobalExceptionHandler() {}
 
@@ -23,8 +26,11 @@ public class GlobalExceptionHandler {
             if (methodAndParams != null) {
                 var method = methodAndParams.first();
                 try {
-                    var response = (ResponseView) method.invoke(handler.getInstance(), exception);
-                    sendResponse(exchange, response.getData().toString(), response.getStatus());
+                    var returnType = method.getReturnType();
+                    var response = method.invoke(handler.getInstance(), exception);
+                    var data = processResult(response, returnType);
+
+                    sendResponse(exchange, data.first(), data.second());
                 } catch (Exception e) {
                     sendResponse(exchange, e.toString(), 500);
                 }
@@ -66,5 +72,16 @@ public class GlobalExceptionHandler {
 
     private void sendResponse(HttpExchange exchange, Object response, int httpCode) {
 
+    }
+
+    private Pair<String, Integer> processResult(Object result, Class<?> returnType) throws Exception {
+        if (returnType.equals(String.class)) {
+            return new Pair<>((String) result, 500)  ;
+        } else if (returnType.equals(ResponseView.class)) {
+            var response = (ResponseView<?>) result;
+            return new Pair<>(objectMapper.writeValueAsString(response.getData()), response.getStatus());
+        } else {
+            return new Pair<>(result.toString(), 500) ;
+        }
     }
 }

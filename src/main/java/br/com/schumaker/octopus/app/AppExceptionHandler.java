@@ -2,6 +2,7 @@ package br.com.schumaker.octopus.app;
 
 import br.com.schumaker.octopus.framework.annotations.ExceptionHandler;
 import br.com.schumaker.octopus.framework.annotations.GlobalExceptionHandler;
+import br.com.schumaker.octopus.framework.exception.ErrorView;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class AppExceptionHandler {
     }
 
     @ExceptionHandler(IOException.class)
-    public ResponseView<String> handle2(IOException e) {
-        return ResponseView.of("IOException", 400);
+    public ResponseView<ErrorView> handle2(IOException e) {
+        return ResponseView.of(new ErrorView(e.getMessage(), 400), 400);
     }
 }

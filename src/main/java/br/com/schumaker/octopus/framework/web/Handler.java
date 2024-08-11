@@ -15,12 +15,14 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
+import static br.com.schumaker.octopus.framework.web.Http.GET;
+
 public class Handler implements HttpHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final IoCContainer container = IoCContainer.getInstance();
 
     @Override
-    public void handle(HttpExchange exchange)  {
+    public void handle(HttpExchange exchange) {
         String method = exchange.getRequestMethod();
         String fullUrl = getFullUrl(exchange).first();
 
@@ -40,16 +42,20 @@ public class Handler implements HttpHandler {
                 return;
             }
 
-            handleUnsupportedMethod(exchange, fullUrl);
+            if (method.equalsIgnoreCase(Http.PATCH)) {
+                handlePutRequest(exchange, fullUrl);
+                return;
+            }
+
+            if (method.equalsIgnoreCase(Http.DELETE)) {
+                handlePutRequest(exchange, fullUrl);
+                return;
+            }
+
+            handleUnsupportedMethod(exchange);
 
         } catch (Exception e) {
-            Throwable originalException = e.getCause();
-            if (originalException == null) {
-                GlobalExceptionHandler.getInstance().handleException(exchange, e);
-            } else {
-                var ex = originalException instanceof Exception ? (Exception) originalException : new RuntimeException(originalException);
-                GlobalExceptionHandler.getInstance().handleException(exchange, ex);
-            }
+            handleException(exchange, e);
         }
     }
 
@@ -59,34 +65,23 @@ public class Handler implements HttpHandler {
         String[] split = fullUrl.split("/");
         String controllerRoute = split.length > 4 ? "/" + split[4] : "/";
         String methodName = split.length > 5 ? split[5] : "/";
-        var header = exchange.getRequestHeaders();
 
         var controller = container.getController(controllerRoute);
         if (controller != null) {
-            var pair = controller.getMethod(methodName, Http.GET);
+            var pair = controller.getMethod(methodName, GET);
             var method = pair.first();
             if (method != null) {
                 var returnType = method.getReturnType();
                 Object result = method.invoke(controller.getInstance());
 
-                if (returnType.equals(String.class)) {
-                    response = (String) result;
-                } else if (returnType.equals(ResponseView.class)) {
-                    response = ((ResponseView<?>) result).getData().toString();
-                } else {
-                    response = result.toString();
-                }
+                response = processResult(result, returnType);
             }
         } else {
             response = "Controller not found!";
             httpCode = Http.HTTP_404;
         }
 
-        exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(httpCode, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        sendResponse(exchange, httpCode, response);
     }
 
     private void handlePostRequest(HttpExchange exchange, String fullUrl) throws Exception {
@@ -95,21 +90,9 @@ public class Handler implements HttpHandler {
         String[] split = fullUrl.split("/");
         String controllerRoute = split.length > 4 ? "/" + split[4] : "/";
         String methodName = split.length > 5 ? split[5] : "/";
-        var header = exchange.getRequestHeaders();
 
-        // Read the request body
-        StringBuilder requestBody = new StringBuilder();
-        try (InputStream is = exchange.getRequestBody();
-             InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-             BufferedReader br = new BufferedReader(isr))
-        {
-            String line;
-            while ((line = br.readLine()) != null) {
-                requestBody.append(line);
-            }
-        }
+        String requestBody = readRequestBody(exchange);
 
-        Object result = null;
         var controller = container.getController(controllerRoute);
         if (controller != null) {
             var pair = controller.getMethod(methodName, Http.POST);
@@ -117,88 +100,91 @@ public class Handler implements HttpHandler {
             if (method != null) {
                 var returnType = method.getReturnType();
                 var parameters = method.getParameters();
+                Object result;
                 if (parameters.length == 1) {
                     var param = parameters[0].getType();
-                    Object paramObject = objectMapper.readValue(requestBody.toString(), param);
+                    Object paramObject = objectMapper.readValue(requestBody, param);
                     result = method.invoke(controller.getInstance(), paramObject);
                 } else {
                     result = method.invoke(controller.getInstance());
                 }
 
-                if (result.equals(String.class)) {
-                    assert result instanceof String;
-                    response = (String) result;
-                } else if (returnType.equals(ResponseView.class)) {
-                    var json = ((ResponseView<?>) result).getData();
-                    response = objectMapper.writeValueAsString(json);
-                } else {
-                    response = result.toString();
-                }
+                response = processResult(result, returnType);
             }
         }
 
-        // Process the request body and generate a response
-        exchange.sendResponseHeaders(Http.HTTP_201, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        sendResponse(exchange, httpCode, response);
     }
 
     private void handlePutRequest(HttpExchange exchange, String fullUrl) throws Exception {
-        int httpCode = Http.HTTP_202;
-        ///////////////////////////////////////////////////////////////////////
-        var split = fullUrl.split("/");
-        var controllerRoute = "/" + split[4];
-        var methodName = split.length > 5 ? split[5] : "/";
-        //////////////////////////////////////////////////////////////
-        var header = exchange.getRequestHeaders();
         String response = "";
+        int httpCode = Http.HTTP_202;
+        String[] split = fullUrl.split("/");
+        String controllerRoute = split.length > 4 ? "/" + split[4] : "/";
+        String methodName = split.length > 5 ? split[5] : "/";
+
         var controller = container.getController(controllerRoute);
         if (controller != null) {
             var pair = controller.getMethod(methodName, Http.PUT);
             var method = pair.first();
             if (method != null) {
                 var returnType = method.getReturnType();
-                Object result = null;
+                Object result = method.invoke(controller.getInstance());
 
-                 result = method.invoke(controller.getInstance());
-
-
-                if (returnType.equals(String.class)) {
-                    response = (String) result;
-                } else if (returnType.equals(ResponseView.class)) {
-                    response = ((ResponseView<?>) result).getData().toString();
-                } else {
-                    response = result.toString();
-                }
+                response = processResult(result, returnType);
             }
         } else {
             response = "Controller not found!";
             httpCode = Http.HTTP_404;
         }
 
-
-        // Read the request body
-        InputStream is = exchange.getRequestBody();
-        StringBuilder requestBody = new StringBuilder();
-        int i;
-        while ((i = is.read()) != -1) {
-            requestBody.append((char) i);
-        }
-
-        // Process the request body and generate a response
-        exchange.sendResponseHeaders(Http.HTTP_202, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        sendResponse(exchange, httpCode, response);
     }
 
-    private void handleUnsupportedMethod(HttpExchange exchange, String fullUrl) throws Exception {
+    private void handleUnsupportedMethod(HttpExchange exchange) throws Exception {
         String response = "Method not supported";
-        exchange.sendResponseHeaders(Http.HTTP_405, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        sendResponse(exchange, Http.HTTP_405, response);
+    }
+
+    private void handleException(HttpExchange exchange, Exception e) {
+        Throwable originalException = e.getCause();
+        if (originalException == null) {
+            GlobalExceptionHandler.getInstance().handleException(exchange, e);
+        } else {
+            var ex = originalException instanceof Exception ? (Exception) originalException : new RuntimeException(originalException);
+            GlobalExceptionHandler.getInstance().handleException(exchange, ex);
+        }
+    }
+
+    private String readRequestBody(HttpExchange exchange) throws Exception {
+        StringBuilder requestBody = new StringBuilder();
+        try (InputStream is = exchange.getRequestBody();
+             InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+             BufferedReader br = new BufferedReader(isr)) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                requestBody.append(line);
+            }
+        }
+        return requestBody.toString();
+    }
+
+    private void sendResponse(HttpExchange exchange, int httpCode, String response) throws Exception {
+        exchange.getResponseHeaders().set("Content-Type", "application/json");
+        exchange.sendResponseHeaders(httpCode, response.getBytes().length);
+        try (OutputStream os = exchange.getResponseBody()) {
+            os.write(response.getBytes());
+        }
+    }
+
+    private String processResult(Object result, Class<?> returnType) throws Exception {
+        if (returnType.equals(String.class)) {
+            return (String) result;
+        } else if (returnType.equals(ResponseView.class)) {
+            return objectMapper.writeValueAsString(((ResponseView<?>) result).getData());
+        } else {
+            return result.toString();
+        }
     }
 
     private Pair<String, String> getFullUrl(HttpExchange exchange) {
