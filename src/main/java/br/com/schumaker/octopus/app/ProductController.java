@@ -35,8 +35,14 @@ public class ProductController {
     }
 
     @Post
-    public ResponseView<ProductDTO> create(@Payload ProductDTO dto) {
-        return ResponseView.of(dto, 201);
+    public ResponseView<ProductView> create(@Payload ProductDTO dto) {
+        return ResponseView.of(new ProductView(
+                1,
+                dto.name(),
+                dto.description(),
+                dto.price(),
+                dto.quantity()),
+                201);
     }
 
     private String info() {
