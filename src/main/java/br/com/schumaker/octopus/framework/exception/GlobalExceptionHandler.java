@@ -54,20 +54,24 @@ public class GlobalExceptionHandler {
 
     private void sendResponse(HttpExchange exchange, Exception exception, int httpCode) {
         try {
-            var response = exception.getMessage();
-            if (response.isBlank() || response.isEmpty()) {
-                response = "";
+            var response = exception.getCause();
+            if (response != null) {
+                var message = response.getMessage();
+                exchange.getResponseHeaders().set("Content-Type", "application/json");
+                exchange.sendResponseHeaders(httpCode, message.getBytes().length);
+                var os = exchange.getResponseBody();
+                os.write(message.getBytes());
+                os.close();
+            } else {
+                exchange.getResponseHeaders().set("Content-Type", "application/json");
+                exchange.sendResponseHeaders(httpCode, exception.getMessage().getBytes().length);
+                var os = exchange.getResponseBody();
+                os.write(exception.getMessage().getBytes());
+                os.close();
             }
-
-            exchange.getResponseHeaders().set("Content-Type", "application/json");
-            exchange.sendResponseHeaders(httpCode, response.getBytes().length);
-            var os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private void sendResponse(HttpExchange exchange, Object response, int httpCode) {

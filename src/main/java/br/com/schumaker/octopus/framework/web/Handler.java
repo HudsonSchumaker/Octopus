@@ -1,6 +1,9 @@
 package br.com.schumaker.octopus.framework.web;
 
+import br.com.schumaker.octopus.framework.annotations.Payload;
+import br.com.schumaker.octopus.framework.annotations.Value;
 import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
+import br.com.schumaker.octopus.framework.reflection.ClassReflection;
 import br.com.schumaker.octopus.framework.reflection.Pair;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
@@ -102,9 +105,14 @@ public class Handler implements HttpHandler {
                 var parameters = method.getParameters();
                 Object result;
                 if (parameters.length == 1) {
+                    var valueAnnotation = parameters[0].getAnnotation(Payload.class);
                     var param = parameters[0].getType();
-                    Object paramObject = objectMapper.readValue(requestBody, param);
-                    result = method.invoke(controller.getInstance(), paramObject);
+                    if (valueAnnotation != null) {
+                        Object paramObject = objectMapper.readValue(requestBody, param);
+                        result = method.invoke(controller.getInstance(), paramObject);
+                    } else {
+                        result = method.invoke(controller.getInstance(), ClassReflection.getInstance().getInstance(param));
+                    }
                 } else {
                     result = method.invoke(controller.getInstance());
                 }

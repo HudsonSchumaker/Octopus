@@ -11,13 +11,13 @@ public class StockController {
     }
 
     @Post
-    public String create(String name) {
-        return "created";
+    public String create(Long name) {
+        return name.toString();
     }
 
     @Put
-    public String update(String name) {
-        return "updated";
+    public String update(Long name) {
+        return name.toString();
     }
 
     @Patch

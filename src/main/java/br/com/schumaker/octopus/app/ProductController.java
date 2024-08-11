@@ -1,6 +1,7 @@
 package br.com.schumaker.octopus.app;
 
 import br.com.schumaker.octopus.framework.annotations.*;
+import br.com.schumaker.octopus.framework.web.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class ProductController {
                 dto.description(),
                 dto.price(),
                 dto.quantity()),
-                201);
+                Http.HTTP_201);
     }
 
     private String info() {
