@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.app.stock;
 
-import br.com.schumaker.octopus.annotations.*;
+import br.com.schumaker.octopus.framework.annotations.*;
 
 @Controller("/stock")
 public class StockController {

@@ -1,7 +1,7 @@
 package br.com.schumaker.octopus;
 
-import br.com.schumaker.octopus.annotations.OctopusApp;
-import br.com.schumaker.octopus.run.Octopus;
+import br.com.schumaker.octopus.framework.annotations.OctopusApp;
+import br.com.schumaker.octopus.framework.run.Octopus;
 
 @OctopusApp(root = "br.com.schumaker.octopus.app")
 public class Main {

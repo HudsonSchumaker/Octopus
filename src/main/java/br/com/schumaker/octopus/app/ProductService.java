@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.app;
 
-import br.com.schumaker.octopus.annotations.Service;
+import br.com.schumaker.octopus.framework.annotations.Service;
 
 @Service
 public class ProductService {

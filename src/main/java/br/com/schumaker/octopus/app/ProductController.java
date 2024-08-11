@@ -1,7 +1,9 @@
 package br.com.schumaker.octopus.app;
 
-import br.com.schumaker.octopus.annotations.*;
-import br.com.schumaker.octopus.web.view.ResponseView;
+import br.com.schumaker.octopus.framework.annotations.*;
+import br.com.schumaker.octopus.framework.web.view.ResponseView;
+
+import java.io.IOException;
 
 @Controller("/product")
 public class ProductController {
@@ -27,9 +29,14 @@ public class ProductController {
         return ResponseView.of("Product " + key, 200);
     }
 
+    @Put
+    public String update() throws IOException {
+        throw new IOException("Not implemented");
+    }
+
     @Post
-    public String create(@Payload ProductDTO dto) {
-        return dto.toString();
+    public ResponseView<ProductDTO> create(@Payload ProductDTO dto) {
+        return ResponseView.of(dto, 201);
     }
 
     private String info() {

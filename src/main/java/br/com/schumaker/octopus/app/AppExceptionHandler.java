@@ -1,0 +1,21 @@
+package br.com.schumaker.octopus.app;
+
+import br.com.schumaker.octopus.framework.annotations.ExceptionHandler;
+import br.com.schumaker.octopus.framework.annotations.GlobalExceptionHandler;
+import br.com.schumaker.octopus.framework.web.view.ResponseView;
+
+import java.io.IOException;
+
+@GlobalExceptionHandler
+public class AppExceptionHandler {
+
+    @ExceptionHandler
+    public ResponseView<String> handle(Exception e) {
+       return ResponseView.of("Exception", 300);
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseView<String> handle2(IOException e) {
+        return ResponseView.of("IOException", 400);
+    }
+}
