@@ -1,5 +1,7 @@
 package br.com.schumaker.octopus.app;
 
+import br.com.schumaker.octopus.app.model.Product;
+import br.com.schumaker.octopus.app.service.ProductService;
 import br.com.schumaker.octopus.framework.annotations.*;
 import br.com.schumaker.octopus.framework.web.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
@@ -20,13 +22,11 @@ public class ProductController {
 
     @Get
     public ResponseView<String> list() {
-        service.save();
         return ResponseView.of("Product " + name, 200);
     }
 
     @Get("/{id}")
     public ResponseView<String> getById(@UrlParam("id") int key) {
-        service.save();
         return ResponseView.of("Product " + key, 200);
     }
 
@@ -37,6 +37,8 @@ public class ProductController {
 
     @Post
     public ResponseView<ProductView> create(@Payload ProductDTO dto) {
+        service.save(new Product(dto.name(), dto.description(), dto.price()));
+
         return ResponseView.of(new ProductView(
                 1,
                 dto.name(),
