@@ -1,31 +1,74 @@
 package br.com.schumaker.octopus.framework.jdbc;
 
+import br.com.schumaker.octopus.framework.reflection.TableReflection;
+
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.lang.reflect.ParameterizedType;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DbCrud<K, T> {
+    private final TableReflection tableReflection = TableReflection.getInstance();
+    private final Class<T> clazz;
+
+    @SuppressWarnings("unchecked")
+    public DbCrud() {
+        this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+    }
 
     public T findById(K id) {
         return null;
     }
 
     public List<T> findAll() {
-        return null;
+        var tableName = tableReflection.getTableName(clazz);
+        var columnFields = tableReflection.getFields(clazz);
+
+        String sql = "SELECT * FROM " + tableName;
+        System.out.println("SQL:" + sql);
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            List<T> results = new ArrayList<>();
+
+            while (resultSet.next()) {
+                T entity = clazz.getDeclaredConstructor().newInstance();
+
+                for (Field field : columnFields) {
+                    field.setAccessible(true);
+                    Object value = resultSet.getObject(field.getName());
+
+                    // Convert Long to BigInteger if necessary
+                    if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
+                        value = java.math.BigInteger.valueOf((Long) value);
+                    }
+
+                    field.set(entity, value);
+                }
+
+                results.add(entity);
+            }
+
+            return results;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void save(T entity) {
+    public K save(T entity) {
         Class<?> clazz = entity.getClass();
-        Field[] fields = clazz.getDeclaredFields();
+        var tableName = tableReflection.getTableName(clazz);
+        var columnNames = tableReflection.getColumnNames(clazz);
 
         StringBuilder sql = new StringBuilder("INSERT INTO ");
-        sql.append(clazz.getSimpleName().toLowerCase()).append(" (");
+        sql.append(tableName).append(" (");
 
         StringBuilder placeholders = new StringBuilder();
-        for (Field field : fields) {
-            sql.append(field.getName()).append(", ");
+        for (var columnName : columnNames) {
+            sql.append(columnName).append(", ");
             placeholders.append("?, ");
         }
 
@@ -34,7 +77,30 @@ public class DbCrud<K, T> {
         placeholders.setLength(placeholders.length() - 2);
 
         sql.append(") VALUES (").append(placeholders).append(")");
-        var x = sql.toString();
+        System.out.println("SQL:" + sql);
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
+
+            int index = 1;
+            for (Field field : tableReflection.getColumnFields(clazz)) {
+                field.setAccessible(true);
+                preparedStatement.setObject(index++, field.get(entity));
+            }
+
+            preparedStatement.executeUpdate();
+
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    return (K) resultSet.getObject(1);
+                }
+            }
+        } catch (Exception e) {
+           throw new RuntimeException(e);
+        }
+
+        return null;
     }
 
     public void update(T entity) {}
