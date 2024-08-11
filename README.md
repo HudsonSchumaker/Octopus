@@ -43,6 +43,11 @@ CREATE TABLE product (
 ```
 4. Run the `Main` class to start the application.
 
+{
+"name": "Sample Product",
+"description": "This is a sample product description.",
+"price": 19.99
+},
 ---
 
 This description provides an overview of the project's purpose, features, technologies, and structure.
