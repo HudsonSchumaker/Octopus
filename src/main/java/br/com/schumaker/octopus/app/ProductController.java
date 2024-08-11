@@ -7,6 +7,8 @@ import br.com.schumaker.octopus.framework.web.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.util.List;
 
 @Controller("/product")
 public class ProductController {
@@ -21,8 +23,9 @@ public class ProductController {
     }
 
     @Get
-    public ResponseView<String> list() {
-        return ResponseView.of("Product " + name, 200);
+    public ResponseView<List<Product>> list() {
+        var list = service.list();
+        return ResponseView.of(list, 200);
     }
 
     @Get("/{id}")
@@ -37,14 +40,13 @@ public class ProductController {
 
     @Post
     public ResponseView<ProductView> create(@Payload ProductDTO dto) {
-        service.save(new Product(dto.name(), dto.description(), dto.price()));
+       var id = service.save(new Product(BigInteger.ONE, dto.name(), dto.description(), dto.price()));
 
         return ResponseView.of(new ProductView(
-                1,
+                id,
                 dto.name(),
                 dto.description(),
-                dto.price(),
-                dto.quantity()),
+                dto.price()),
                 Http.HTTP_201);
     }
 

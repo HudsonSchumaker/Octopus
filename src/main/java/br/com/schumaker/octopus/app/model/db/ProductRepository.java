@@ -4,5 +4,7 @@ import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.framework.annotations.Repository;
 import br.com.schumaker.octopus.framework.jdbc.DbCrud;
 
+import java.math.BigInteger;
+
 @Repository
-public class ProductRepository extends DbCrud<Long, Product> {}
+public class ProductRepository extends DbCrud<BigInteger, Product> {}

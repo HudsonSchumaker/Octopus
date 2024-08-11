@@ -4,6 +4,9 @@ import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.model.db.ProductRepository;
 import br.com.schumaker.octopus.framework.annotations.Service;
 
+import java.math.BigInteger;
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -13,7 +16,12 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public void save(Product product) {
-        productRepository.save(product);
+    public List<Product> list() {
+        return productRepository.findAll();
     }
+
+    public BigInteger save(Product product) {
+       return productRepository.save(product);
+    }
+
 }

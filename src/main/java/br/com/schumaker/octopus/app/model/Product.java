@@ -4,16 +4,18 @@ import br.com.schumaker.octopus.framework.annotations.Column;
 import br.com.schumaker.octopus.framework.annotations.Pk;
 import br.com.schumaker.octopus.framework.annotations.Table;
 
-@Table("product")
+import java.math.BigInteger;
+
+@Table()
 public class Product {
 
     @Pk("id")
-    private long id;
+    private BigInteger id;
 
     @Column("name")
     private String name;
 
-    @Column("description")
+    @Column()
     private String description;
 
     @Column("price")
@@ -21,19 +23,20 @@ public class Product {
 
     public Product() {}
 
-    public Product(long id, String name, String description, double price) {
+    public Product(BigInteger id, String name, String description, double price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public Product(String name, String description, double price) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
+    public BigInteger getId() {
+        return id;
     }
 
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
