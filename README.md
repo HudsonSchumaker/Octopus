@@ -17,6 +17,7 @@ This project is a Java-based web application framework that leverages Spring Boo
 - Java
 - Gradle
 - Jackson
+- MySQL
 
 **Project Structure:**
 - `src/main/java`: Contains the main application code, including the framework core and annotations.
@@ -25,7 +26,22 @@ This project is a Java-based web application framework that leverages Spring Boo
 **Getting Started:**
 1. Clone the repository.
 2. Build the project using Gradle.
-3. Run the `Main` class to start the application.
+3. Run a docker mySQL
+```bash
+docker run -d -ti --name local-mysql-8 -p 3306:3306 -p 33060:33060 -v mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=tester mysql:8.0
+```
+```sql 
+mysql -u root -p
+CREATE DATABASE octopus;
+USE octopus;
+CREATE TABLE product (
+           id BIGINT AUTO_INCREMENT PRIMARY KEY,
+           name VARCHAR(255) NOT NULL,
+           description VARCHAR(255),
+           price DOUBLE NOT NULL
+);
+```
+4. Run the `Main` class to start the application.
 
 ---
 
