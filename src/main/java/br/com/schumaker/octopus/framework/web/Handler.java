@@ -1,7 +1,6 @@
 package br.com.schumaker.octopus.framework.web;
 
 import br.com.schumaker.octopus.framework.annotations.Payload;
-import br.com.schumaker.octopus.framework.annotations.Value;
 import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
 import br.com.schumaker.octopus.framework.reflection.Pair;
@@ -169,6 +168,7 @@ public class Handler implements HttpHandler {
         try (InputStream is = exchange.getRequestBody();
              InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
              BufferedReader br = new BufferedReader(isr)) {
+
             String line;
             while ((line = br.readLine()) != null) {
                 requestBody.append(line);

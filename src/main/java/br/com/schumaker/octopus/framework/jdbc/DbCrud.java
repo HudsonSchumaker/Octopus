@@ -10,14 +10,48 @@ import java.util.List;
 
 public class DbCrud<K, T> {
     private final TableReflection tableReflection = TableReflection.getInstance();
+    private final Class<K> pk;
     private final Class<T> clazz;
 
     @SuppressWarnings("unchecked")
     public DbCrud() {
+        this.pk = (Class<K>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
     public T findById(K id) {
+        var primaryKey = tableReflection.getPrimaryKey(clazz);
+        var tableName = tableReflection.getTableName(clazz);
+        var columnFields = tableReflection.getFields(clazz);
+
+        String sql = "SELECT * FROM " + tableName + " WHERE " + primaryKey + " = ?";
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setObject(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    T entity = clazz.getDeclaredConstructor().newInstance();
+
+                    for (Field field : columnFields) {
+                        field.setAccessible(true);
+                        Object value = resultSet.getObject(field.getName());
+
+                        if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
+                            value = java.math.BigInteger.valueOf((Long) value);
+                        }
+
+                        field.set(entity, value);
+                    }
+
+                    return entity;
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         return null;
     }
 
@@ -41,7 +75,7 @@ public class DbCrud<K, T> {
                     field.setAccessible(true);
                     Object value = resultSet.getObject(field.getName());
 
-                    // Convert Long to BigInteger if necessary
+                    // convert Long to BigInteger ???
                     if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
                         value = java.math.BigInteger.valueOf((Long) value);
                     }
@@ -61,13 +95,13 @@ public class DbCrud<K, T> {
     public K save(T entity) {
         Class<?> clazz = entity.getClass();
         var tableName = tableReflection.getTableName(clazz);
-        var columnNames = tableReflection.getColumnNames(clazz);
+        var columnFields = tableReflection.getColumnNames(clazz);
 
         StringBuilder sql = new StringBuilder("INSERT INTO ");
         sql.append(tableName).append(" (");
 
         StringBuilder placeholders = new StringBuilder();
-        for (var columnName : columnNames) {
+        for (var columnName : columnFields) {
             sql.append(columnName).append(", ");
             placeholders.append("?, ");
         }
