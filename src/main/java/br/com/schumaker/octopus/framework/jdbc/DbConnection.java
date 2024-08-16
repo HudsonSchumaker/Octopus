@@ -11,7 +11,7 @@ public class DbConnection {
 
     public static Connection getConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(
                     environment.getKey(AppProperties.DB_URL),
                     environment.getKey(AppProperties.DB_USER),

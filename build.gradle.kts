@@ -8,7 +8,6 @@ version = "1.0-SNAPSHOT"
 
 application {
     mainClass.set("br.com.schumaker.octopus.Main")
-
 }
 
 java {
@@ -19,7 +18,6 @@ java {
 
 repositories {
     mavenCentral()
-    gradlePluginPortal()
 }
 
 dependencies {
@@ -31,9 +29,10 @@ dependencies {
 }
 
 tasks.jar {
-    manifest {
-        attributes["Main-Class"] = application.mainClass.get()
-    }
+    manifest.attributes["Main-Class"] = application.mainClass.get()
+    val dependencies = configurations.runtimeClasspath.get().map(::zipTree)
+    from(dependencies)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 tasks.test {
