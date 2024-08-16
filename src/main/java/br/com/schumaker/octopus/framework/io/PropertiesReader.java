@@ -1,5 +1,7 @@
 package br.com.schumaker.octopus.framework.io;
 
+import br.com.schumaker.octopus.framework.exception.OctopusException;
+
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -15,7 +17,7 @@ public class PropertiesReader {
 
             properties.load(inputStream);
         } catch (Exception e) {
-           throw new RuntimeException(e);
+           throw new OctopusException(e.getMessage());
         }
 
         return properties;

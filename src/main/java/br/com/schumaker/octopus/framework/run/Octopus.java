@@ -1,9 +1,6 @@
 package br.com.schumaker.octopus.framework.run;
 
-import br.com.schumaker.octopus.framework.annotations.Controller;
-import br.com.schumaker.octopus.framework.annotations.GlobalExceptionHandler;
-import br.com.schumaker.octopus.framework.annotations.OctopusApp;
-import br.com.schumaker.octopus.framework.annotations.Service;
+import br.com.schumaker.octopus.framework.annotations.*;
 import br.com.schumaker.octopus.framework.exception.ExceptionCodes;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.reflection.AppProperties;
@@ -33,6 +30,15 @@ public class Octopus {
 
         List<Class<?>> globalExceptionHandler = ClassScanner.getClassesWithAnnotation(packageName, GlobalExceptionHandler.class);
         container.registerGlobalExceptionHandler(globalExceptionHandler);
+
+        List<Class<?>> configurationClasses = ClassScanner.getClassesWithAnnotation(packageName, Configuration.class);
+        container.registerConfiguration(configurationClasses);
+
+        List<Class<?>> componentClasses = ClassScanner.getClassesWithAnnotation(packageName, Component.class);
+        container.registerComponent(componentClasses);
+
+        List<Class<?>> repositoryClasses = ClassScanner.getClassesWithAnnotation(packageName, Repository.class);
+       // container.registerRepository(repositoryClasses);
 
         List<Class<?>> serviceClasses = ClassScanner.getClassesWithAnnotation(packageName, Service.class);
         container.registerService(serviceClasses);

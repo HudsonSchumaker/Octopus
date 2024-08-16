@@ -3,6 +3,7 @@ package br.com.schumaker.octopus.app;
 import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.service.ProductService;
 import br.com.schumaker.octopus.framework.annotations.*;
+import br.com.schumaker.octopus.framework.model.Mapper;
 import br.com.schumaker.octopus.framework.web.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
@@ -40,7 +41,9 @@ public class ProductController {
 
     @Post
     public ResponseView<ProductView> create(@Payload ProductDTO dto) {
-       var id = service.save(new Product(BigInteger.ONE, dto.name(), dto.description(), dto.price()));
+        Mapper<ProductDTO, Product> mapper = new Mapper<>();
+        var product = mapper.map(dto, Product.class);
+        var id = service.save(product);
 
         return ResponseView.of(new ProductView(
                 id,

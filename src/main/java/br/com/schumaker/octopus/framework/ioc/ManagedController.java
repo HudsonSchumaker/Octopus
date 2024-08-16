@@ -29,7 +29,7 @@ public class ManagedController {
         var methods = ControllerReflection.getMethods(controller);
 
         var managedController = new ManagedController(fqn, route, methods);
-        managedController.instance = ClassReflection.getInstance().getInstance(controller);
+        managedController.instance = ClassReflection.getInstance().instantiate(controller);
 
         return managedController;
     }

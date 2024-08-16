@@ -2,7 +2,7 @@ package br.com.schumaker.octopus.framework.ioc;
 
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
 
-public class ManagedService implements ManagedClass {
+public class ManagedService implements ManagedClass<ManagedService> {
     private final String fqn;
     private Object instance;
 
@@ -13,7 +13,7 @@ public class ManagedService implements ManagedClass {
     public static ManagedService builder(Class<?> service) {
         var fqn = service.getName();
         var managedService = new ManagedService(fqn);
-        managedService.instance = ClassReflection.getInstance().getInstance(service);
+        managedService.instance = ClassReflection.getInstance().instantiate(service);
         return managedService;
     }
 

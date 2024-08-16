@@ -110,7 +110,7 @@ public class Handler implements HttpHandler {
                         Object paramObject = objectMapper.readValue(requestBody, param);
                         result = method.invoke(controller.getInstance(), paramObject);
                     } else {
-                        result = method.invoke(controller.getInstance(), ClassReflection.getInstance().getInstance(param));
+                        result = method.invoke(controller.getInstance(), ClassReflection.getInstance().instantiate(param));
                     }
                 } else {
                     result = method.invoke(controller.getInstance());

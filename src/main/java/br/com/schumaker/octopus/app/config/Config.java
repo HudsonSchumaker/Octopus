@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.app.model.config;
+package br.com.schumaker.octopus.app.config;
 
 import br.com.schumaker.octopus.app.ProductDTO;
 import br.com.schumaker.octopus.framework.annotations.Bean;
