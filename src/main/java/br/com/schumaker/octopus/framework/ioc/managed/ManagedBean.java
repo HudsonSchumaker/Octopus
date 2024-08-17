@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.ioc;
+package br.com.schumaker.octopus.framework.ioc.managed;
 
 public class ManagedBean implements ManagedClass<ManagedBean> {
     private final String fqn;
