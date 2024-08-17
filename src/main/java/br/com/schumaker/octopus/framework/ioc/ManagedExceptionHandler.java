@@ -9,21 +9,21 @@ import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 
-public class ManagedGlobalExceptionHandler {
+public class ManagedExceptionHandler {
     private final String fqn;
     private final Map<Class<?>, Pair<Method, List<Parameter>>> methods;
     private Object instance;
 
-    private ManagedGlobalExceptionHandler(String fqn, Map<Class<?>, Pair<Method, List<Parameter>>> methods) {
+    private ManagedExceptionHandler(String fqn, Map<Class<?>, Pair<Method, List<Parameter>>> methods) {
         this.fqn = fqn;
         this.methods = methods;
     }
 
-    public static ManagedGlobalExceptionHandler builder(Class<?> handler) {
+    public static ManagedExceptionHandler builder(Class<?> handler) {
         var fqn = handler.getName();
         var methods = GlobalExceptionHandlerReflection.getMethods(handler);
 
-        var managedGlobalExceptionHandler = new ManagedGlobalExceptionHandler(fqn, methods);
+        var managedGlobalExceptionHandler = new ManagedExceptionHandler(fqn, methods);
         managedGlobalExceptionHandler.instance = ClassReflection.getInstance().instantiate(handler);
 
         return managedGlobalExceptionHandler;

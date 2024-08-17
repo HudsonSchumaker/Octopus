@@ -5,7 +5,7 @@ import java.util.List;
 
 public class IoCContainer {
     private static final IoCContainer INSTANCE = new IoCContainer();
-    private ManagedGlobalExceptionHandler globalExceptionHandler;
+    private ManagedExceptionHandler globalExceptionHandler;
 
     private final List<ManagedClass<?>> managedClasses = new ArrayList<>();
     private final List<ManagedController> managedController = new ArrayList<>();
@@ -32,7 +32,7 @@ public class IoCContainer {
         return (ManagedConfiguration) configuration.orElse(null);
     }
 
-    public ManagedGlobalExceptionHandler getGlobalExceptionHandler() {
+    public ManagedExceptionHandler getGlobalExceptionHandler() {
         return globalExceptionHandler;
     }
 
@@ -54,41 +54,31 @@ public class IoCContainer {
 
     public void registerGlobalExceptionHandler(List<Class<?>> clazz) {
         if (!clazz.isEmpty() && clazz.getFirst() != null) {
-            globalExceptionHandler = ManagedGlobalExceptionHandler.builder(clazz.getFirst());
+            this.globalExceptionHandler = ManagedExceptionHandler.builder(clazz.getFirst());
         }
     }
 
     public void registerConfiguration(List<Class<?>> configurations) {
-        configurations.forEach(it -> {
-            managedClasses.add(ManagedConfiguration.builder(it));
-        });
+        configurations.forEach(it -> this.managedClasses.add(ManagedConfiguration.builder(it)));
     }
 
     public void registerBean(ManagedBean bean) {
-        managedClasses.add(bean);
+        this.managedClasses.add(bean);
     }
 
     public void registerComponent(List<Class<?>> components) {
-        components.forEach(it -> {
-            managedClasses.add(ManagedComponent.builder(it));
-        });
+        components.forEach(it -> this.managedClasses.add(ManagedComponent.builder(it)));
     }
 
     public void registerRepository(List<Class<?>> repositories) {
-        repositories.forEach(it -> {
-            managedClasses.add(ManagedRepository.builder(it));
-        });
+        repositories.forEach(it -> this.managedClasses.add(ManagedRepository.builder(it)));
     }
 
     public void registerService(List<Class<?>> services) {
-        services.forEach(it -> {
-            managedClasses.add(ManagedService.builder(it));
-        });
+        services.forEach(it -> this.managedClasses.add(ManagedService.builder(it)));
     }
 
     public void registerController(List<Class<?>> controllers) {
-        controllers.forEach(it -> {
-           managedController.add(ManagedController.builder(it));
-        });
+        controllers.forEach(it -> this.managedController.add(ManagedController.builder(it)));
     }
 }

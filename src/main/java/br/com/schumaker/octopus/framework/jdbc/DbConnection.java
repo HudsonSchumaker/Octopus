@@ -1,7 +1,7 @@
 package br.com.schumaker.octopus.framework.jdbc;
 
+import br.com.schumaker.octopus.framework.ioc.AppProperties;
 import br.com.schumaker.octopus.framework.ioc.Environment;
-import br.com.schumaker.octopus.framework.reflection.AppProperties;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

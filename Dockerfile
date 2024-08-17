@@ -4,4 +4,4 @@ COPY . .
 EXPOSE 80
 
 # Run the application
-CMD ["java", "-jar", "build/libs/Octopus-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "build/libs/Octopus-1.0-SNAPSHOT.jar", "-env=local"]

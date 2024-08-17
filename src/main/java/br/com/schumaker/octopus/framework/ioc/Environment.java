@@ -4,9 +4,9 @@ import br.com.schumaker.octopus.framework.io.PropertiesReader;
 
 import java.util.Properties;
 
-import static br.com.schumaker.octopus.framework.reflection.AppProperties.DEFAULT_VALUE_NAME;
-import static br.com.schumaker.octopus.framework.reflection.AppProperties.SERVER_CONTEXT;
-import static br.com.schumaker.octopus.framework.reflection.AppProperties.SERVER_PORT;
+import static br.com.schumaker.octopus.framework.ioc.AppProperties.DEFAULT_VALUE_NAME;
+import static br.com.schumaker.octopus.framework.ioc.AppProperties.SERVER_CONTEXT;
+import static br.com.schumaker.octopus.framework.ioc.AppProperties.SERVER_PORT;
 
 public class Environment {
     private static final String DEFAULT_VALUE_VALUE = "0";
@@ -14,14 +14,21 @@ public class Environment {
     private static final String SERVER_CONTEXT_DEFAULT = "/";
     private static final Environment INSTANCE = new Environment();
     private final Properties properties;
+    private String environment = "";
 
     private Environment() {
-        properties = PropertiesReader.loadProperties();
+        properties = PropertiesReader.loadProperties(environment);
         properties.putIfAbsent(DEFAULT_VALUE_NAME, DEFAULT_VALUE_VALUE);
     }
 
     public static Environment getInstance() {
         return INSTANCE;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+        properties.clear();
+        properties.putAll(PropertiesReader.loadProperties(environment));
     }
 
     public String getKey(String key) {

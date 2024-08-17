@@ -5,12 +5,18 @@ import br.com.schumaker.octopus.framework.exception.OctopusException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class PropertiesReader {
-    public static Properties loadProperties() {
-        Properties properties = new Properties();
-        String propertiesFileName = "application.properties";
+import static br.com.schumaker.octopus.framework.ioc.AppProperties.APPLICATION_PROPERTIES_FILE_NAME;
 
-        try (InputStream inputStream = PropertiesReader.class.getClassLoader().getResourceAsStream(propertiesFileName)) {
+public class PropertiesReader {
+    public static Properties loadProperties(String environment) {
+        Properties properties = new Properties();
+        String fileName = APPLICATION_PROPERTIES_FILE_NAME;
+
+        if (environment != null && !environment.isBlank()) {
+            fileName = "application-" + environment + ".properties";
+        }
+
+        try (InputStream inputStream = PropertiesReader.class.getClassLoader().getResourceAsStream(fileName)) {
             if (inputStream == null) {
                 return properties;
             }
