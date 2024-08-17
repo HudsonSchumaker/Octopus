@@ -1,6 +1,8 @@
 package br.com.schumaker.octopus.framework.ioc;
 
-import br.com.schumaker.octopus.framework.reflection.*;
+import br.com.schumaker.octopus.framework.reflection.ClassReflection;
+import br.com.schumaker.octopus.framework.reflection.GlobalExceptionHandlerReflection;
+import br.com.schumaker.octopus.framework.reflection.Pair;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

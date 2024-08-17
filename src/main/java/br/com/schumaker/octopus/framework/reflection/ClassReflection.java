@@ -6,7 +6,10 @@ import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class ClassReflection {
@@ -55,6 +58,30 @@ public class ClassReflection {
         }
     }
 
+    // Inject
+    public Object instantiate(Class<?> clazz, Object... args) {
+        try {
+            var constructors = getConstructors(clazz);
+            for (Constructor<?> constructor : constructors) {
+                if (constructor.getParameterCount() == args.length) {
+                    return constructor.newInstance(args);
+                }
+            }
+            throw new OctopusException("No constructor found with the given parameters.");
+        } catch (Exception e) {
+            throw new OctopusException(e.getMessage());
+        }
+    }
+
+    private Object handleParameterValueAnnotation(Parameter parameter) {
+        return valueReflection.injectParameterValue(parameter);
+    }
+
+    private Object handleFieldInjectionAndValueAnnotation(Object instance) {
+        injectReflection.injectFieldBean(instance);
+        return valueReflection.injectFieldValue(instance);
+    }
+
     private Optional<Constructor<?>> getDefaultConstructor(Class<?> clazz) {
         try {
             return Stream.of(clazz.getDeclaredConstructors())
@@ -88,14 +115,5 @@ public class ClassReflection {
         } catch (Exception e) {
             throw new OctopusException(e.getMessage());
         }
-    }
-
-    private Object handleParameterValueAnnotation(Parameter parameter) {
-        return valueReflection.injectParameterValue(parameter);
-    }
-
-    private Object handleFieldInjectionAndValueAnnotation(Object instance) {
-        injectReflection.injectFieldBean(instance);
-        return valueReflection.injectFieldValue(instance);
     }
 }

@@ -4,7 +4,9 @@ import br.com.schumaker.octopus.framework.io.PropertiesReader;
 
 import java.util.Properties;
 
-import static br.com.schumaker.octopus.framework.reflection.AppProperties.*;
+import static br.com.schumaker.octopus.framework.reflection.AppProperties.DEFAULT_VALUE_NAME;
+import static br.com.schumaker.octopus.framework.reflection.AppProperties.SERVER_CONTEXT;
+import static br.com.schumaker.octopus.framework.reflection.AppProperties.SERVER_PORT;
 
 public class Environment {
     private static final String DEFAULT_VALUE_VALUE = "0";

@@ -17,7 +17,11 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
+import static br.com.schumaker.octopus.framework.web.Http.DELETE;
 import static br.com.schumaker.octopus.framework.web.Http.GET;
+import static br.com.schumaker.octopus.framework.web.Http.PATCH;
+import static br.com.schumaker.octopus.framework.web.Http.POST;
+import static br.com.schumaker.octopus.framework.web.Http.PUT;
 
 public class Handler implements HttpHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -29,27 +33,27 @@ public class Handler implements HttpHandler {
         String fullUrl = getFullUrl(exchange).first();
 
         try {
-            if (method.equalsIgnoreCase(Http.GET)) {
+            if (method.equalsIgnoreCase(GET)) {
                 handleGetRequest(exchange, fullUrl);
                 return;
             }
 
-            if (method.equalsIgnoreCase(Http.POST)) {
+            if (method.equalsIgnoreCase(POST)) {
                 handlePostRequest(exchange, fullUrl);
                 return;
             }
 
-            if (method.equalsIgnoreCase(Http.PUT)) {
+            if (method.equalsIgnoreCase(PUT)) {
                 handlePutRequest(exchange, fullUrl);
                 return;
             }
 
-            if (method.equalsIgnoreCase(Http.PATCH)) {
+            if (method.equalsIgnoreCase(PATCH)) {
                 handlePutRequest(exchange, fullUrl);
                 return;
             }
 
-            if (method.equalsIgnoreCase(Http.DELETE)) {
+            if (method.equalsIgnoreCase(DELETE)) {
                 handlePutRequest(exchange, fullUrl);
                 return;
             }
@@ -97,7 +101,7 @@ public class Handler implements HttpHandler {
 
         var controller = container.getController(controllerRoute);
         if (controller != null) {
-            var pair = controller.getMethod(methodName, Http.POST);
+            var pair = controller.getMethod(methodName, POST);
             var method = pair.first();
             if (method != null) {
                 var returnType = method.getReturnType();
@@ -132,7 +136,7 @@ public class Handler implements HttpHandler {
 
         var controller = container.getController(controllerRoute);
         if (controller != null) {
-            var pair = controller.getMethod(methodName, Http.PUT);
+            var pair = controller.getMethod(methodName, PUT);
             var method = pair.first();
             if (method != null) {
                 var returnType = method.getReturnType();
