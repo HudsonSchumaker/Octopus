@@ -9,6 +9,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The ConstructorReflection class provides utility methods for instantiating classes using constructors with dependency injection.
+ * It uses reflection to create instances of classes by injecting the required dependencies into the constructor parameters.
+ * This class is a singleton and provides a global point of access to its instance.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class ConstructorReflection {
     private static final ConstructorReflection INSTANCE = new ConstructorReflection();
     private static final IoCContainer ioCContainer = IoCContainer.getInstance();
@@ -19,6 +27,13 @@ public class ConstructorReflection {
         return INSTANCE;
     }
 
+    /**
+     * Instantiates a class using the specified constructor and injects the required dependencies into the constructor parameters.
+     *
+     * @param constructor the constructor to use for instantiation
+     * @return the instantiated object
+     * @throws OctopusException if an error occurs during instantiation
+     */
     public Object instantiateWithInjectedBeans(Constructor<?> constructor) {
         List<Object> parameters = new ArrayList<>();
         for (Parameter parameter : this.getParameters(constructor)) {
@@ -32,6 +47,14 @@ public class ConstructorReflection {
         return instantiate(constructor, parameters.toArray());
     }
 
+    /**
+     * Instantiates a class using the specified constructor and arguments.
+     *
+     * @param constructor the constructor to use for instantiation
+     * @param args the arguments to pass to the constructor
+     * @return the instantiated object
+     * @throws OctopusException if an error occurs during instantiation
+     */
     private Object instantiate(Constructor<?> constructor, Object... args) {
         try {
             if (constructor.getParameterCount() == args.length) {
@@ -44,6 +67,13 @@ public class ConstructorReflection {
         }
     }
 
+    /**
+     * Retrieves the parameters of a constructor.
+     *
+     * @param constructor the constructor
+     * @return a list of parameters
+     * @throws OctopusException if an error occurs during retrieval
+     */
     private List<Parameter> getParameters(Constructor<?> constructor) {
         try {
             return Arrays.stream(constructor.getParameters()).toList();

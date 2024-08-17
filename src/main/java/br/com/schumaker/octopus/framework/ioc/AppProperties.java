@@ -1,8 +1,14 @@
 package br.com.schumaker.octopus.framework.ioc;
 
+/**
+ * The \@AppProperties class contains constants for application configuration properties.
+ * These properties include application name, version, database configuration, and server settings.
+ * The class is designed to be used as a centralized place for accessing application properties.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class AppProperties {
-
-
     public static final String APP_NAME = "Octopus";
     public static final String APP_VERSION = "0.10.0";
     public static final String DB_DRIVER = "oc.db.driver";

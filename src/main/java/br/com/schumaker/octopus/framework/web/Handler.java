@@ -24,6 +24,14 @@ import static br.com.schumaker.octopus.framework.web.http.Http.PATCH;
 import static br.com.schumaker.octopus.framework.web.http.Http.POST;
 import static br.com.schumaker.octopus.framework.web.http.Http.PUT;
 
+/**
+ * The Handler class implements the HttpHandler interface to handle HTTP requests.
+ * It supports GET, POST, PUT, PATCH, DELETE, HEADER and OPTIONS methods and delegates the request handling to appropriate methods.
+ * This class uses an IoC container to retrieve controllers and their methods, and processes the request and response accordingly.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class Handler implements HttpHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final IoCContainer container = IoCContainer.getInstance();
@@ -66,6 +74,13 @@ public class Handler implements HttpHandler {
         }
     }
 
+    /**
+     * Handles a GET request and sends the response.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @param fullUrl the full URL of the request
+     * @throws Exception if an error occurs during request handling
+     */
     private void handleGetRequest(HttpExchange exchange, String fullUrl) throws Exception {
         String response = "";
         int httpCode = Http.HTTP_200;
@@ -81,7 +96,7 @@ public class Handler implements HttpHandler {
                 var returnType = method.getReturnType();
                 Object result = method.invoke(controller.getInstance());
 
-                response = processResult(result, returnType);
+                response = this.processResponse(result, returnType);
             }
         } else {
             response = "Controller not found!";
@@ -91,6 +106,13 @@ public class Handler implements HttpHandler {
         sendResponse(exchange, httpCode, response);
     }
 
+    /**
+     * Handles a POST request and sends the response.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @param fullUrl the full URL of the request
+     * @throws Exception if an error occurs during request handling
+     */
     private void handlePostRequest(HttpExchange exchange, String fullUrl) throws Exception {
         String response = "";
         int httpCode = Http.HTTP_201;
@@ -121,13 +143,20 @@ public class Handler implements HttpHandler {
                     result = method.invoke(controller.getInstance());
                 }
 
-                response = processResult(result, returnType);
+                response = this.processResponse(result, returnType);
             }
         }
 
         sendResponse(exchange, httpCode, response);
     }
 
+    /**
+     * Handles a PUT request and sends the response.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @param fullUrl the full URL of the request
+     * @throws Exception if an error occurs during request handling
+     */
     private void handlePutRequest(HttpExchange exchange, String fullUrl) throws Exception {
         String response = "";
         int httpCode = Http.HTTP_202;
@@ -143,7 +172,7 @@ public class Handler implements HttpHandler {
                 var returnType = method.getReturnType();
                 Object result = method.invoke(controller.getInstance());
 
-                response = processResult(result, returnType);
+                response = this.processResponse(result, returnType);
             }
         } else {
             response = "Controller not found!";
@@ -153,11 +182,23 @@ public class Handler implements HttpHandler {
         sendResponse(exchange, httpCode, response);
     }
 
+    /**
+     * Handles unsupported HTTP methods and sends a 405 response.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @throws Exception if an error occurs during request handling
+     */
     private void handleUnsupportedMethod(HttpExchange exchange) throws Exception {
         String response = "Method not supported";
         sendResponse(exchange, Http.HTTP_405, response);
     }
 
+    /**
+     * Handles exceptions that occur during request handling.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @param e the exception that occurred
+     */
     private void handleException(HttpExchange exchange, Exception e) {
         Throwable originalException = e.getCause();
         if (originalException == null) {
@@ -168,6 +209,13 @@ public class Handler implements HttpHandler {
         }
     }
 
+    /**
+     * Reads the request body from the HttpExchange object.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @return the request body as a string
+     * @throws Exception if an error occurs during request body reading
+     */
     private String readRequestBody(HttpExchange exchange) throws Exception {
         StringBuilder requestBody = new StringBuilder();
         try (InputStream is = exchange.getRequestBody();
@@ -182,6 +230,14 @@ public class Handler implements HttpHandler {
         return requestBody.toString();
     }
 
+    /**
+     * Sends the response to the client.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @param httpCode the HTTP status code
+     * @param response the response body
+     * @throws Exception if an error occurs during response sending
+     */
     private void sendResponse(HttpExchange exchange, int httpCode, String response) throws Exception {
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         exchange.sendResponseHeaders(httpCode, response.getBytes().length);
@@ -190,7 +246,16 @@ public class Handler implements HttpHandler {
         }
     }
 
-    private String processResult(Object result, Class<?> returnType) throws Exception {
+
+    /**
+     * Processes the result of a controller method invocation and converts it to a string.
+     *
+     * @param result the result of the method invocation
+     * @param returnType the return type of the method
+     * @return the result as a string
+     * @throws Exception if an error occurs during result processing
+     */
+    private String processResponse(Object result, Class<?> returnType) throws Exception {
         if (returnType.equals(String.class)) {
             return (String) result;
         } else if (returnType.equals(ResponseView.class)) {
@@ -200,6 +265,12 @@ public class Handler implements HttpHandler {
         }
     }
 
+    /**
+     * Retrieves the full URL of the request.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @return a Pair containing the full URL and the request URI
+     */
     private Pair<String, String> getFullUrl(HttpExchange exchange) {
         URI requestUri = exchange.getRequestURI();
         String scheme = exchange.getProtocol().startsWith("HTTP") ? "http" : "https";

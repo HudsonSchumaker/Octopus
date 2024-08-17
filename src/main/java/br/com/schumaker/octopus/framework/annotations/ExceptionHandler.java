@@ -33,6 +33,9 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * @see GlobalExceptionHandler
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

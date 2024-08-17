@@ -2,7 +2,15 @@ package br.com.schumaker.octopus.framework.web.http;
 
 import br.com.schumaker.octopus.framework.reflection.Pair;
 
+/**
+ * The Http class provides constants for HTTP methods, content types, and status codes.
+ * It also provides pairs of HTTP status codes and their corresponding messages.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class Http {
+    // HTTP Methods
     public static final String GET = HttpVerb.GET.name();
     public static final String POST = HttpVerb.POST.name();
     public static final String PUT = HttpVerb.PUT.name();
@@ -11,6 +19,7 @@ public class Http {
     public static final String HEADER = HttpVerb.HEADER.name();
     public static final String OPTIONS = HttpVerb.OPTIONS.name();
 
+    // Content Types
     public static final String CONTENT_TYPE = "Content-Type";
     public static final String APPLICATION_JSON = "application/json";
     public static final String APPLICATION_XML = "application/xml";
@@ -23,6 +32,7 @@ public class Http {
     public static final String TEXT_CSV = "text/csv";
     public static final String TEXT_YAML = "text/yaml";
 
+    // HTTP Status Codes
     public static final Integer HTTP_200 = 200;
     public static final Integer HTTP_201 = 201;
     public static final Integer HTTP_202 = 202;
@@ -39,6 +49,7 @@ public class Http {
     public static final Integer HTTP_503 = 503;
     public static final Integer HTTP_504 = 504;
 
+    // HTTP Status Messages
     public static final String HTTP_OK = "OK";
     public static final String HTTP_CREATED = "CREATED";
     public static final String HTTP_ACCEPTED = "ACCEPTED";
@@ -55,6 +66,7 @@ public class Http {
     public static final String HTTP_SERVICE_UNAVAILABLE = "SERVICE UNAVAILABLE";
     public static final String HTTP_GATEWAY_TIMEOUT = "GATEWAY TIMEOUT";
 
+    // HTTP Status Code and Message Pairs
     public static final Pair<Integer, String> HTTP_200_OK = new Pair<>(HTTP_200, HTTP_OK);
     public static final Pair<Integer, String> HTTP_201_CREATED = new Pair<>(HTTP_201, HTTP_CREATED);
     public static final Pair<Integer, String> HTTP_202_ACCEPTED = new Pair<>(HTTP_202, HTTP_ACCEPTED);

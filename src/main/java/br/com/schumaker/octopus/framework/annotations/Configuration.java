@@ -29,6 +29,9 @@ import java.lang.annotation.Target;
  *
  * @see Bean
  * @see Inject
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

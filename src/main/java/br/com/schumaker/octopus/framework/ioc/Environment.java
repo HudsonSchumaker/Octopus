@@ -8,6 +8,15 @@ import static br.com.schumaker.octopus.framework.ioc.AppProperties.DEFAULT_VALUE
 import static br.com.schumaker.octopus.framework.ioc.AppProperties.SERVER_CONTEXT;
 import static br.com.schumaker.octopus.framework.ioc.AppProperties.SERVER_PORT;
 
+/**
+ * The Environment class represents the environment configuration within the IoC container.
+ * It provides methods to retrieve and set environment-specific properties, including server port and context.
+ *
+ * @see PropertiesReader
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class Environment {
     private static final String DEFAULT_VALUE_VALUE = "0";
     private static final String SERVER_PORT_DEFAULT = "8080";

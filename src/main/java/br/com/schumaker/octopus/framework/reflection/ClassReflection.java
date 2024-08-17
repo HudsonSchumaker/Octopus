@@ -13,6 +13,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+/**
+ * The ClassReflection class provides utility methods for instantiating classes and handling dependency injection.
+ * It uses reflection to create instances of classes, inject field values, and handle constructor parameters.
+ * This class is a singleton and provides a global point of access to its instance.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class ClassReflection {
     private static final ClassReflection INSTANCE = new ClassReflection();
     private static final ConstructorReflection constructorReflection = ConstructorReflection.getInstance();
@@ -26,6 +34,13 @@ public class ClassReflection {
         return INSTANCE;
     }
 
+    /**
+     * Instantiates a class using reflection, handling field injection and value annotations.
+     *
+     * @param clazz the class to instantiate
+     * @return the instantiated object
+     * @throws OctopusException if an error occurs during instantiation
+     */
     public Object instantiate(Class<?> clazz) {
         try {
             var defaultConstructor = this.getDefaultConstructor(clazz);
@@ -63,15 +78,34 @@ public class ClassReflection {
         }
     }
 
+    /**
+     * Handles the @Value annotation for a constructor parameter.
+     *
+     * @param parameter the constructor parameter
+     * @return the value to inject
+     */
     private Object handleParameterValueAnnotation(Parameter parameter) {
         return valueReflection.injectParameterValue(parameter);
     }
 
+    /**
+     * Handles field injection and value annotations for an instance.
+     *
+     * @param instance the instance to handle
+     * @return the instance with injected fields and values
+     */
     private Object handleFieldInjectionAndValueAnnotation(Object instance) {
         injectReflection.injectFieldBean(instance);
         return valueReflection.injectFieldValue(instance);
+
     }
 
+    /**
+     * Retrieves the default constructor of a class.
+     *
+     * @param clazz the class
+     * @return an optional containing the default constructor, or empty if not found
+     */
     private Optional<Constructor<?>> getDefaultConstructor(Class<?> clazz) {
         try {
             return Stream.of(clazz.getDeclaredConstructors())
@@ -83,6 +117,13 @@ public class ClassReflection {
         }
     }
 
+    /**
+     * Retrieves the first available constructor of a class.
+     *
+     * @param clazz the class
+     * @return the first available constructor
+     * @throws OctopusException if an error occurs during retrieval
+     */
     private Constructor<?> getFirstAvailableConstructor(Class<?> clazz) {
         try {
             return clazz.getDeclaredConstructors()[0];
@@ -91,6 +132,13 @@ public class ClassReflection {
         }
     }
 
+    /**
+     * Retrieves all constructors of a class.
+     *
+     * @param clazz the class
+     * @return a list of constructors
+     * @throws OctopusException if an error occurs during retrieval
+     */
     private List<Constructor<?>> getConstructors(Class<?> clazz) {
         try {
             return Arrays.stream(clazz.getDeclaredConstructors()).toList();
@@ -99,6 +147,13 @@ public class ClassReflection {
         }
     }
 
+    /**
+     * Retrieves the parameters of a constructor.
+     *
+     * @param constructor the constructor
+     * @return a list of parameters
+     * @throws OctopusException if an error occurs during retrieval
+     */
     private List<Parameter> getParameters(Constructor<?> constructor) {
         try {
             return Arrays.stream(constructor.getParameters()).toList();

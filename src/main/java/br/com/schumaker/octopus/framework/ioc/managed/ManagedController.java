@@ -11,6 +11,16 @@ import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The ManagedController class represents a managed controller within the IoC container.
+ * It provides methods to retrieve the fully qualified name (FQN), route, and instance of the managed controller.
+ * Additionally, it provides methods to retrieve specific HTTP methods based on the mapping and type.
+ *
+ * @see ManagedClass
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class ManagedController {
     private final String fqn;
     private final String route;
@@ -23,6 +33,12 @@ public class ManagedController {
         this.methods = methods;
     }
 
+    /**
+     * Creates a new ManagedController instance using the specified controller class.
+     *
+     * @param controller the controller class
+     * @return a new ManagedController instance
+     */
     public static ManagedController builder(Class<?> controller) {
         var fqn = controller.getName();
         var route = ControllerReflection.getControllerRoute(controller);

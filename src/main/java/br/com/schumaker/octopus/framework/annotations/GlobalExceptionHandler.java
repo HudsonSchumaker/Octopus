@@ -28,6 +28,9 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * @see ExceptionHandler
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

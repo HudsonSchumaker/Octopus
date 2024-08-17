@@ -10,6 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * The ValueReflection class provides utility methods for injecting values into fields and parameters annotated with @Value.
+ * It uses reflection to set the field values of an instance and parameter values with the corresponding values from the environment.
+ * This class is a singleton and provides a global point of access to its instance.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class ValueReflection {
     private static final ValueReflection INSTANCE = new ValueReflection();
     private static final Environment environment = Environment.getInstance();
@@ -39,6 +47,14 @@ public class ValueReflection {
         return INSTANCE;
     }
 
+    /**
+     * Injects the field values of the specified instance with the corresponding values from the environment.
+     * Fields annotated with \@Value are set with the appropriate values.
+     *
+     * @param instance the instance whose fields are to be injected
+     * @return the instance with injected field values
+     * @throws OctopusException if an error occurs during field injection
+     */
     public Object injectFieldValue(Object instance) {
         try {
             for (Field field : instance.getClass().getDeclaredFields()) {
@@ -59,6 +75,14 @@ public class ValueReflection {
         }
     }
 
+    /**
+     * Injects the value of the specified parameter with the corresponding value from the environment.
+     * Parameters annotated with \@Value are set with the appropriate values.
+     *
+     * @param parameter the parameter whose value is to be injected
+     * @return the injected parameter value
+     * @throws OctopusException if an error occurs during parameter injection
+     */
     public Object injectParameterValue(Parameter parameter) {
         try {
             var valueAnnotation = parameter.getAnnotation(Value.class);
