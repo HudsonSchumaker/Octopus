@@ -5,6 +5,7 @@ import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
 import br.com.schumaker.octopus.framework.reflection.Pair;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
+import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -17,11 +18,11 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
-import static br.com.schumaker.octopus.framework.web.Http.DELETE;
-import static br.com.schumaker.octopus.framework.web.Http.GET;
-import static br.com.schumaker.octopus.framework.web.Http.PATCH;
-import static br.com.schumaker.octopus.framework.web.Http.POST;
-import static br.com.schumaker.octopus.framework.web.Http.PUT;
+import static br.com.schumaker.octopus.framework.web.http.Http.DELETE;
+import static br.com.schumaker.octopus.framework.web.http.Http.GET;
+import static br.com.schumaker.octopus.framework.web.http.Http.PATCH;
+import static br.com.schumaker.octopus.framework.web.http.Http.POST;
+import static br.com.schumaker.octopus.framework.web.http.Http.PUT;
 
 public class Handler implements HttpHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();

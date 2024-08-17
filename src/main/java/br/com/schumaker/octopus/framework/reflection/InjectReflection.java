@@ -4,8 +4,6 @@ import br.com.schumaker.octopus.framework.annotations.Inject;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 
-import java.util.List;
-
 public class InjectReflection {
     private static final InjectReflection INSTANCE = new InjectReflection();
 
@@ -28,14 +26,6 @@ public class InjectReflection {
                     }
                 }
             }
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
-        }
-    }
-
-    public List<Object> injectConstructorBean(Object instance) {
-        try {
-            return null;
         } catch (Exception e) {
             throw new OctopusException(e.getMessage());
         }

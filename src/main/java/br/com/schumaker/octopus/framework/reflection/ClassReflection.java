@@ -1,5 +1,6 @@
 package br.com.schumaker.octopus.framework.reflection;
 
+import br.com.schumaker.octopus.framework.annotations.Inject;
 import br.com.schumaker.octopus.framework.annotations.Value;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
@@ -14,6 +15,7 @@ import java.util.stream.Stream;
 
 public class ClassReflection {
     private static final ClassReflection INSTANCE = new ClassReflection();
+    private static final ConstructorReflection constructorReflection = ConstructorReflection.getInstance();
     private static final ValueReflection valueReflection = ValueReflection.getInstance();
     private static final InjectReflection injectReflection = InjectReflection.getInstance();
     private static final IoCContainer iocContainer = IoCContainer.getInstance();
@@ -26,19 +28,22 @@ public class ClassReflection {
 
     public Object instantiate(Class<?> clazz) {
         try {
-            var defaultConstructor = getDefaultConstructor(clazz);
+            var defaultConstructor = this.getDefaultConstructor(clazz);
             if (defaultConstructor.isPresent()) {
                 Object instance = defaultConstructor.get().newInstance();
-                return handleFieldInjectionAndValueAnnotation(instance);
+                return this.handleFieldInjectionAndValueAnnotation(instance);
             } else {
-                var firstAvailableConstructor = getFirstAvailableConstructor(clazz);
-                List<Object> parameters = new ArrayList<>();
+                var firstAvailableConstructor = this.getFirstAvailableConstructor(clazz);
+                if (firstAvailableConstructor.getAnnotation(Inject.class) != null) {
+                    Object instance = constructorReflection.instantiateWithInjectedBeans(firstAvailableConstructor);
+                    return this.handleFieldInjectionAndValueAnnotation(instance);
+                }
 
-                for (Parameter parameter : getParameters(firstAvailableConstructor)) {
+                List<Object> parameters = new ArrayList<>();
+                for (Parameter parameter : this.getParameters(firstAvailableConstructor)) {
                     var parameterType = parameter.getType();
-                    var valueAnnotation = parameter.getAnnotation(Value.class);
-                    if (valueAnnotation != null) {
-                        var value = handleParameterValueAnnotation(parameter);
+                    if (parameter.getAnnotation(Value.class) != null) {
+                        var value = this.handleParameterValueAnnotation(parameter);
                         parameters.add(value);
                     } else {
                         var service = iocContainer.getService(parameterType.getName());
@@ -53,21 +58,6 @@ public class ClassReflection {
                 Object instance = firstAvailableConstructor.newInstance(parameters.toArray());
                 return handleFieldInjectionAndValueAnnotation(instance);
             }
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
-        }
-    }
-
-    // Inject
-    public Object instantiate(Class<?> clazz, Object... args) {
-        try {
-            var constructors = getConstructors(clazz);
-            for (Constructor<?> constructor : constructors) {
-                if (constructor.getParameterCount() == args.length) {
-                    return constructor.newInstance(args);
-                }
-            }
-            throw new OctopusException("No constructor found with the given parameters.");
         } catch (Exception e) {
             throw new OctopusException(e.getMessage());
         }

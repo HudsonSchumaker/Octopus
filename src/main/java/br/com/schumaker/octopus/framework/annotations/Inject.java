@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
  * This annotation ask the container to inject a compatible bean if found.
  * <p>
  * The @Inject annotation injects a bean into the annotated field or constructor.
+ * All the parameters of the constructor have to be a Bean to be proper injected by the container.
  * </p>
  *
  * <p>

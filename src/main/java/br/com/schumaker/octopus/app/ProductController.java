@@ -4,11 +4,10 @@ import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.service.ProductService;
 import br.com.schumaker.octopus.framework.annotations.*;
 import br.com.schumaker.octopus.framework.model.Mapper;
-import br.com.schumaker.octopus.framework.web.Http;
+import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.List;
 
 @Controller("/product")
