@@ -54,7 +54,7 @@ public class Octopus {
 
     private static void handleCommandLineArgs(String[] args) {
         commandLineArgs.setArgs(args);
-        String env = commandLineArgs.getArg("-env");
+        String env = commandLineArgs.getArg(CommandLineArgs.ENV);
         if (env != null) {
             environment.setEnvironment(env);
         }
