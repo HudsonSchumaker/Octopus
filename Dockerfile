@@ -1,7 +1,6 @@
 FROM openjdk:21-jdk-slim
 WORKDIR /app
 COPY . .
-RUN ./gradlew build
 EXPOSE 80
 
 # Run the application

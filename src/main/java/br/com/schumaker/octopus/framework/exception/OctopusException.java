@@ -4,6 +4,11 @@ public class OctopusException extends RuntimeException {
 
     private final int statusCode;
 
+    public OctopusException(String message) {
+        super(message);
+        this.statusCode = 500;
+    }
+
     public OctopusException(String message, int statusCode) {
         super(message);
         this.statusCode = statusCode;

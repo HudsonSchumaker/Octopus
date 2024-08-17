@@ -92,6 +92,7 @@ public class DbCrud<K, T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public K save(T entity) {
         Class<?> clazz = entity.getClass();
         var tableName = tableReflection.getTableName(clazz);

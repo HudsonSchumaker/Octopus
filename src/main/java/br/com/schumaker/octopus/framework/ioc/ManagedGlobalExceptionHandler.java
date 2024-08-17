@@ -22,7 +22,7 @@ public class ManagedGlobalExceptionHandler {
         var methods = GlobalExceptionHandlerReflection.getMethods(handler);
 
         var managedGlobalExceptionHandler = new ManagedGlobalExceptionHandler(fqn, methods);
-        managedGlobalExceptionHandler.instance = ClassReflection.getInstance().getInstance(handler);
+        managedGlobalExceptionHandler.instance = ClassReflection.getInstance().instantiate(handler);
 
         return managedGlobalExceptionHandler;
     }

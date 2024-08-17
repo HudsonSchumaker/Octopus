@@ -1,5 +1,7 @@
 package br.com.schumaker.octopus.framework.hardware;
 
+import br.com.schumaker.octopus.framework.exception.OctopusException;
+
 import java.net.InetAddress;
 
 public class Machine {
@@ -12,7 +14,7 @@ public class Machine {
         try {
             return InetAddress.getLocalHost().getHostName();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage());
         }
     }
 
@@ -20,7 +22,7 @@ public class Machine {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage());
         }
     }
 

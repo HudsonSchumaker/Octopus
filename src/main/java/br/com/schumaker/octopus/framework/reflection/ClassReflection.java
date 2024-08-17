@@ -1,38 +1,19 @@
 package br.com.schumaker.octopus.framework.reflection;
 
 import br.com.schumaker.octopus.framework.annotations.Value;
-import br.com.schumaker.octopus.framework.ioc.Environment;
+import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class ClassReflection {
     private static final ClassReflection INSTANCE = new ClassReflection();
-    private static final Environment environment = Environment.getInstance();
+    private static final ValueReflection valueReflection = ValueReflection.getInstance();
+    private static final InjectReflection injectReflection = InjectReflection.getInstance();
     private static final IoCContainer iocContainer = IoCContainer.getInstance();
-    private static final Map<Class<?>, Function<String, Object>> typeParsers = new HashMap<>();
-
-    static {
-        typeParsers.put(String.class, environment::getKey);
-        typeParsers.put(Integer.class, key -> Integer.parseInt(environment.getKey(key)));
-        typeParsers.put(int.class, key -> Integer.parseInt(environment.getKey(key)));
-        typeParsers.put(Float.class, key -> Float.parseFloat(environment.getKey(key)));
-        typeParsers.put(float.class, key -> Float.parseFloat(environment.getKey(key)));
-        typeParsers.put(Double.class, key -> Double.parseDouble(environment.getKey(key)));
-        typeParsers.put(double.class, key -> Double.parseDouble(environment.getKey(key)));
-        typeParsers.put(Long.class, key -> Long.parseLong(environment.getKey(key)));
-        typeParsers.put(long.class, key -> Long.parseLong(environment.getKey(key)));
-        typeParsers.put(Boolean.class, key -> Boolean.parseBoolean(environment.getKey(key)));
-        typeParsers.put(boolean.class, key -> Boolean.parseBoolean(environment.getKey(key)));
-        typeParsers.put(Short.class, key -> Short.parseShort(environment.getKey(key)));
-        typeParsers.put(short.class, key -> Short.parseShort(environment.getKey(key)));
-        typeParsers.put(Character.class, key -> environment.getKey(key).charAt(0));
-        typeParsers.put(char.class, key -> environment.getKey(key).charAt(0));
-    }
 
     private ClassReflection() {}
 
@@ -40,11 +21,12 @@ public class ClassReflection {
         return INSTANCE;
     }
 
-    public Object getInstance(Class<?> clazz) {
+    public Object instantiate(Class<?> clazz) {
         try {
             var defaultConstructor = getDefaultConstructor(clazz);
             if (defaultConstructor.isPresent()) {
-                return defaultConstructor.get().newInstance();
+                Object instance = defaultConstructor.get().newInstance();
+                return handleFieldInjectionAndValueAnnotation(instance);
             } else {
                 var firstAvailableConstructor = getFirstAvailableConstructor(clazz);
                 List<Object> parameters = new ArrayList<>();
@@ -61,13 +43,15 @@ public class ClassReflection {
                             parameters.add(service.getInstance());
                             continue;
                         }
-                        parameters.add(getInstance(parameterType));
+                        parameters.add(instantiate(parameterType));
                     }
                 }
-                return firstAvailableConstructor.newInstance(parameters.toArray());
+
+                Object instance = firstAvailableConstructor.newInstance(parameters.toArray());
+                return handleFieldInjectionAndValueAnnotation(instance);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage());
         }
     }
 
@@ -78,7 +62,7 @@ public class ClassReflection {
                     .findFirst();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage());
         }
     }
 
@@ -86,7 +70,7 @@ public class ClassReflection {
         try {
             return clazz.getDeclaredConstructors()[0];
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage());
         }
     }
 
@@ -94,7 +78,7 @@ public class ClassReflection {
         try {
             return Arrays.stream(clazz.getDeclaredConstructors()).toList();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage());
         }
     }
 
@@ -102,25 +86,16 @@ public class ClassReflection {
         try {
             return Arrays.stream(constructor.getParameters()).toList();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage());
         }
     }
 
     private Object handleParameterValueAnnotation(Parameter parameter) {
-        try {
-            var valueAnnotation = parameter.getAnnotation(Value.class);
-            if (valueAnnotation != null) {
-                var key = valueAnnotation.value();
-                var type = parameter.getType();
-                var parser = typeParsers.get(type);
-                if (parser != null) {
-                    return parser.apply(key);
-                }
-            }
+        return valueReflection.injectParameterValue(parameter);
+    }
 
-            return null;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    private Object handleFieldInjectionAndValueAnnotation(Object instance) {
+        injectReflection.injectFieldBean(instance);
+        return valueReflection.injectFieldValue(instance);
     }
 }

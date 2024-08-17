@@ -3,6 +3,7 @@ package br.com.schumaker.octopus.framework.reflection;
 import br.com.schumaker.octopus.framework.annotations.Column;
 import br.com.schumaker.octopus.framework.annotations.Pk;
 import br.com.schumaker.octopus.framework.annotations.Table;
+import br.com.schumaker.octopus.framework.exception.OctopusException;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class TableReflection {
                 return name;
             }
         }
-        throw new RuntimeException("Table annotation not found.");
+        throw new OctopusException("Table annotation not found.");
     }
 
     public String getPrimaryKey(Class<?> clazz) {
@@ -44,7 +45,7 @@ public class TableReflection {
                 }
             }
         }
-        throw new RuntimeException("Primary key not found.");
+        throw new OctopusException("Primary key not found.");
     }
 
     public List<String> getColumnNames(Class<?> clazz) {

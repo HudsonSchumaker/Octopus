@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The @Service annotation is used to mark a class as a service component.
+ * The @Component annotation is used to mark a class as a component.
  * This annotation can be applied to classes to indicate that the class
- * performs service tasks and is a candidate for auto-detection and dependency injection by the container.
+ * is a candidate for auto-detection and dependency injection by the container.
  *
  * <p>
  * Example usage:
@@ -16,19 +16,25 @@ import java.lang.annotation.Target;
  *
  * <pre>
  * {@code
- * @Service
- * public class MyService {
+ * @Component
+ * public class MyComponent {
  *
- *     public void performService() {
- *         // Service logic
+ *     @Value("some.value.from.file")
+ *     private String myField;
+ *
+ *     @Inject
+ *     private MyDependency myDependency;
+ *
+ *     public void doSomething() {
+ *         // Component logic
  *     }
  * }
  * }
  * </pre>
  *
- * @see Bean
+ * @see Value
  * @see Inject
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Service {}
+public @interface Component {}

@@ -2,7 +2,7 @@ package br.com.schumaker.octopus.framework.ioc;
 
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
 
-public class ManagedRepository implements ManagedClass {
+public class ManagedRepository implements ManagedClass<ManagedRepository> {
     private final String fqn;
     private Object instance;
 
@@ -13,7 +13,7 @@ public class ManagedRepository implements ManagedClass {
     public static ManagedRepository builder(Class<?> repository) {
         var fqn = repository.getName();
         var managedRepository = new ManagedRepository(fqn);
-        managedRepository.instance = ClassReflection.getInstance().getInstance(repository);
+        managedRepository.instance = ClassReflection.getInstance().instantiate(repository);
         return managedRepository;
     }
 
