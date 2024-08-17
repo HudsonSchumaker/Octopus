@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.web;
+package br.com.schumaker.octopus.framework.web.http;
 
 public enum HttpVerb {
     GET("GET"),

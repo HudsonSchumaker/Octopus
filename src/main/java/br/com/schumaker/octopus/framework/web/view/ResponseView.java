@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.web.view;
 
-import br.com.schumaker.octopus.framework.web.Http;
+import br.com.schumaker.octopus.framework.web.http.Http;
 
 public class ResponseView<T> {
 

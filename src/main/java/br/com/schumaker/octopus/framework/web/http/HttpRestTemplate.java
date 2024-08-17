@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.web;
+package br.com.schumaker.octopus.framework.web.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -12,13 +12,17 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Map;
 
 public class HttpRestTemplate {
-
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
     public HttpRestTemplate() {
         this.httpClient = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
+    }
+
+    public <T> T get(String url, Map<String, String> headers, Class<T> responseType) throws IOException, InterruptedException {
+        String responseBody = get(url, headers);
+        return objectMapper.readValue(responseBody, responseType);
     }
 
     public String get(String url, Map<String, String> headers) throws IOException, InterruptedException {
@@ -34,8 +38,8 @@ public class HttpRestTemplate {
         return response.body();
     }
 
-    public <T> T get(String url, Map<String, String> headers, Class<T> responseType) throws IOException, InterruptedException {
-        String responseBody = get(url, headers);
+    public <T> T post(String url, String body, Map<String, String> headers, Class<T> responseType) throws IOException, InterruptedException {
+        String responseBody = post(url, body, headers);
         return objectMapper.readValue(responseBody, responseType);
     }
 
@@ -52,8 +56,8 @@ public class HttpRestTemplate {
         return response.body();
     }
 
-    public <T> T post(String url, String body, Map<String, String> headers, Class<T> responseType) throws IOException, InterruptedException {
-        String responseBody = post(url, body, headers);
+    public <T> T put(String url, String body, Map<String, String> headers, Class<T> responseType) throws IOException, InterruptedException {
+        String responseBody = put(url, body, headers);
         return objectMapper.readValue(responseBody, responseType);
     }
 
@@ -70,8 +74,8 @@ public class HttpRestTemplate {
         return response.body();
     }
 
-    public <T> T put(String url, String body, Map<String, String> headers, Class<T> responseType) throws IOException, InterruptedException {
-        String responseBody = put(url, body, headers);
+    public <T> T delete(String url, Map<String, String> headers, Class<T> responseType) throws IOException, InterruptedException {
+        String responseBody = delete(url, headers);
         return objectMapper.readValue(responseBody, responseType);
     }
 
@@ -86,10 +90,5 @@ public class HttpRestTemplate {
         HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 
         return response.body();
-    }
-
-    public <T> T delete(String url, Map<String, String> headers, Class<T> responseType) throws IOException, InterruptedException {
-        String responseBody = delete(url, headers);
-        return objectMapper.readValue(responseBody, responseType);
     }
 }
