@@ -77,6 +77,7 @@ public class Octopus {
                 """);
         System.out.print(AppProperties.APP_NAME + ", ");
         System.out.print("Version: " + AppProperties.APP_VERSION + ", ");
+        System.out.print("Server Port: " + environment.getServerPort() + ", ");
         System.out.println("Environment: " + (commandLineArgs.getArg("-env") == null ? "default" : commandLineArgs.getArg("-env")));
     }
 }
