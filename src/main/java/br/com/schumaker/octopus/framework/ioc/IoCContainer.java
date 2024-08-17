@@ -59,9 +59,7 @@ public class IoCContainer {
     }
 
     public void registerConfiguration(List<Class<?>> configurations) {
-        configurations.forEach(it -> {
-            this.managedClasses.add(ManagedConfiguration.builder(it));
-        });
+        configurations.forEach(it -> this.managedClasses.add(ManagedConfiguration.builder(it)));
     }
 
     public void registerBean(ManagedBean bean) {
@@ -69,26 +67,18 @@ public class IoCContainer {
     }
 
     public void registerComponent(List<Class<?>> components) {
-        components.forEach(it -> {
-            this.managedClasses.add(ManagedComponent.builder(it));
-        });
+        components.forEach(it -> this.managedClasses.add(ManagedComponent.builder(it)));
     }
 
     public void registerRepository(List<Class<?>> repositories) {
-        repositories.forEach(it -> {
-            this.managedClasses.add(ManagedRepository.builder(it));
-        });
+        repositories.forEach(it -> this.managedClasses.add(ManagedRepository.builder(it)));
     }
 
     public void registerService(List<Class<?>> services) {
-        services.forEach(it -> {
-            this.managedClasses.add(ManagedService.builder(it));
-        });
+        services.forEach(it -> this.managedClasses.add(ManagedService.builder(it)));
     }
 
     public void registerController(List<Class<?>> controllers) {
-        controllers.forEach(it -> {
-            this.managedController.add(ManagedController.builder(it));
-        });
+        controllers.forEach(it -> this.managedController.add(ManagedController.builder(it)));
     }
 }
