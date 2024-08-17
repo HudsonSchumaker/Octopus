@@ -1,7 +1,7 @@
 package br.com.schumaker.octopus.framework.reflection;
 
 import br.com.schumaker.octopus.framework.annotations.*;
-import br.com.schumaker.octopus.framework.web.HttpVerb;
+import br.com.schumaker.octopus.framework.web.http.HttpVerb;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

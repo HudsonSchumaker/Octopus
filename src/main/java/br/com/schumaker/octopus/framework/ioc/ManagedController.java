@@ -4,7 +4,7 @@ import br.com.schumaker.octopus.framework.reflection.ControllerReflection;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
 import br.com.schumaker.octopus.framework.reflection.Pair;
 import br.com.schumaker.octopus.framework.reflection.Triple;
-import br.com.schumaker.octopus.framework.web.Http;
+import br.com.schumaker.octopus.framework.web.http.Http;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
