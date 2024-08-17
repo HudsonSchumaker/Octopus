@@ -3,7 +3,6 @@ package br.com.schumaker.octopus.framework.run;
 import br.com.schumaker.octopus.framework.annotations.*;
 import br.com.schumaker.octopus.framework.exception.ExceptionCodes;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.reflection.AppProperties;
 import br.com.schumaker.octopus.framework.web.WebServer;
 import br.com.schumaker.octopus.framework.ioc.Environment;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
@@ -50,8 +49,8 @@ public class Octopus {
     }
 
     private static void printBanner() {
-        System.out.println(AppProperties.APP_NAME);
-        System.out.println("Version: " + AppProperties.APP_VERSION);
+        System.out.println(Environment.AppProperties.APP_NAME);
+        System.out.println("Version: " + Environment.AppProperties.APP_VERSION);
         System.out.println("""
                       ___           ___           ___           ___           ___           ___           ___    \s
                      /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\__\\         /\\  \\   \s
