@@ -5,7 +5,7 @@ Sure, here's a brief description for your project:
 
 **Project Description:**
 
-The framework, named Octopus, provides a lightweight and modular structure for developing web applications. It includes custom annotations for defining application components such as controllers and services, and an IoC (Inversion of Control) container for managing dependencies.
+The framework, named Octopus, provides a lightweight and modular structure for developing rest services. It includes custom annotations for defining application components such as controllers and services, and an IoC (Inversion of Control) container for managing dependencies.
 
 **Key Features:**
 - **Annotation-Based Configuration:** Use custom annotations like `@OctopusApp`, `@Controller`, and `@Service` to define application components.
