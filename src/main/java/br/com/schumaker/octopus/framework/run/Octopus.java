@@ -3,6 +3,7 @@ package br.com.schumaker.octopus.framework.run;
 import br.com.schumaker.octopus.framework.annotations.*;
 import br.com.schumaker.octopus.framework.exception.ExceptionCodes;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.octopus.framework.ioc.AppProperties;
 import br.com.schumaker.octopus.framework.web.WebServer;
 import br.com.schumaker.octopus.framework.ioc.Environment;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
@@ -13,6 +14,7 @@ public class Octopus {
     private static final WebServer ws;
     private static final IoCContainer container = IoCContainer.getInstance();
     private static final Environment environment = Environment.getInstance();
+    private static final CommandLineArgs commandLineArgs = CommandLineArgs.getInstance();
 
     static {
         try {
@@ -23,7 +25,9 @@ public class Octopus {
     }
 
     public static void run(Class<?> clazz, String[] args) throws Exception {
+        handleCommandLineArgs(args);
         printBanner();
+
         OctopusApp app = clazz.getAnnotation(OctopusApp.class);
         var packageName = app.root();
 
@@ -48,9 +52,15 @@ public class Octopus {
         ws.start();
     }
 
+    private static void handleCommandLineArgs(String[] args) {
+        commandLineArgs.setArgs(args);
+        String env = commandLineArgs.getArg("-env");
+        if (env != null) {
+            environment.setEnvironment(env);
+        }
+    }
+
     private static void printBanner() {
-        System.out.println(Environment.AppProperties.APP_NAME);
-        System.out.println("Version: " + Environment.AppProperties.APP_VERSION);
         System.out.println("""
                       ___           ___           ___           ___           ___           ___           ___    \s
                      /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\__\\         /\\  \\   \s
@@ -65,5 +75,8 @@ public class Octopus {
                      \\/__/         \\/__/                       \\/__/                       \\/__/         \\/__/   \s
                 
                 """);
+        System.out.print(AppProperties.APP_NAME + ", ");
+        System.out.print("Version: " + AppProperties.APP_VERSION + ", ");
+        System.out.println("Environment: " + (commandLineArgs.getArg("-env") == null ? "default" : commandLineArgs.getArg("-env")));
     }
 }

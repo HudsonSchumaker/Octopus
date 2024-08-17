@@ -42,12 +42,14 @@ CREATE TABLE product (
 );
 ```
 4. Run the `Main` class to start the application.
-
+**Sample Data:**
+```json
 {
 "name": "Sample Product",
 "description": "This is a sample product description.",
 "price": 19.99
 }
+```
 ---
 
 ### Developer Manual

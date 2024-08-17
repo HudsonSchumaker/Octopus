@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 
 public class GlobalExceptionHandler {
-
     private static final GlobalExceptionHandler INSTANCE = new GlobalExceptionHandler();
     private static final IoCContainer container = IoCContainer.getInstance();
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -19,8 +18,8 @@ public class GlobalExceptionHandler {
     }
 
     public void handleException(HttpExchange exchange, Exception exception) {
-        if (container.getGlobalExceptionHandler() != null) {
-            var handler = container.getGlobalExceptionHandler();
+        var handler = container.getGlobalExceptionHandler();
+        if (handler != null) {
             var methodAndParams = handler.geMethod(exception.getClass());
 
             if (methodAndParams != null) {

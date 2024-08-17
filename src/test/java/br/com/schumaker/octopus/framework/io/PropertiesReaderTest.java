@@ -12,7 +12,7 @@ public class PropertiesReaderTest {
     @Test
     public void testLoadProperties() {
         // Arrange
-        Properties properties = PropertiesReader.loadProperties();
+        Properties properties = PropertiesReader.loadProperties("");
 
         // Act & Assert
         assertNotNull(properties);

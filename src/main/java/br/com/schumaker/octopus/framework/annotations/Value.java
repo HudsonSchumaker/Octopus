@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static br.com.schumaker.octopus.framework.ioc.Environment.AppProperties.DEFAULT_VALUE_NAME;
+import static br.com.schumaker.octopus.framework.ioc.AppProperties.DEFAULT_VALUE_NAME;
 
 /**
  * The @Value annotation is used to inject a value into a field or parameter.
