@@ -35,6 +35,10 @@ public class Environment {
         return properties.getProperty(key);
     }
 
+    public void setKey(String key, String value) {
+        properties.putIfAbsent(key, value);
+    }
+
     public Integer getServerPort() {
         return Integer.parseInt(properties.getProperty(SERVER_PORT, SERVER_PORT_DEFAULT));
     }
