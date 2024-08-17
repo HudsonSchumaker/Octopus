@@ -11,7 +11,23 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+/**
+ * The ClassScanner class provides utility methods for scanning classes within a specified package.
+ * It can retrieve classes with a specific annotation and all classes within a package.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class ClassScanner {
+
+    /**
+     * Retrieves the classes within the specified package that are annotated with the specified annotation.
+     *
+     * @param packageName the name of the package to scan
+     * @param annotation the annotation to look for
+     * @return a list of classes annotated with the specified annotation
+     * @throws Exception if an error occurs during class scanning
+     */
     public static List<Class<?>> getClassesWithAnnotation(String packageName, Class<? extends Annotation> annotation) throws Exception {
         List<Class<?>> annotatedClasses = new ArrayList<>();
         List<Class<?>> classes = getClasses(packageName);
@@ -25,6 +41,13 @@ public class ClassScanner {
         return annotatedClasses;
     }
 
+    /**
+     * Retrieves all classes within the specified package.
+     *
+     * @param packageName the name of the package to scan
+     * @return a list of classes within the specified package
+     * @throws Exception if an error occurs during class scanning
+     */
     public static List<Class<?>> getClasses(String packageName) throws Exception{
         List<Class<?>> classes = new ArrayList<>();
         String path = packageName.replace('.', '/');
@@ -45,6 +68,14 @@ public class ClassScanner {
         return classes;
     }
 
+    /**
+     * Retrieves classes from a JAR file within the specified package path.
+     *
+     * @param jarFilePath the path to the JAR file
+     * @param packagePath the package path to scan within the JAR file
+     * @return a list of classes within the specified package path in the JAR file
+     * @throws Exception if an error occurs during class scanning
+     */
     private static List<Class<?>> getClassesFromJarFile(String jarFilePath, String packagePath) throws Exception {
         List<Class<?>> classes = new ArrayList<>();
         JarFile jarFile = new JarFile(jarFilePath);
@@ -64,6 +95,14 @@ public class ClassScanner {
         return classes;
     }
 
+    /**
+     * Finds classes within the specified directory and package name.
+     *
+     * @param directory the directory to scan
+     * @param packageName the package name to scan
+     * @return a list of classes within the specified directory and package name
+     * @throws Exception if an error occurs during class scanning
+     */
     private static List<Class<?>> findClasses(File directory, String packageName) throws Exception {
         List<Class<?>> classes = new ArrayList<>();
         if (!directory.exists()) {

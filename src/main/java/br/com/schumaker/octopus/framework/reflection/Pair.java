@@ -6,5 +6,8 @@ package br.com.schumaker.octopus.framework.reflection;
  *
  * @param <F> the type of the first value
  * @param <S> the type of the second value
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 public record Pair<F, S>(F first, S second) {}

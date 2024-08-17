@@ -12,6 +12,23 @@ import br.com.schumaker.octopus.framework.ioc.managed.ManagedService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The IoCContainer class represents the Inversion of Control (IoC) container.
+ * It manages the lifecycle and dependencies of various managed classes, including controllers, services, repositories, and more.
+ * The container provides methods to retrieve and register these managed classes.
+ *
+ * @see ManagedBean
+ * @see ManagedClass
+ * @see ManagedService
+ * @see ManagedComponent
+ * @see ManagedController
+ * @see ManagedRepository
+ * @see ManagedConfiguration
+ * @see ManagedGlobalExceptionHandler
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class IoCContainer {
     private static final IoCContainer INSTANCE = new IoCContainer();
     private ManagedGlobalExceptionHandler globalExceptionHandler;

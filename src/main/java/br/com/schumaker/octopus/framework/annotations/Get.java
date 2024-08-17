@@ -37,7 +37,14 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  *
+ * @see Post
+ * @see Put
+ * @see Patch
+ * @see Delete
  * @see Controller
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

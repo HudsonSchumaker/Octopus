@@ -49,6 +49,9 @@ import java.lang.reflect.Field;
  * </pre>
  *
  * @see OctopusException
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 public class Mapper <S, T> {
 

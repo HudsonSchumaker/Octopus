@@ -38,6 +38,9 @@ import java.lang.annotation.Target;
  *
  * @see Pk
  * @see Column
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

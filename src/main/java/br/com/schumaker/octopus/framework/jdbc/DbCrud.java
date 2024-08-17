@@ -1,5 +1,6 @@
 package br.com.schumaker.octopus.framework.jdbc;
 
+import br.com.schumaker.octopus.framework.annotations.Table;
 import br.com.schumaker.octopus.framework.reflection.TableReflection;
 
 import java.lang.reflect.Field;
@@ -11,6 +12,33 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The DbCrud class provides generic CRUD (Create, Read, Update, Delete) operations for database entities.
+ * It uses reflection to dynamically map entity fields to database columns and vice versa.
+ * The class is parameterized with a primary key type K and an entity type T.
+ *
+ * <p>
+ * Example usage:
+ * </p>
+ *
+ * <pre>
+ * {@code
+ * DbCrud<Integer, User> userCrud = new DbCrud<>();
+ * User user = userCrud.findById(1);
+ * List<User> users = userCrud.findAll();
+ * Integer userId = userCrud.save(new User());
+ * }
+ * </pre>
+ *
+ * @param <K> the type of the primary key
+ * @param <T> the type of the entity
+ *
+ * @see Table
+ * @see DbConnection
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class DbCrud<K, T> {
     private final TableReflection tableReflection = TableReflection.getInstance();
     private final Class<K> pk;

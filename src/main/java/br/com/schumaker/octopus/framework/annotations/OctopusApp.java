@@ -37,6 +37,9 @@ import java.lang.annotation.Target;
  * @see Table
  * @see Service
  * @see Controller
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

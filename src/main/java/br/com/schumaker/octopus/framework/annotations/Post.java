@@ -40,6 +40,9 @@ import java.lang.annotation.Target;
  *
  * @see Controller
  * @see Payload
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

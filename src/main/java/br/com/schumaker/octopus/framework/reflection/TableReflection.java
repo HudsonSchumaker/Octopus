@@ -9,6 +9,14 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The TableReflection class provides utility methods for handling classes annotated with @Table.
+ * It retrieves table names, primary keys, and column names from the class and its fields.
+ * This class is a singleton and provides a global point of access to its instance.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class TableReflection {
 
     private static final TableReflection INSTANCE = new TableReflection();
@@ -19,6 +27,13 @@ public class TableReflection {
         return INSTANCE;
     }
 
+    /**
+     * Retrieves the table name of the specified class.
+     *
+     * @param clazz the class to inspect
+     * @return the table name
+     * @throws OctopusException if the \@Table annotation is not found
+     */
     public String getTableName(Class<?> clazz) {
         var tableAnnotation = clazz.getAnnotation(Table.class);
         if (tableAnnotation != null) {
@@ -32,6 +47,13 @@ public class TableReflection {
         throw new OctopusException("Table annotation not found.");
     }
 
+    /**
+     * Retrieves the primary key of the specified class.
+     *
+     * @param clazz the class to inspect
+     * @return the primary key
+     * @throws OctopusException if the primary key is not found
+     */
     public String getPrimaryKey(Class<?> clazz) {
         var fields = getFields(clazz);
         for (Field field : fields) {
@@ -48,6 +70,12 @@ public class TableReflection {
         throw new OctopusException("Primary key not found.");
     }
 
+    /**
+     * Retrieves the column names of the specified class.
+     *
+     * @param clazz the class to inspect
+     * @return a list of column names
+     */
     public List<String> getColumnNames(Class<?> clazz) {
         var fields = getFields(clazz);
 
@@ -66,10 +94,22 @@ public class TableReflection {
         return columnNames;
     }
 
+    /**
+     * Retrieves the fields of the specified class.
+     *
+     * @param clazz the class to inspect
+     * @return an array of fields
+     */
     public Field[] getFields(Class<?> clazz) {
         return clazz.getDeclaredFields();
     }
 
+    /**
+     * Retrieves the fields annotated with \@Column of the specified class.
+     *
+     * @param clazz the class to inspect
+     * @return a list of fields annotated with \@Column
+     */
     public List<Field> getColumnFields(Class<?> clazz) {
         var fields = getFields(clazz);
         List<Field> columnFields = new ArrayList<>();

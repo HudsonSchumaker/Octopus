@@ -45,6 +45,9 @@ import static br.com.schumaker.octopus.framework.ioc.AppProperties.DEFAULT_VALUE
  * }
  * }
  * </pre>
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
