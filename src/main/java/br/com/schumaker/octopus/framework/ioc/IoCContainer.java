@@ -5,7 +5,7 @@ import java.util.List;
 
 public class IoCContainer {
     private static final IoCContainer INSTANCE = new IoCContainer();
-    private ManagedExceptionHandler globalExceptionHandler;
+    private ManagedGlobalExceptionHandler globalExceptionHandler;
 
     private final List<ManagedClass<?>> managedClasses = new ArrayList<>();
     private final List<ManagedController> managedController = new ArrayList<>();
@@ -32,7 +32,7 @@ public class IoCContainer {
         return (ManagedConfiguration) configuration.orElse(null);
     }
 
-    public ManagedExceptionHandler getGlobalExceptionHandler() {
+    public ManagedGlobalExceptionHandler getGlobalExceptionHandler() {
         return globalExceptionHandler;
     }
 
@@ -54,7 +54,7 @@ public class IoCContainer {
 
     public void registerGlobalExceptionHandler(List<Class<?>> clazz) {
         if (!clazz.isEmpty() && clazz.getFirst() != null) {
-            this.globalExceptionHandler = ManagedExceptionHandler.builder(clazz.getFirst());
+            this.globalExceptionHandler = ManagedGlobalExceptionHandler.builder(clazz.getFirst());
         }
     }
 
