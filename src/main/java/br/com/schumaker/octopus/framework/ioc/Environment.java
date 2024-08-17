@@ -4,11 +4,10 @@ import br.com.schumaker.octopus.framework.io.PropertiesReader;
 
 import java.util.Properties;
 
+import static br.com.schumaker.octopus.framework.reflection.AppProperties.*;
+
 public class Environment {
-
-    public static final String SERVER_PORT = "server.port";
-    public static final String SERVER_CONTEXT = "server.context";
-
+    private static final String DEFAULT_VALUE_VALUE = "0";
     private static final String SERVER_PORT_DEFAULT = "8080";
     private static final String SERVER_CONTEXT_DEFAULT = "/";
     private static final Environment INSTANCE = new Environment();
@@ -16,6 +15,7 @@ public class Environment {
 
     private Environment() {
         properties = PropertiesReader.loadProperties();
+        properties.putIfAbsent(DEFAULT_VALUE_NAME, DEFAULT_VALUE_VALUE);
     }
 
     public static Environment getInstance() {

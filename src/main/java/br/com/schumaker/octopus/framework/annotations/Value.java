@@ -5,6 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static br.com.schumaker.octopus.framework.reflection.AppProperties.DEFAULT_VALUE_NAME;
+
 /**
  * The @Value annotation is used to inject a value into a field or parameter.
  * This annotation can be applied to fields and parameters to indicate that the
@@ -47,5 +49,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Value {
-    String value() default "";
+    String value() default DEFAULT_VALUE_NAME;
 }
