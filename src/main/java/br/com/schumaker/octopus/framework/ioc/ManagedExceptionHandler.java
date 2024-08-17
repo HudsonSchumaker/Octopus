@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class ManagedExceptionHandler {
     private final String fqn;
-    private final Map<Class<?>, Pair<Method, List<Parameter>>> methods;  // <VERB, List<Triple<mapping, method, List<parameters>>>>
+    private final Map<Class<?>, Pair<Method, List<Parameter>>> methods;
     private Object instance;
 
     private ManagedExceptionHandler(String fqn, Map<Class<?>, Pair<Method, List<Parameter>>> methods) {
