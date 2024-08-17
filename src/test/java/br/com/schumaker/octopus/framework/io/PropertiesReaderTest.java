@@ -11,7 +11,10 @@ public class PropertiesReaderTest {
 
     @Test
     public void testLoadProperties() {
+        // Arrange
         Properties properties = PropertiesReader.loadProperties();
+
+        // Act & Assert
         assertNotNull(properties);
         assertEquals("8080", properties.getProperty("server.port"));
         assertEquals("/", properties.getProperty("server.context"));

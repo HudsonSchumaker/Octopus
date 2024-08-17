@@ -8,23 +8,28 @@ class MapperTest {
 
     @Test
     void testMap() {
+        // Arrange
         Source source = new Source();
         source.setId(100L);
         source.setName("John Doe");
         source.setAge(30);
 
+        // Act
         Mapper<Source, Target> mapper = new Mapper<>();
         Target target = mapper.map(source, Target.class);
 
+        // Assert
         assertEquals(source.getName(), target.getName());
         assertEquals(source.getAge(), target.getAge());
     }
 
     @Test
     void testMapWithException() {
+        // Arrange
         Source source = new Source();
         Mapper<Source, Target> mapper = new Mapper<>();
 
+        // Act & Assert
         assertThrows(OctopusException.class, () -> {
             mapper.map(source, null);
         });
