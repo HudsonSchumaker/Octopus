@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.ioc;
+package br.com.schumaker.octopus.framework.ioc.managed;
 
 import br.com.schumaker.octopus.framework.reflection.ControllerReflection;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;

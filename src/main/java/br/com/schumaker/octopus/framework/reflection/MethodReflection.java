@@ -3,7 +3,7 @@ package br.com.schumaker.octopus.framework.reflection;
 import br.com.schumaker.octopus.framework.annotations.Bean;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.ioc.ManagedBean;
+import br.com.schumaker.octopus.framework.ioc.managed.ManagedBean;
 
 public class MethodReflection {
     private static final MethodReflection INSTANCE = new MethodReflection();

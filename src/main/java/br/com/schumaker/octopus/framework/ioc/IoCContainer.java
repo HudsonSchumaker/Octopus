@@ -1,5 +1,14 @@
 package br.com.schumaker.octopus.framework.ioc;
 
+import br.com.schumaker.octopus.framework.ioc.managed.ManagedBean;
+import br.com.schumaker.octopus.framework.ioc.managed.ManagedClass;
+import br.com.schumaker.octopus.framework.ioc.managed.ManagedComponent;
+import br.com.schumaker.octopus.framework.ioc.managed.ManagedConfiguration;
+import br.com.schumaker.octopus.framework.ioc.managed.ManagedController;
+import br.com.schumaker.octopus.framework.ioc.managed.ManagedGlobalExceptionHandler;
+import br.com.schumaker.octopus.framework.ioc.managed.ManagedRepository;
+import br.com.schumaker.octopus.framework.ioc.managed.ManagedService;
+
 import java.util.ArrayList;
 import java.util.List;
 
