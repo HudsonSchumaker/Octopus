@@ -81,7 +81,6 @@ public class Octopus {
         }
     }
 
-
     /**
      * Prints the application banner to the console.
      */
