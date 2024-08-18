@@ -70,6 +70,22 @@ public class TableReflection {
         throw new OctopusException("Primary key not found.");
     }
 
+    public Object getPrimaryKeyValue(Object entity) {
+        var fields = getFields(entity.getClass());
+        for (Field field : fields) {
+            var columnAnnotation = field.getAnnotation(Pk.class);
+            if (columnAnnotation != null) {
+                field.setAccessible(true);
+                try {
+                    return field.get(entity);
+                } catch (IllegalAccessException e) {
+                    throw new OctopusException(e.getMessage(), e);
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * Retrieves the column names of the specified class.
      *
