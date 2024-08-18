@@ -13,7 +13,5 @@ public class UseInjectedBeans {
     private ProductDTO productDTO;
 
     @Inject
-    public UseInjectedBeans(HttpRestTemplate httpRestTemplate, Mapper<ProductDTO, Product> mapper) {
-        System.out.println("InjectBean constructor");
-    }
+    public UseInjectedBeans(HttpRestTemplate httpRestTemplate, Mapper<ProductDTO, Product> mapper) {}
 }
