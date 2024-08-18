@@ -1,5 +1,6 @@
 package br.com.schumaker.octopus.framework.annotations.controller;
 
+import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
 import java.lang.annotation.ElementType;
@@ -42,4 +43,5 @@ import java.lang.annotation.Target;
 public @interface Patch {
     String value() default "/";
     String type() default "application/json";
+    int httpCode() default Http.HTTP_202;
 }
