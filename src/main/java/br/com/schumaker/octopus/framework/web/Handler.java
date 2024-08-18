@@ -251,7 +251,6 @@ public class Handler implements HttpHandler {
         }
     }
 
-
     /**
      * Processes the result of a controller method invocation and converts it to a string.
      *
