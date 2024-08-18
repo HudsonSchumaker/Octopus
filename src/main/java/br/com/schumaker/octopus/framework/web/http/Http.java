@@ -32,56 +32,56 @@ public class Http {
 
     // HTTP Status Codes
     // 1xx Informational
-    public static final Integer HTTP_100 = 100;
-    public static final Integer HTTP_101 = 101;
-    public static final Integer HTTP_102 = 102;
+    public static final int HTTP_100 = 100;
+    public static final int HTTP_101 = 101;
+    public static final int HTTP_102 = 102;
 
     // 2xx Success
-    public static final Integer HTTP_200 = 200;
-    public static final Integer HTTP_201 = 201;
-    public static final Integer HTTP_202 = 202;
-    public static final Integer HTTP_203 = 203;
-    public static final Integer HTTP_204 = 204;
+    public static final int HTTP_200 = 200;
+    public static final int HTTP_201 = 201;
+    public static final int HTTP_202 = 202;
+    public static final int HTTP_203 = 203;
+    public static final int HTTP_204 = 204;
 
     // 3xx Redirection
-    public static final Integer HTTP_300 = 300;
-    public static final Integer HTTP_301 = 301;
-    public static final Integer HTTP_302 = 302;
-    public static final Integer HTTP_303 = 303;
-    public static final Integer HTTP_304 = 304;
-    public static final Integer HTTP_305 = 305;
-    public static final Integer HTTP_306 = 306;
-    public static final Integer HTTP_307 = 307;
-    public static final Integer HTTP_308 = 308;
+    public static final int HTTP_300 = 300;
+    public static final int HTTP_301 = 301;
+    public static final int HTTP_302 = 302;
+    public static final int HTTP_303 = 303;
+    public static final int HTTP_304 = 304;
+    public static final int HTTP_305 = 305;
+    public static final int HTTP_306 = 306;
+    public static final int HTTP_307 = 307;
+    public static final int HTTP_308 = 308;
 
     // 4xx Client Error
-    public static final Integer HTTP_400 = 400;
-    public static final Integer HTTP_401 = 401;
-    public static final Integer HTTP_403 = 403;
-    public static final Integer HTTP_404 = 404;
-    public static final Integer HTTP_405 = 405;
-    public static final Integer HTTP_406 = 406;
-    public static final Integer HTTP_407 = 407;
-    public static final Integer HTTP_408 = 408;
-    public static final Integer HTTP_409 = 409;
-    public static final Integer HTTP_410 = 410;
-    public static final Integer HTTP_411 = 411;
-    public static final Integer HTTP_412 = 412;
-    public static final Integer HTTP_413 = 413;
-    public static final Integer HTTP_414 = 414;
-    public static final Integer HTTP_415 = 415;
-    public static final Integer HTTP_416 = 416;
-    public static final Integer HTTP_417 = 417;
-    public static final Integer HTTP_418 = 418;
-    public static final Integer HTTP_422 = 422;
+    public static final int HTTP_400 = 400;
+    public static final int HTTP_401 = 401;
+    public static final int HTTP_403 = 403;
+    public static final int HTTP_404 = 404;
+    public static final int HTTP_405 = 405;
+    public static final int HTTP_406 = 406;
+    public static final int HTTP_407 = 407;
+    public static final int HTTP_408 = 408;
+    public static final int HTTP_409 = 409;
+    public static final int HTTP_410 = 410;
+    public static final int HTTP_411 = 411;
+    public static final int HTTP_412 = 412;
+    public static final int HTTP_413 = 413;
+    public static final int HTTP_414 = 414;
+    public static final int HTTP_415 = 415;
+    public static final int HTTP_416 = 416;
+    public static final int HTTP_417 = 417;
+    public static final int HTTP_418 = 418;
+    public static final int HTTP_422 = 422;
 
     // 5xx Server Error
-    public static final Integer HTTP_500 = 500;
-    public static final Integer HTTP_501 = 501;
-    public static final Integer HTTP_502 = 502;
-    public static final Integer HTTP_503 = 503;
-    public static final Integer HTTP_504 = 504;
-    public static final Integer HTTP_505 = 505;
+    public static final int HTTP_500 = 500;
+    public static final int HTTP_501 = 501;
+    public static final int HTTP_502 = 502;
+    public static final int HTTP_503 = 503;
+    public static final int HTTP_504 = 504;
+    public static final int HTTP_505 = 505;
 
     // HTTP Status Messages
     // 1xx Informational
