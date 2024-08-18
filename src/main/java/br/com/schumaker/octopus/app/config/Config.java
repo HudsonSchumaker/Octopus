@@ -16,7 +16,6 @@ public class Config {
 
     @Bean
     public Mapper<ProductDTO, Product> mapper() {
-        System.out.println("Name: " + name);
         return new Mapper<ProductDTO, Product>();
     }
 
