@@ -26,7 +26,7 @@ public class WebServer {
      */
     public WebServer(Integer port, String context) throws Exception {
         server = HttpServer.create(new InetSocketAddress(port), 10);
-        server.createContext(context, new Handler());
+        server.createContext(context, new Listener());
         server.setExecutor(Executors.newFixedThreadPool(Machine.getNumberProcessors()));
     }
 
