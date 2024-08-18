@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.app;
+package br.com.schumaker.octopus.app.view;
 
 import br.com.schumaker.octopus.framework.annotations.validations.Max;
 import br.com.schumaker.octopus.framework.annotations.validations.NotBlank;

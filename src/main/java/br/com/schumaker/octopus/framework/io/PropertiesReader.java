@@ -8,7 +8,7 @@ import java.util.Properties;
 import static br.com.schumaker.octopus.framework.ioc.AppProperties.APPLICATION_PROPERTIES_FILE_NAME;
 
 /**
- * The \@PropertiesReader class is responsible for loading properties from a properties file.
+ * The PropertiesReader class is responsible for loading properties from a properties file.
  * It provides a method to load properties based on the specified environment.
  *
  * @see OctopusException

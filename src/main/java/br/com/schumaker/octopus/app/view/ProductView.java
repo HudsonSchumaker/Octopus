@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.app;
+package br.com.schumaker.octopus.app.view;
 
 import java.math.BigInteger;
 

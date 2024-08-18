@@ -61,7 +61,18 @@ public class ConstructorReflection {
                 return constructor.newInstance(args);
             }
 
-            throw new OctopusException("No constructor found with the given parameters.");
+            // handle missing beans for injection in constructor parameters.
+            var paramTypes = Arrays.stream(constructor.getParameters()).map(Parameter::getType).toList();
+            var argTypes = Arrays.stream(args).map(Object::getClass).toList();
+            var missingTypes = new ArrayList<Class<?>>();
+
+            for (var paramType : paramTypes) {
+                if (!argTypes.contains(paramType)) {
+                    missingTypes.add(paramType);
+                }
+            }
+
+            throw new OctopusException("Bean(s) missing for injection in constructor parameters: " + missingTypes);
         } catch (Exception e) {
             throw new OctopusException(e.getMessage());
         }

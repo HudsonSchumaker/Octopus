@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.app;
+package br.com.schumaker.octopus.app.view;
 
 import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.service.ProductService;
