@@ -39,6 +39,18 @@ public class ResponseView<T> {
     }
 
     /**
+     * Creates a new ResponseView instance with the specified data.
+     * The HTTP status code is set to 200 (OK) by default.
+     *
+     * @param data the response data
+     * @param <T> the type of the response data
+     * @return a new ResponseView instance
+     */
+    public static <T> ResponseView<T> of(T data) {
+        return new ResponseView<>(data);
+    }
+
+    /**
      * Creates a new ResponseView instance with the specified data and status.
      *
      * @param data the response data
