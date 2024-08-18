@@ -1,6 +1,7 @@
 package br.com.schumaker.octopus.framework.jdbc;
 
 import br.com.schumaker.octopus.framework.annotations.db.Table;
+import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.reflection.TableReflection;
 
 import java.lang.reflect.Field;
@@ -56,6 +57,7 @@ public class DbCrud<K, T> {
         var columnFields = tableReflection.getFields(clazz);
 
         String sql = "SELECT * FROM " + tableName + " WHERE " + primaryKey + " = ?";
+        System.out.println("SQL: " + sql);
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -80,7 +82,7 @@ public class DbCrud<K, T> {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage(), e);
         }
 
         return null;
@@ -119,7 +121,7 @@ public class DbCrud<K, T> {
 
             return results;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage(), e);
         }
     }
 
@@ -143,7 +145,7 @@ public class DbCrud<K, T> {
         placeholders.setLength(placeholders.length() - 2);
 
         sql.append(") VALUES (").append(placeholders).append(")");
-        System.out.println("SQL:" + sql);
+        System.out.println("SQL: " + sql);
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement =
@@ -163,7 +165,7 @@ public class DbCrud<K, T> {
                 }
             }
         } catch (Exception e) {
-           throw new RuntimeException(e);
+            throw new OctopusException(e.getMessage(), e);
         }
 
         return null;
@@ -171,5 +173,26 @@ public class DbCrud<K, T> {
 
     public void update(T entity) {}
 
-    public void delete(K id) {}
+    @SuppressWarnings("unchecked")
+    public void delete(T entity) {
+        var id = tableReflection.getPrimaryKeyValue(entity);
+        deleteById((K) id);
+    }
+
+    public void deleteById(K id) {
+        var primaryKey = tableReflection.getPrimaryKey(clazz);
+        var tableName = tableReflection.getTableName(clazz);
+
+        String sql = "DELETE FROM " + tableName + " WHERE " + primaryKey + " = ?";
+        System.out.println("SQL: " + sql);
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setObject(1, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new OctopusException(e.getMessage(), e);
+        }
+    }
 }
