@@ -43,29 +43,43 @@ public class Octopus {
     public static void run(Class<?> clazz, String[] args) throws Exception {
         handleCommandLineArgs(args);
         printBanner();
+        createManagedClasses(clazz);
 
+        ws.start();
+    }
+
+    private static void createManagedClasses(Class<?> clazz) throws Exception {
         OctopusApp app = clazz.getAnnotation(OctopusApp.class);
         var packageName = app.root();
 
+        int totalTasks = 6; // Total number of registration tasks
+        ProgressBar progressBar = new ProgressBar(totalTasks, 50);
+
         List<Class<?>> globalExceptionHandler = ClassScanner.getClassesWithAnnotation(packageName, GlobalExceptionHandler.class);
         container.registerGlobalExceptionHandler(globalExceptionHandler);
+        progressBar.update(1, "GlobalExceptionHandler");
 
         List<Class<?>> configurationClasses = ClassScanner.getClassesWithAnnotation(packageName, Configuration.class);
         container.registerConfiguration(configurationClasses);
+        progressBar.update(1, "Configuration");
 
         List<Class<?>> componentClasses = ClassScanner.getClassesWithAnnotation(packageName, Component.class);
         container.registerComponent(componentClasses);
+        progressBar.update(1, "Component");
 
         List<Class<?>> repositoryClasses = ClassScanner.getClassesWithAnnotation(packageName, Repository.class);
-       // container.registerRepository(repositoryClasses);
+        // container.registerRepository(repositoryClasses);
+        progressBar.update(1, "Repository");
 
         List<Class<?>> serviceClasses = ClassScanner.getClassesWithAnnotation(packageName, Service.class);
         container.registerService(serviceClasses);
+        progressBar.update(1, "Service");
 
         List<Class<?>> controllerClasses = ClassScanner.getClassesWithAnnotation(packageName, Controller.class);
         container.registerController(controllerClasses);
+        progressBar.update(1, "Controller");
 
-        ws.start();
+        progressBar.complete();
     }
 
     /**
