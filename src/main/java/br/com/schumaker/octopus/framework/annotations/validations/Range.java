@@ -1,0 +1,50 @@
+package br.com.schumaker.octopus.framework.annotations.validations;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import static br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection.RANGE_VALIDATION_MESSAGE;
+
+/**
+ * The @Range annotation is used to mark a field as a range value.
+ * This annotation can be applied to fields to indicate that the field should be
+ * validated as a range value.
+ *
+ * <p>
+ * Example usage:
+ * </p>
+ *
+ * <pre>
+ * {@code
+ * public class User {
+ *
+ *     @Range(min = 0, max = 100)
+ *     private int age;
+ *
+ *     // Getters and Setters
+ * }
+ * }
+ * </pre>
+ *
+ * @see Max
+ * @see Min
+ * @see Past
+ * @see NotEmpty
+ * @see Email
+ * @see NotNull
+ * @see NotBlank
+ * @see Validate
+ * @see br.com.schumaker.octopus.framework.annotations.Payload
+ *
+ * @author Hudson Schumaker
+ * @since 1.0.0
+ */
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Range {
+    double min() default Double.MIN_VALUE;
+    double max() default Double.MAX_VALUE;
+    String message() default RANGE_VALIDATION_MESSAGE;
+}

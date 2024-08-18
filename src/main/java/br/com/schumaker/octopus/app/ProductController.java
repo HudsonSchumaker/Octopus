@@ -3,6 +3,7 @@ package br.com.schumaker.octopus.app;
 import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.service.ProductService;
 import br.com.schumaker.octopus.framework.annotations.*;
+import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.model.Mapper;
 import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @Post
-    public ResponseView<ProductView> create(@Payload ProductDTO dto) {
+    public ResponseView<ProductView> create(@Payload @Validate ProductDTO dto) {
         Mapper<ProductDTO, Product> mapper = new Mapper<>();
         var product = mapper.map(dto, Product.class);
         var id = service.save(product);
