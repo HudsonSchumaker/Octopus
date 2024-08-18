@@ -1,10 +1,12 @@
 package br.com.schumaker.octopus.framework.web;
 
 import br.com.schumaker.octopus.framework.annotations.Payload;
+import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
 import br.com.schumaker.octopus.framework.reflection.Pair;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
+import br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection;
 import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +37,7 @@ import static br.com.schumaker.octopus.framework.web.http.Http.PUT;
 public class Handler implements HttpHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final IoCContainer container = IoCContainer.getInstance();
+    private final ValidationReflection validationReflection = ValidationReflection.getInstance();
 
     @Override
     public void handle(HttpExchange exchange) {
@@ -135,6 +138,9 @@ public class Handler implements HttpHandler {
                     var param = parameters[0].getType();
                     if (valueAnnotation != null) {
                         Object paramObject = objectMapper.readValue(requestBody, param);
+                        if (parameters[0].getAnnotation(Validate.class) != null) {
+                            validationReflection.validate(paramObject);
+                        }
                         result = method.invoke(controller.getInstance(), paramObject);
                     } else {
                         result = method.invoke(controller.getInstance(), ClassReflection.getInstance().instantiate(param));
@@ -142,7 +148,6 @@ public class Handler implements HttpHandler {
                 } else {
                     result = method.invoke(controller.getInstance());
                 }
-
                 response = this.processResponse(result, returnType);
             }
         }

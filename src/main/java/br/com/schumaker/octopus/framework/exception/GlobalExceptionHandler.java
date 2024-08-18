@@ -59,6 +59,11 @@ public class GlobalExceptionHandler {
                 return;
             }
         }
+
+        if (exception instanceof OctopusException) {
+            sendResponse(exchange, exception, ((OctopusException) exception).getStatusCode());
+            return;
+        }
         sendResponse(exchange, exception, 500);
     }
 
