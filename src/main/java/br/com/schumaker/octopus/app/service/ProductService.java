@@ -16,6 +16,10 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public Product getById(BigInteger id) {
+        return productRepository.findById(id);
+    }
+
     public List<Product> list() {
         return productRepository.findAll();
     }
@@ -24,4 +28,7 @@ public class ProductService {
        return productRepository.save(product);
     }
 
+    public void delete(Product product) {
+        productRepository.delete(product);
+    }
 }

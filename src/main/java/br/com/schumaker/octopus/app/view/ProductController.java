@@ -4,6 +4,7 @@ import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.service.ProductService;
 import br.com.schumaker.octopus.framework.annotations.bean.Value;
 import br.com.schumaker.octopus.framework.annotations.controller.Controller;
+import br.com.schumaker.octopus.framework.annotations.controller.Delete;
 import br.com.schumaker.octopus.framework.annotations.controller.Get;
 import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.annotations.controller.Payload;
@@ -15,6 +16,7 @@ import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 
 @Controller("/product")
@@ -26,18 +28,34 @@ public class ProductController {
     public ProductController(@Value("product.name") String name, ProductService service) {
         this.name = name;
         this.service = service;
-        System.out.println(name);
     }
 
     @Get
     public ResponseView<List<Product>> list() {
         var list = service.list();
-        return ResponseView.of(list, 200);
+        return ResponseView.of(list);
     }
 
     @Get("/{id}")
-    public ResponseView<String> getById(@PathVariable("id") int key) {
-        return ResponseView.of("Product " + key, 200);
+    public ResponseView<ProductView> getById(@PathVariable("id") int key) {
+        var product = service.getById(BigInteger.valueOf(key));
+        return ResponseView.of(new ProductView(
+                        product.getId(),
+                        product.getName(),
+                        product.getDescription(),
+                        product.getPrice()),
+                Http.HTTP_200);
+    }
+
+    @Get("/info/{id}/{name}")
+    public ResponseView<ProductView> getInfo(@PathVariable("id") int id, @PathVariable("name") String name) {
+        var product = service.getById(BigInteger.valueOf(id));
+        return ResponseView.of(new ProductView(
+                        product.getId(),
+                        product.getName(),
+                        product.getDescription(),
+                        product.getPrice()),
+                Http.HTTP_200);
     }
 
     @Put
@@ -57,6 +75,14 @@ public class ProductController {
                 dto.description(),
                 dto.price()),
                 Http.HTTP_201);
+    }
+
+    @Delete("/{id}")
+    public ResponseView<Void> delete(@PathVariable("id") int id) {
+        var product = service.getById(BigInteger.valueOf(id));
+        service.delete(product);
+
+        return ResponseView.of(null, Http.HTTP_204);
     }
 
     private String info() {

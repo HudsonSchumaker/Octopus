@@ -37,6 +37,7 @@ public class Product {
     public void setId(BigInteger id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
