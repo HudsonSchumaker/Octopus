@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.app;
+package br.com.schumaker.octopus.app.exception;
 
 import br.com.schumaker.octopus.framework.annotations.ExceptionHandler;
 import br.com.schumaker.octopus.framework.annotations.GlobalExceptionHandler;
