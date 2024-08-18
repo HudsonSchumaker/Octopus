@@ -71,7 +71,7 @@ public class ManagedController {
             return getDeleteMethod(mapping);
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_IMPLEMENTED);
+        throw new RuntimeException(Http.HTTP_501_NOT_IMPLEMENTED);
     }
 
     private Pair<Method, List<Parameter>> getGetMethod(String mapping) {
@@ -82,7 +82,7 @@ public class ManagedController {
             }
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+        throw new RuntimeException(Http.HTTP_404_NOT_FOUND);
     }
 
     private Pair<Method, List<Parameter>> getPostMethod(String mapping) {
@@ -93,7 +93,7 @@ public class ManagedController {
             }
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+        throw new RuntimeException(Http.HTTP_404_NOT_FOUND);
     }
 
     private Pair<Method, List<Parameter>> getPutMethod(String mapping) {
@@ -104,7 +104,7 @@ public class ManagedController {
             }
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+        throw new RuntimeException(Http.HTTP_404_NOT_FOUND);
     }
 
     private Pair<Method, List<Parameter>> getPatchMethod(String mapping) {
@@ -115,7 +115,7 @@ public class ManagedController {
             }
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+        throw new RuntimeException(Http.HTTP_404_NOT_FOUND);
     }
 
     private Pair<Method, List<Parameter>> getDeleteMethod(String mapping) {
@@ -126,7 +126,7 @@ public class ManagedController {
             }
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+        throw new RuntimeException(Http.HTTP_404_NOT_FOUND);
     }
 
     public String getFqn() {
