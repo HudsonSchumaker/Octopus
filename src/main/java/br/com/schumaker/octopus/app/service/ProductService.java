@@ -2,7 +2,7 @@ package br.com.schumaker.octopus.app.service;
 
 import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.model.db.ProductRepository;
-import br.com.schumaker.octopus.framework.annotations.Service;
+import br.com.schumaker.octopus.framework.annotations.bean.Service;
 
 import java.math.BigInteger;
 import java.util.List;

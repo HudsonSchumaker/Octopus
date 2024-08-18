@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.web;
 
-import br.com.schumaker.octopus.framework.annotations.Payload;
+import br.com.schumaker.octopus.framework.annotations.controller.Payload;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;

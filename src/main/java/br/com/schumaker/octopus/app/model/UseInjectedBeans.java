@@ -1,8 +1,8 @@
 package br.com.schumaker.octopus.app.model;
 
 import br.com.schumaker.octopus.app.view.ProductDTO;
-import br.com.schumaker.octopus.framework.annotations.Component;
-import br.com.schumaker.octopus.framework.annotations.Inject;
+import br.com.schumaker.octopus.framework.annotations.bean.Component;
+import br.com.schumaker.octopus.framework.annotations.bean.Inject;
 import br.com.schumaker.octopus.framework.model.Mapper;
 import br.com.schumaker.octopus.framework.web.http.HttpRestTemplate;
 

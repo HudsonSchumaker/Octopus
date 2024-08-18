@@ -2,7 +2,13 @@ package br.com.schumaker.octopus.app.view;
 
 import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.service.ProductService;
-import br.com.schumaker.octopus.framework.annotations.*;
+import br.com.schumaker.octopus.framework.annotations.bean.Value;
+import br.com.schumaker.octopus.framework.annotations.controller.Controller;
+import br.com.schumaker.octopus.framework.annotations.controller.Get;
+import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
+import br.com.schumaker.octopus.framework.annotations.controller.Payload;
+import br.com.schumaker.octopus.framework.annotations.controller.Post;
+import br.com.schumaker.octopus.framework.annotations.controller.Put;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.model.Mapper;
 import br.com.schumaker.octopus.framework.web.http.Http;
@@ -30,7 +36,7 @@ public class ProductController {
     }
 
     @Get("/{id}")
-    public ResponseView<String> getById(@UrlParam("id") int key) {
+    public ResponseView<String> getById(@PathVariable("id") int key) {
         return ResponseView.of("Product " + key, 200);
     }
 

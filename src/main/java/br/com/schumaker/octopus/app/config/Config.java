@@ -2,9 +2,9 @@ package br.com.schumaker.octopus.app.config;
 
 import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.view.ProductDTO;
-import br.com.schumaker.octopus.framework.annotations.Bean;
-import br.com.schumaker.octopus.framework.annotations.Configuration;
-import br.com.schumaker.octopus.framework.annotations.Value;
+import br.com.schumaker.octopus.framework.annotations.bean.Bean;
+import br.com.schumaker.octopus.framework.annotations.bean.Configuration;
+import br.com.schumaker.octopus.framework.annotations.bean.Value;
 import br.com.schumaker.octopus.framework.model.Mapper;
 import br.com.schumaker.octopus.framework.web.http.HttpRestTemplate;
 

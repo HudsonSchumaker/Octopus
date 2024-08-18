@@ -1,5 +1,12 @@
 package br.com.schumaker.octopus.framework.annotations;
 
+import br.com.schumaker.octopus.framework.annotations.bean.Component;
+import br.com.schumaker.octopus.framework.annotations.bean.Configuration;
+import br.com.schumaker.octopus.framework.annotations.bean.Service;
+import br.com.schumaker.octopus.framework.annotations.controller.Controller;
+import br.com.schumaker.octopus.framework.annotations.db.Repository;
+import br.com.schumaker.octopus.framework.annotations.db.Table;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.annotations;
+package br.com.schumaker.octopus.framework.annotations.db;
 
 import br.com.schumaker.octopus.framework.jdbc.DbCrud;
 

@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.annotations;
+package br.com.schumaker.octopus.framework.annotations.bean;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,7 +1,7 @@
 package br.com.schumaker.octopus.app.exception;
 
-import br.com.schumaker.octopus.framework.annotations.ExceptionHandler;
-import br.com.schumaker.octopus.framework.annotations.GlobalExceptionHandler;
+import br.com.schumaker.octopus.framework.annotations.exception.ExceptionHandler;
+import br.com.schumaker.octopus.framework.annotations.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.exception.ErrorView;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 

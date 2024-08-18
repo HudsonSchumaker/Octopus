@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.annotations;
+package br.com.schumaker.octopus.framework.annotations.controller;
 
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 

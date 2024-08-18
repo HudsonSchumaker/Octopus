@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.jdbc;
 
-import br.com.schumaker.octopus.framework.annotations.Table;
+import br.com.schumaker.octopus.framework.annotations.db.Table;
 import br.com.schumaker.octopus.framework.reflection.TableReflection;
 
 import java.lang.reflect.Field;

@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.Value;
+import br.com.schumaker.octopus.framework.annotations.bean.Value;
 import br.com.schumaker.octopus.framework.ioc.Environment;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import org.junit.jupiter.api.BeforeEach;

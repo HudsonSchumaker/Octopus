@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.annotations;
+package br.com.schumaker.octopus.framework.annotations.exception;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,14 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The @ExceptionHandler annotation is used to mark a method as an exception handler.
- * This annotation can be applied to methods to indicate that the method handles
- * a specific type of exception.
- *
- * <p>
- * The value attribute specifies the type of exception that the method handles.
- * By default, it handles the {@link Exception} class.
- * </p>
+ * The @GlobalExceptionHandler annotation is used to mark a class as a global exception handler.
+ * This annotation can be applied to classes to indicate that the class contains methods
+ * that handle exceptions globally within the application.
  *
  * <p>
  * Example usage:
@@ -32,13 +27,11 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  *
- * @see GlobalExceptionHandler
+ * @see ExceptionHandler
  *
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExceptionHandler {
-    Class<?> value() default Exception.class;
-}
+public @interface GlobalExceptionHandler {}
