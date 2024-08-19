@@ -1,4 +1,6 @@
-package br.com.schumaker.octopus.framework.annotations;
+package br.com.schumaker.octopus.framework.annotations.controller;
+
+import br.com.schumaker.octopus.framework.web.http.Http;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,12 +8,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The @Put annotation is used to map HTTP PUT requests onto specific handler methods.
+ * The @Get annotation is used to map HTTP GET requests onto specific handler methods.
  * This annotation can be applied to methods to indicate that the method should handle
- * HTTP PUT requests for the specified path.
+ * HTTP GET requests for the specified path.
  *
  * <p>
- * The value attribute specifies the path for the PUT request. If no value is provided,
+ * The value attribute specifies the path for the GET request. If no value is provided,
  * the default is "/".
  * </p>
  *
@@ -26,27 +28,30 @@ import java.lang.annotation.Target;
  *
  * <pre>
  * {@code
- * @Controller("/api")
+ * @Controller("/welcome")
  * public class MyController {
  *
- *     @Put(value = "/update", type = "application/json")
- *     public ResponseView<ProductView> updateData(@Payload Form form) {
- *         // Handle PUT request
- *         return ResponseView.of(new ProductView(), Http.HTTP_200);
+ *     @Get(value = "/hello", type = "text/plain")
+ *     public String sayHello() {
+ *         return "Hello, World!";
  *     }
  * }
  * }
  * </pre>
  *
+ * @see Post
+ * @see Put
+ * @see Patch
+ * @see Delete
  * @see Controller
- * @see Payload
  *
  * @author Hudson Schumaker
  * @version 1.0.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Put {
+public @interface Get {
     String value() default "/";
     String type() default "application/json";
+    int httpCode() default Http.HTTP_200;
 }

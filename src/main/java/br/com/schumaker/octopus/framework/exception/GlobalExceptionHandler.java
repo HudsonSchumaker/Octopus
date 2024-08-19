@@ -116,7 +116,7 @@ public class GlobalExceptionHandler {
     }
 
     private void sendResponse(HttpExchange exchange, Object response, int httpCode) {
-
+        //TODO: check this
     }
 
     /**

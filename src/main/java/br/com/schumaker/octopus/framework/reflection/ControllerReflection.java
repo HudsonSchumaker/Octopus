@@ -1,6 +1,11 @@
 package br.com.schumaker.octopus.framework.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.*;
+import br.com.schumaker.octopus.framework.annotations.controller.Controller;
+import br.com.schumaker.octopus.framework.annotations.controller.Delete;
+import br.com.schumaker.octopus.framework.annotations.controller.Get;
+import br.com.schumaker.octopus.framework.annotations.controller.Patch;
+import br.com.schumaker.octopus.framework.annotations.controller.Post;
+import br.com.schumaker.octopus.framework.annotations.controller.Put;
 import br.com.schumaker.octopus.framework.web.http.HttpVerb;
 
 import java.lang.annotation.Annotation;

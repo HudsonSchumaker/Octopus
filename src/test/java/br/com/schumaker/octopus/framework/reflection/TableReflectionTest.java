@@ -1,8 +1,8 @@
 package br.com.schumaker.octopus.framework.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.Column;
-import br.com.schumaker.octopus.framework.annotations.Pk;
-import br.com.schumaker.octopus.framework.annotations.Table;
+import br.com.schumaker.octopus.framework.annotations.db.Column;
+import br.com.schumaker.octopus.framework.annotations.db.Pk;
+import br.com.schumaker.octopus.framework.annotations.db.Table;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

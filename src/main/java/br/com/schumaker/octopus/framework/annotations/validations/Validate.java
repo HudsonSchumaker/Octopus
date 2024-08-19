@@ -1,5 +1,7 @@
 package br.com.schumaker.octopus.framework.annotations.validations;
 
+import br.com.schumaker.octopus.framework.annotations.controller.Payload;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -36,7 +38,7 @@ import java.lang.annotation.Target;
  * @see NotEmpty
  * @see NotNull
  * @see NotBlank
- * @see br.com.schumaker.octopus.framework.annotations.Payload
+ * @see Payload
  *
  * @author Hudson Schumaker
  * @since 1.0.0

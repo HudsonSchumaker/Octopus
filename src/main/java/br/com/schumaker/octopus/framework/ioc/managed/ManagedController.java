@@ -2,12 +2,13 @@ package br.com.schumaker.octopus.framework.ioc.managed;
 
 import br.com.schumaker.octopus.framework.reflection.ControllerReflection;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
-import br.com.schumaker.octopus.framework.reflection.Pair;
 import br.com.schumaker.octopus.framework.reflection.Triple;
 import br.com.schumaker.octopus.framework.web.http.Http;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -50,83 +51,80 @@ public class ManagedController {
         return managedController;
     }
 
-    public Pair<Method, List<Parameter>> getMethod(String mapping, String type) {
+    public Triple<String, Method, List<Parameter>> getMethod(String mapping, String type) {
         if (type.equalsIgnoreCase(Http.GET)) {
-            return getGetMethod(mapping);
+            return search(mapping, Http.GET);
         }
 
         if (type.equalsIgnoreCase(Http.POST)) {
-            return getPostMethod(mapping);
+            return search(mapping, Http.POST);
         }
 
         if (type.equalsIgnoreCase(Http.PUT)) {
-            return getPutMethod(mapping);
+            return search(mapping, Http.PUT);
         }
 
         if (type.equalsIgnoreCase(Http.PATCH)) {
-            return getPatchMethod(mapping);
+            return search(mapping, Http.PATCH);
         }
 
         if (type.equalsIgnoreCase(Http.DELETE)) {
-            return getDeleteMethod(mapping);
+            return search(mapping, Http.DELETE);
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_IMPLEMENTED);
+        throw new RuntimeException(Http.HTTP_501_NOT_IMPLEMENTED);
     }
 
-    private Pair<Method, List<Parameter>> getGetMethod(String mapping) {
-        var list = methods.get(Http.GET);
-        for (var triple : list) {
-            if (triple.first().equalsIgnoreCase(mapping)) {
-                return new Pair<>(triple.second(), triple.third());
+    private Triple<String, Method, List<Parameter>> search(String mapping, String type) {
+        var getMethods = methods.get(type);
+        for (var mappingAndMethodAndParams : getMethods) {
+            if (this.pathMatches(mappingAndMethodAndParams.first(), mapping)) {
+                return mappingAndMethodAndParams;
             }
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+        throw new RuntimeException(Http.HTTP_404_NOT_FOUND);
     }
 
-    private Pair<Method, List<Parameter>> getPostMethod(String mapping) {
-        var list = methods.get(Http.POST);
-        for (var triple : list) {
-            if (triple.first().equalsIgnoreCase(mapping)) {
-                return new Pair<>(triple.second(), triple.third());
+    private boolean pathMatches(String pattern, String path) {
+        var patternParts = splitAndFilter(pattern);
+        var pathParts = splitAndFilter(path);
+
+        if (patternParts.size() != pathParts.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < patternParts.size(); i++) {
+            if (!isPathVariable(patternParts.get(i)) && !patternParts.get(i).equals(pathParts.get(i))) {
+                return false;
             }
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+        return true;
     }
 
-    private Pair<Method, List<Parameter>> getPutMethod(String mapping) {
-        var list = methods.get(Http.PUT);
-        for (var triple : list) {
-            if (triple.first().equalsIgnoreCase(mapping)) {
-                return new Pair<>(triple.second(), triple.third());
+    public List<Object> extractPathVariables(String pattern, String path) {
+        var patternParts = splitAndFilter(pattern);
+        var pathParts = splitAndFilter(path);
+
+        List<Object> variables = new ArrayList<>();
+        for (int i = 0; i < patternParts.size(); i++) {
+            if (isPathVariable(patternParts.get(i))) {
+                variables.add(pathParts.get(i));
             }
         }
 
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+        return variables;
     }
 
-    private Pair<Method, List<Parameter>> getPatchMethod(String mapping) {
-        var list = methods.get(Http.PATCH);
-        for (var triple : list) {
-            if (triple.first().equalsIgnoreCase(mapping)) {
-                return new Pair<>(triple.second(), triple.third());
-            }
-        }
-
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+    private List<String> splitAndFilter(String input) {
+        return Arrays.stream(input.split("/"))
+                .filter(part -> !part.isEmpty())
+                .toList();
     }
 
-    private Pair<Method, List<Parameter>> getDeleteMethod(String mapping) {
-        var list = methods.get(Http.DELETE);
-        for (var triple : list) {
-            if (triple.first().equalsIgnoreCase(mapping)) {
-                return new Pair<>(triple.second(), triple.third());
-            }
-        }
-
-        throw new RuntimeException(Http.HTTP_NOT_FOUND);
+    private boolean isPathVariable(String part) {
+        return part.startsWith("{") && part.endsWith("}");
     }
 
     public String getFqn() {

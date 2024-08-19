@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.Inject;
+import br.com.schumaker.octopus.framework.annotations.bean.Inject;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 

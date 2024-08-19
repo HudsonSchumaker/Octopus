@@ -1,13 +1,15 @@
 package br.com.schumaker.octopus.framework.web;
 
-import br.com.schumaker.octopus.framework.annotations.Payload;
+import br.com.schumaker.octopus.framework.annotations.controller.Payload;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
 import br.com.schumaker.octopus.framework.reflection.Pair;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 import br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection;
+import br.com.schumaker.octopus.framework.web.handler.GetHandler;
 import br.com.schumaker.octopus.framework.web.http.Http;
+import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -34,19 +36,20 @@ import static br.com.schumaker.octopus.framework.web.http.Http.PUT;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class Handler implements HttpHandler {
+public class Listener implements HttpHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final IoCContainer container = IoCContainer.getInstance();
     private final ValidationReflection validationReflection = ValidationReflection.getInstance();
 
+    // TODO: improve the conditional
     @Override
     public void handle(HttpExchange exchange) {
         String method = exchange.getRequestMethod();
-        String fullUrl = getFullUrl(exchange).first();
+        String fullUrl = this.getFullUrl(exchange).first();
 
         try {
             if (method.equalsIgnoreCase(GET)) {
-                handleGetRequest(exchange, fullUrl);
+                handleGetRequest(fullUrl, exchange);
                 return;
             }
 
@@ -61,17 +64,16 @@ public class Handler implements HttpHandler {
             }
 
             if (method.equalsIgnoreCase(PATCH)) {
-                handlePutRequest(exchange, fullUrl);
+                // TODO: Implement PATCH
                 return;
             }
 
             if (method.equalsIgnoreCase(DELETE)) {
-                handlePutRequest(exchange, fullUrl);
+                // TODO: Implement DELETE
                 return;
             }
 
             handleUnsupportedMethod(exchange);
-
         } catch (Exception e) {
             handleException(exchange, e);
         }
@@ -80,33 +82,20 @@ public class Handler implements HttpHandler {
     /**
      * Handles a GET request and sends the response.
      *
+     * @param fullUrl  the full URL of the request
      * @param exchange the HttpExchange object containing the request and response
-     * @param fullUrl the full URL of the request
      * @throws Exception if an error occurs during request handling
      */
-    private void handleGetRequest(HttpExchange exchange, String fullUrl) throws Exception {
-        String response = "";
-        int httpCode = Http.HTTP_200;
-        String[] split = fullUrl.split("/");
-        String controllerRoute = split.length > 4 ? "/" + split[4] : "/";
-        String methodName = split.length > 5 ? split[5] : "/";
+    private void handleGetRequest(String fullUrl, HttpExchange exchange) throws Exception {
+        HttpRequest request = new HttpRequest(fullUrl, exchange);
 
-        var controller = container.getController(controllerRoute);
-        if (controller != null) {
-            var pair = controller.getMethod(methodName, GET);
-            var method = pair.first();
-            if (method != null) {
-                var returnType = method.getReturnType();
-                Object result = method.invoke(controller.getInstance());
+        // Process the request
+        // TODO: Singleton?
+        GetHandler handler = new GetHandler();
+        var response = handler.processRequest(request);
+        var body = this.processResponse(response.body(), response.typeResponseBody());
 
-                response = this.processResponse(result, returnType);
-            }
-        } else {
-            response = "Controller not found!";
-            httpCode = Http.HTTP_404;
-        }
-
-        sendResponse(exchange, httpCode, response);
+        this.sendResponse(exchange, response.httpCode(), body);
     }
 
     /**
@@ -127,8 +116,8 @@ public class Handler implements HttpHandler {
 
         var controller = container.getController(controllerRoute);
         if (controller != null) {
-            var pair = controller.getMethod(methodName, POST);
-            var method = pair.first();
+            var mappingAndMethodAndParams = controller.getMethod(methodName, POST);
+            var method = mappingAndMethodAndParams.second();
             if (method != null) {
                 var returnType = method.getReturnType();
                 var parameters = method.getParameters();
@@ -171,8 +160,9 @@ public class Handler implements HttpHandler {
 
         var controller = container.getController(controllerRoute);
         if (controller != null) {
-            var pair = controller.getMethod(methodName, PUT);
-            var method = pair.first();
+            var mappingAndMethodAndParams = controller.getMethod(methodName, PUT);
+
+            var method = mappingAndMethodAndParams.second();
             if (method != null) {
                 var returnType = method.getReturnType();
                 Object result = method.invoke(controller.getInstance());
@@ -251,7 +241,6 @@ public class Handler implements HttpHandler {
         }
     }
 
-
     /**
      * Processes the result of a controller method invocation and converts it to a string.
      *
@@ -262,6 +251,7 @@ public class Handler implements HttpHandler {
      */
     private String processResponse(Object result, Class<?> returnType) throws Exception {
         if (returnType.equals(String.class)) {
+            // TODO: Check if this is necessary more types
             return (String) result;
         } else if (returnType.equals(ResponseView.class)) {
             return objectMapper.writeValueAsString(((ResponseView<?>) result).getData());

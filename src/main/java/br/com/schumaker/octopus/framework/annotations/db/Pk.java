@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.annotations;
+package br.com.schumaker.octopus.framework.annotations.db;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,13 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The @Column annotation is used to specify the column name in a database
+ * The @Pk annotation is used to specify the primary key column in a database
  * that corresponds to the annotated field in an entity class.
  * This annotation can be applied to fields to indicate that the field
- * represents a column in the database.
+ * represents the primary key column in the database.
  *
  * <p>
- * The value attribute specifies the name of the column. If no value is provided,
+ * The value attribute specifies the name of the primary key column. If no value is provided,
  * the default is an empty string.
  * </p>
  *
@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * @Table("my_table")
  * public class MyEntity {
  *
- *     @Pk
+ *     @Pk("id_column")
  *     private Long id;
  *
  *     @Column("name_column")
@@ -37,12 +37,13 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * @see Table
+ * @see Column
  *
  * @author Hudson Schumaker
  * @version 1.0.0
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Column {
+public @interface Pk {
     String value() default "";
 }

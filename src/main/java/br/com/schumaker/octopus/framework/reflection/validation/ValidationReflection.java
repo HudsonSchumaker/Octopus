@@ -18,6 +18,23 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The ValidationReflection class provides utility methods for validating objects using reflection.
+ * It validates fields annotated with validation annotations such as @NotNull, @NotBlank, @NotEmpty, @Email, @Min, @Max, @Range, and @Past.
+ * This class is a singleton and provides a global point of access to its instance.
+ *
+ * @see NotNull
+ * @see NotBlank
+ * @see NotEmpty
+ * @see Email
+ * @see Min
+ * @see Max
+ * @see Range
+ * @see Past
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class ValidationReflection {
     private static final ValidationReflection INSTANCE = new ValidationReflection();
 
@@ -36,10 +53,18 @@ public class ValidationReflection {
         return INSTANCE;
     }
 
+    /**
+     * Validates the specified object using reflection.
+     * Fields annotated with validation annotations are validated according to their constraints.
+     *
+     * @param object the object to validate
+     * @throws OctopusException if a validation error occurs
+     */
     public void validate(Object object) {
         List<Field> fields = Arrays.asList(object.getClass().getDeclaredFields());
         fields.forEach(field -> {
 
+            // TODO: improve conditional statements
             if (field.isAnnotationPresent(NotNull.class)) {
                 validateNotNull(object, field);
             }
@@ -74,6 +99,7 @@ public class ValidationReflection {
         });
     }
 
+    //TODO: Document all methods
     private void validateNotNull(Object object, Field field) {
         try {
             field.setAccessible(true);
@@ -184,6 +210,12 @@ public class ValidationReflection {
         }
     }
 
+    /**
+     * Validates that the specified field is within the specified range.
+     *
+     * @param object the object to validate
+     * @param field the field to validate
+     */
     private void validateRange(Object object, Field field) {
         try {
             field.setAccessible(true);
@@ -205,6 +237,12 @@ public class ValidationReflection {
         }
     }
 
+    /**
+     * Validates that the specified field is in the past.
+     *
+     * @param object the object to validate
+     * @param field the field to validate
+     */
     private void validatePast(Object object, Field field) {
         try {
             field.setAccessible(true);

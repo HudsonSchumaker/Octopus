@@ -1,8 +1,8 @@
 package br.com.schumaker.octopus.framework.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.Column;
-import br.com.schumaker.octopus.framework.annotations.Pk;
-import br.com.schumaker.octopus.framework.annotations.Table;
+import br.com.schumaker.octopus.framework.annotations.db.Column;
+import br.com.schumaker.octopus.framework.annotations.db.Pk;
+import br.com.schumaker.octopus.framework.annotations.db.Table;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 
 import java.lang.reflect.Field;
@@ -18,7 +18,6 @@ import java.util.List;
  * @version 1.0.0
  */
 public class TableReflection {
-
     private static final TableReflection INSTANCE = new TableReflection();
 
     private TableReflection() {}
@@ -68,6 +67,28 @@ public class TableReflection {
             }
         }
         throw new OctopusException("Primary key not found.");
+    }
+
+    /**
+     * Retrieves the primary key value of the specified entity.
+     *
+     * @param entity the entity to inspect
+     * @return the primary key value
+     */
+    public Object getPrimaryKeyValue(Object entity) {
+        var fields = getFields(entity.getClass());
+        for (Field field : fields) {
+            var columnAnnotation = field.getAnnotation(Pk.class);
+            if (columnAnnotation != null) {
+                field.setAccessible(true);
+                try {
+                    return field.get(entity);
+                } catch (IllegalAccessException e) {
+                    throw new OctopusException(e.getMessage(), e);
+                }
+            }
+        }
+        return null;
     }
 
     /**

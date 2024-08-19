@@ -20,6 +20,8 @@ import java.sql.DriverManager;
 public class DbConnection {
     private static final Environment environment = Environment.getInstance();
 
+    // TODO: add support for other database types
+
     /**
      * Establishes and returns a connection to the database using the configured properties.
      *

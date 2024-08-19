@@ -25,6 +25,9 @@ public class Environment {
     private final Properties properties;
     private String environment = "";
 
+
+    //TODO: documentation
+
     private Environment() {
         properties = PropertiesReader.loadProperties(environment);
         properties.putIfAbsent(DEFAULT_VALUE_NAME, DEFAULT_VALUE_VALUE);

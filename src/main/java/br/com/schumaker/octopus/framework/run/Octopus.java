@@ -1,6 +1,12 @@
 package br.com.schumaker.octopus.framework.run;
 
 import br.com.schumaker.octopus.framework.annotations.*;
+import br.com.schumaker.octopus.framework.annotations.bean.Component;
+import br.com.schumaker.octopus.framework.annotations.bean.Configuration;
+import br.com.schumaker.octopus.framework.annotations.bean.Service;
+import br.com.schumaker.octopus.framework.annotations.controller.Controller;
+import br.com.schumaker.octopus.framework.annotations.db.Repository;
+import br.com.schumaker.octopus.framework.annotations.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.exception.ExceptionCodes;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.AppProperties;
