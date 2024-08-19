@@ -45,6 +45,8 @@ public class DbCrud<K, T> {
     private final Class<K> pk;
     private final Class<T> clazz;
 
+    // TODO: documentation
+
     @SuppressWarnings("unchecked")
     public DbCrud() {
         this.pk = (Class<K>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -171,6 +173,7 @@ public class DbCrud<K, T> {
         return null;
     }
 
+    // TODO: implement update method
     public void update(T entity) {}
 
     @SuppressWarnings("unchecked")

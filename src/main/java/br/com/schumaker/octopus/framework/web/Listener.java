@@ -41,6 +41,7 @@ public class Listener implements HttpHandler {
     private final IoCContainer container = IoCContainer.getInstance();
     private final ValidationReflection validationReflection = ValidationReflection.getInstance();
 
+    // TODO: improve the conditional
     @Override
     public void handle(HttpExchange exchange) {
         String method = exchange.getRequestMethod();

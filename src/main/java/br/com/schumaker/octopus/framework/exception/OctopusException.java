@@ -13,6 +13,8 @@ import br.com.schumaker.octopus.framework.web.http.Http;
  */
 public class OctopusException extends RuntimeException {
 
+    //TODO: improve and document this class
+
     private final int statusCode;
 
     public OctopusException(String message) {

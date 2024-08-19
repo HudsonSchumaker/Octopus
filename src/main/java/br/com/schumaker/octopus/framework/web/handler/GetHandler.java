@@ -11,7 +11,7 @@ import  java.util.Arrays;
 
 import static br.com.schumaker.octopus.framework.web.http.Http.GET;
 
-public class GetHandler implements Handler {
+public class GetHandler implements RequestHandler {
     private final IoCContainer container = IoCContainer.getInstance();
 
     @Override
@@ -79,14 +79,5 @@ public class GetHandler implements Handler {
 
         // Add more type conversions as needed
         return param;
-    }
-
-
-    public static class PostHandler implements Handler {
-
-        @Override
-        public HttpResponse processRequest(HttpRequest request) {
-            return null;
-        }
     }
 }

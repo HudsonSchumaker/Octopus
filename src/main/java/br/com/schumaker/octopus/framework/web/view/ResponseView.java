@@ -23,8 +23,8 @@ import br.com.schumaker.octopus.framework.web.http.Http;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
+// TODO: fluent Api for builder
 public class ResponseView<T> {
-
     private final T data;
     private final int status;
 

@@ -31,10 +31,11 @@ import java.util.List;
  */
 public class IoCContainer {
     private static final IoCContainer INSTANCE = new IoCContainer();
-    private ManagedGlobalExceptionHandler globalExceptionHandler;
-
     private final List<ManagedClass<?>> managedClasses = new ArrayList<>();
     private final List<ManagedController> managedController = new ArrayList<>();
+    private ManagedGlobalExceptionHandler globalExceptionHandler;
+
+    // TODO: documentation
 
     private IoCContainer() {}
 

@@ -18,7 +18,6 @@ import java.util.List;
  * @version 1.0.0
  */
 public class TableReflection {
-
     private static final TableReflection INSTANCE = new TableReflection();
 
     private TableReflection() {}
@@ -70,6 +69,12 @@ public class TableReflection {
         throw new OctopusException("Primary key not found.");
     }
 
+    /**
+     * Retrieves the primary key value of the specified entity.
+     *
+     * @param entity the entity to inspect
+     * @return the primary key value
+     */
     public Object getPrimaryKeyValue(Object entity) {
         var fields = getFields(entity.getClass());
         for (Field field : fields) {
