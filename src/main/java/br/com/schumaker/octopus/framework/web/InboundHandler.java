@@ -8,8 +8,10 @@ import br.com.schumaker.octopus.framework.reflection.Pair;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 import br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection;
 import br.com.schumaker.octopus.framework.web.handler.GetHandler;
+import br.com.schumaker.octopus.framework.web.handler.RequestHandler;
 import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
+import br.com.schumaker.octopus.framework.web.http.HttpResponse;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -21,6 +23,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import static br.com.schumaker.octopus.framework.web.http.Http.DELETE;
 import static br.com.schumaker.octopus.framework.web.http.Http.GET;
@@ -36,23 +40,40 @@ import static br.com.schumaker.octopus.framework.web.http.Http.PUT;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class Listener implements HttpHandler {
+final class InboundHandler implements HttpHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final IoCContainer container = IoCContainer.getInstance();
     private final ValidationReflection validationReflection = ValidationReflection.getInstance();
+    private final OutboundHandler outboundHandler = new OutboundHandler();
+
+    private final Map<String, RequestHandler> handlers = new HashMap<>();
+
+    public InboundHandler() {
+        handlers.put(GET, new GetHandler());
+    }
+
 
     // TODO: improve the conditional
     @Override
     public void handle(HttpExchange exchange) {
         String method = exchange.getRequestMethod();
         String fullUrl = this.getFullUrl(exchange).first();
+        HttpRequest request = new HttpRequest(fullUrl, exchange);
 
         try {
-            if (method.equalsIgnoreCase(GET)) {
-                handleGetRequest(fullUrl, exchange);
+            RequestHandler handler = handlers.get(method.toUpperCase());
+            if (handler != null) {
+                HttpResponse response = handler.processRequest(request);
+                outboundHandler.processResponse(response);
                 return;
+            } else {
+                this.handleUnsupportedMethod(exchange);
             }
+        } catch (Exception e) {
+            this.handleException(exchange, e);
+        }
 
+        try {
             if (method.equalsIgnoreCase(POST)) {
                 handlePostRequest(exchange, fullUrl);
                 return;
@@ -92,10 +113,8 @@ public class Listener implements HttpHandler {
         // Process the request
         // TODO: Singleton?
         GetHandler handler = new GetHandler();
-        var response = handler.processRequest(request);
-        var body = this.processResponse(response.body(), response.typeResponseBody());
-
-        this.sendResponse(exchange, response.httpCode(), body);
+        HttpResponse response = handler.processRequest(request);
+        outboundHandler.processResponse(response);
     }
 
     /**
@@ -137,11 +156,12 @@ public class Listener implements HttpHandler {
                 } else {
                     result = method.invoke(controller.getInstance());
                 }
-                response = this.processResponse(result, returnType);
+                HttpResponse httpResponse = new HttpResponse(returnType, result, httpCode, exchange);
+                outboundHandler.processResponse(httpResponse);
             }
         }
 
-        sendResponse(exchange, httpCode, response);
+        outboundHandler.sendResponse(exchange, httpCode, response);
     }
 
     /**
@@ -167,14 +187,14 @@ public class Listener implements HttpHandler {
                 var returnType = method.getReturnType();
                 Object result = method.invoke(controller.getInstance());
 
-                response = this.processResponse(result, returnType);
+               // response = outboundHandler.processResponse(result, returnType);
             }
         } else {
             response = "Controller not found!";
             httpCode = Http.HTTP_404;
         }
 
-        sendResponse(exchange, httpCode, response);
+        // outboundHandler.sendResponse(exchange, httpCode, response);
     }
 
     /**
@@ -185,7 +205,7 @@ public class Listener implements HttpHandler {
      */
     private void handleUnsupportedMethod(HttpExchange exchange) throws Exception {
         String response = "Method not supported";
-        sendResponse(exchange, Http.HTTP_405, response);
+        outboundHandler.sendResponse(exchange, Http.HTTP_405, response);
     }
 
     /**
@@ -223,41 +243,6 @@ public class Listener implements HttpHandler {
             }
         }
         return requestBody.toString();
-    }
-
-    /**
-     * Sends the response to the client.
-     *
-     * @param exchange the HttpExchange object containing the request and response
-     * @param httpCode the HTTP status code
-     * @param response the response body
-     * @throws Exception if an error occurs during response sending
-     */
-    private void sendResponse(HttpExchange exchange, int httpCode, String response) throws Exception {
-        exchange.getResponseHeaders().set("Content-Type", "application/json");
-        exchange.sendResponseHeaders(httpCode, response.getBytes().length);
-        try (OutputStream os = exchange.getResponseBody()) {
-            os.write(response.getBytes());
-        }
-    }
-
-    /**
-     * Processes the result of a controller method invocation and converts it to a string.
-     *
-     * @param result the result of the method invocation
-     * @param returnType the return type of the method
-     * @return the result as a string
-     * @throws Exception if an error occurs during result processing
-     */
-    private String processResponse(Object result, Class<?> returnType) throws Exception {
-        if (returnType.equals(String.class)) {
-            // TODO: Check if this is necessary more types
-            return (String) result;
-        } else if (returnType.equals(ResponseView.class)) {
-            return objectMapper.writeValueAsString(((ResponseView<?>) result).getBody());
-        } else {
-            return result.toString();
-        }
     }
 
     /**

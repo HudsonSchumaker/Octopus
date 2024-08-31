@@ -27,7 +27,7 @@ public class WebServer {
     public WebServer(Integer port, String context) throws Exception {
         // TODO: check the backlog parameter for the HttpServer.create method
         server = HttpServer.create(new InetSocketAddress(port), 10);
-        server.createContext(context, new Listener());
+        server.createContext(context, new InboundHandler());
         server.setExecutor(Executors.newFixedThreadPool(Machine.getNumberProcessors()));
     }
 
