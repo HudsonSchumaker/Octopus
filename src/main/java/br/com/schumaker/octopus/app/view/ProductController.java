@@ -33,29 +33,31 @@ public class ProductController {
     @Get
     public ResponseView<List<Product>> list() {
         var list = service.list();
-        return ResponseView.of(list);
+        return ResponseView.ok().body(list).build();
     }
 
     @Get("/{id}")
     public ResponseView<ProductView> getById(@PathVariable("id") int key) {
         var product = service.getById(BigInteger.valueOf(key));
-        return ResponseView.of(new ProductView(
+        return ResponseView.ok()
+                .body(new ProductView(
                         product.getId(),
                         product.getName(),
                         product.getDescription(),
-                        product.getPrice()),
-                Http.HTTP_200);
+                        product.getPrice()))
+                .build();
     }
 
     @Get("/info/{id}/{name}")
     public ResponseView<ProductView> getInfo(@PathVariable("id") int id, @PathVariable("name") String name) {
         var product = service.getById(BigInteger.valueOf(id));
-        return ResponseView.of(new ProductView(
+        return ResponseView.ok()
+                .body(new ProductView(
                         product.getId(),
                         product.getName(),
                         product.getDescription(),
-                        product.getPrice()),
-                Http.HTTP_200);
+                        product.getPrice()))
+                .build();
     }
 
     @Put
@@ -69,12 +71,13 @@ public class ProductController {
         var product = mapper.map(dto, Product.class);
         var id = service.save(product);
 
-        return ResponseView.of(new ProductView(
-                id,
-                dto.name(),
-                dto.description(),
-                dto.price()),
-                Http.HTTP_201);
+        return ResponseView.created()
+                .body(new ProductView(
+                    id,
+                    dto.name(),
+                    dto.description(),
+                    dto.price()))
+                .build();
     }
 
     @Delete("/{id}")
@@ -82,7 +85,7 @@ public class ProductController {
         var product = service.getById(BigInteger.valueOf(id));
         service.delete(product);
 
-        return ResponseView.of(null, Http.HTTP_204);
+        return ResponseView.noContent().build();
     }
 
     private String info() {

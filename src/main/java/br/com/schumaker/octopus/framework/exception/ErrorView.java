@@ -5,9 +5,7 @@ package br.com.schumaker.octopus.framework.exception;
  * It is used to encapsulate error details in a structured format.
  *
  * @param message the error message
- * @param code the error code
- *
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public record ErrorView(String message, Integer code) {}
+public record ErrorView(String message, String code) {}

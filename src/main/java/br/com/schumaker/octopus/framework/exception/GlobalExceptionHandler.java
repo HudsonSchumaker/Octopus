@@ -132,7 +132,7 @@ public class GlobalExceptionHandler {
             return new Pair<>((String) result, 500)  ;
         } else if (returnType.equals(ResponseView.class)) {
             var response = (ResponseView<?>) result;
-            return new Pair<>(objectMapper.writeValueAsString(response.getData()), response.getStatus());
+            return new Pair<>(objectMapper.writeValueAsString(response.getBody()), response.getHttpCode());
         } else {
             return new Pair<>(result.toString(), 500) ;
         }

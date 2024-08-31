@@ -254,7 +254,7 @@ public class Listener implements HttpHandler {
             // TODO: Check if this is necessary more types
             return (String) result;
         } else if (returnType.equals(ResponseView.class)) {
-            return objectMapper.writeValueAsString(((ResponseView<?>) result).getData());
+            return objectMapper.writeValueAsString(((ResponseView<?>) result).getBody());
         } else {
             return result.toString();
         }
