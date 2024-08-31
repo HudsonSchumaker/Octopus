@@ -24,27 +24,28 @@ public class ProductController {
 
     private final String name;
     private final ProductService service;
+    private final Product2ProductDTO mapper;
 
-    public ProductController(@Value("product.name") String name, ProductService service) {
+    public ProductController(@Value("product.name") String name, ProductService service, Product2ProductDTO mapper) {
         this.name = name;
         this.service = service;
+        this.mapper = mapper;
     }
 
     @Get
     public ResponseView<List<Product>> list() {
         var list = service.list();
-        return ResponseView.ok().body(list).build();
+        var listDTO = mapper.from(list);
+        return ResponseView.ok().body(listDTO).headers("info", name).build();
     }
 
     @Get("/{id}")
     public ResponseView<ProductView> getById(@PathVariable("id") int key) {
         var product = service.getById(BigInteger.valueOf(key));
+        var productView = mapper.from(product);
+
         return ResponseView.ok()
-                .body(new ProductView(
-                        product.getId(),
-                        product.getName(),
-                        product.getDescription(),
-                        product.getPrice()))
+                .body(productView)
                 .build();
     }
 
