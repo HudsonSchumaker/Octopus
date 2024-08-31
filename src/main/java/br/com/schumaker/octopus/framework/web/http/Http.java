@@ -7,7 +7,7 @@ package br.com.schumaker.octopus.framework.web.http;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class Http {
+public final class Http {
     // HTTP Methods
     public static final String GET = HttpVerb.GET.name();
     public static final String POST = HttpVerb.POST.name();
