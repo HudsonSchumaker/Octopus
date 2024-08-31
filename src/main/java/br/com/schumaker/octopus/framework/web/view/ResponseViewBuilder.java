@@ -59,6 +59,18 @@ public class ResponseViewBuilder<T> {
     }
 
     /**
+     * Adds a header to the response.
+     *
+     * @param key the header name
+     * @param value the header value
+     * @return this ResponseViewBuilder
+     */
+    public ResponseViewBuilder<T> headers(String key, String value) {
+        this.headers.put(key, value);
+        return this;
+    }
+
+    /**
      * Builds a new ResponseView object with the specified HTTP status code, response body,and headers.
      *
      * @return a new ResponseView object

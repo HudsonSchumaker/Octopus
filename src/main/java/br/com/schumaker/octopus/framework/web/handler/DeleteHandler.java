@@ -3,7 +3,7 @@ package br.com.schumaker.octopus.framework.web.handler;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.http.HttpResponse;
 
-public class DeleteHandler implements RequestHandler {
+public final class DeleteHandler implements RequestHandler {
 
     @Override
     public HttpResponse processRequest(HttpRequest request) {

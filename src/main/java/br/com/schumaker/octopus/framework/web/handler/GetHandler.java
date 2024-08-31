@@ -11,7 +11,7 @@ import  java.util.Arrays;
 
 import static br.com.schumaker.octopus.framework.web.http.Http.GET;
 
-public class GetHandler implements RequestHandler {
+public final class GetHandler implements RequestHandler {
     private final IoCContainer container = IoCContainer.getInstance();
 
     @Override
