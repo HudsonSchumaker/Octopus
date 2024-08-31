@@ -29,6 +29,7 @@ public class ResponseViewBuilder<T> {
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> ResponseView<T> build() {
         return new ResponseView<T>(httpCode, (T) body, headers);
     }
