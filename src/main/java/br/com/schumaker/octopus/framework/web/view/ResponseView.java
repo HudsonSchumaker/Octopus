@@ -2,71 +2,85 @@ package br.com.schumaker.octopus.framework.web.view;
 
 import br.com.schumaker.octopus.framework.web.http.Http;
 
-/**
- * The ResponseView class represents a standardized response structure for HTTP responses.
- * It encapsulates the response data and the HTTP status code.
- *
- * <p>
- * Example usage:
- * </p>
- *
- * <pre>
- * {@code
- * ResponseView<String> response = ResponseView.of("Success", Http.HTTP_200);
- * int status = response.getStatus();
- * String data = response.getData();
- * }
- * </pre>
- *
- * @param <T> the type of the response data
- *
- * @author Hudson Schumaker
- * @version 1.0.0
- */
-// TODO: fluent Api for builder
+import java.util.HashMap;
+import java.util.Map;
+
 public class ResponseView<T> {
-    private final T data;
-    private final int status;
+    private final T body;
+    private final int httpCode;
+    private final Map<String, String> headers;
 
-    private ResponseView(T data) {
-        this.data = data;
-        this.status = Http.HTTP_200;
+    public ResponseView() {
+        this(Http.HTTP_204, null, new HashMap<>());
     }
 
-    private ResponseView(T data, int status) {
-        this.data = data;
-        this.status = status;
+    public ResponseView(int httpCode) {
+        this(httpCode, (T) null);
     }
 
-    /**
-     * Creates a new ResponseView instance with the specified data.
-     * The HTTP status code is set to 200 (OK) by default.
-     *
-     * @param data the response data
-     * @param <T> the type of the response data
-     * @return a new ResponseView instance
-     */
-    public static <T> ResponseView<T> of(T data) {
-        return new ResponseView<>(data);
+    public ResponseView(int httpCode, T body) {
+        this(httpCode, null, new HashMap<>());
     }
 
-    /**
-     * Creates a new ResponseView instance with the specified data and status.
-     *
-     * @param data the response data
-     * @param status the HTTP status code
-     * @param <T> the type of the response data
-     * @return a new ResponseView instance
-     */
-    public static <T> ResponseView<T> of(T data, int status) {
-        return new ResponseView<>(data, status);
+    public ResponseView(int httpCode, Map<String, String> headers) {
+        this(httpCode, null, headers);
     }
 
-    public T getData() {
-        return data;
+    public ResponseView(int httpCode, T body, Map<String, String> headers) {
+        this.body = body;
+        this.headers = headers;
+        this.httpCode = httpCode;
     }
 
-    public int getStatus() {
-        return status;
+    public int getHttpCode() {
+        return this.httpCode;
+    }
+
+    public T getBody() {
+        return this.body;
+    }
+
+    public Map<String, String> getHeaders() {
+        return this.headers;
+    }
+
+    public static <T> ResponseViewBuilder<T> ok() {
+        return new ResponseViewBuilder<T>(Http.HTTP_200);
+    }
+
+    public static <T> ResponseViewBuilder<T> created() {
+        return new ResponseViewBuilder<T>(Http.HTTP_201);
+    }
+
+    public static <T> ResponseViewBuilder<T> accepted() {
+        return new ResponseViewBuilder<T>(Http.HTTP_202);
+    }
+
+    public static <T> ResponseViewBuilder<T> noContent() {
+        return new ResponseViewBuilder<T>(Http.HTTP_204);
+    }
+
+    public static <T> ResponseViewBuilder<T> badRequest() {
+        return new ResponseViewBuilder<T>(Http.HTTP_400);
+    }
+
+    public static <T> ResponseViewBuilder<T> unauthorized() {
+        return new ResponseViewBuilder<T>(Http.HTTP_401);
+    }
+
+    public static <T> ResponseViewBuilder<T> forbidden() {
+        return new ResponseViewBuilder<T>(Http.HTTP_403);
+    }
+
+    public static <T> ResponseViewBuilder<T> notFound() {
+        return new ResponseViewBuilder<T>(Http.HTTP_404);
+    }
+
+    public static <T> ResponseViewBuilder<T> conflict() {
+        return new ResponseViewBuilder<T>(Http.HTTP_409);
+    }
+
+    public static <T> ResponseViewBuilder<T> internalServerError() {
+        return new ResponseViewBuilder<T>(Http.HTTP_500);
     }
 }
