@@ -7,6 +7,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
+
 /**
  * The @Get annotation is used to map HTTP GET requests onto specific handler methods.
  * This annotation can be applied to methods to indicate that the method should handle
@@ -52,6 +54,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Get {
     String value() default "/";
-    String type() default "application/json";
+    String type() default APPLICATION_JSON;
     int httpCode() default Http.HTTP_200;
 }

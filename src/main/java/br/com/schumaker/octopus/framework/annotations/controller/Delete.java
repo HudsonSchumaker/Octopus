@@ -7,6 +7,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
+
 /**
  * The @Delete annotation is used to specify the HTTP DELETE method.
  * This annotation can be applied to methods to indicate that the method
@@ -48,6 +50,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Delete {
     String value() default "/";
-    String type() default "application/json";
+    String type() default APPLICATION_JSON;
     int httpCode() default Http.HTTP_204;
 }

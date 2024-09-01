@@ -8,6 +8,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
+
 /**
  * The @Patch annotation is used to mark a method to handle HTTP PATCH requests.
  * This annotation can be applied to methods in a controller class to indicate that the method
@@ -42,6 +44,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Patch {
     String value() default "/";
-    String type() default "application/json";
+    String type() default APPLICATION_JSON;
     int httpCode() default Http.HTTP_202;
 }
