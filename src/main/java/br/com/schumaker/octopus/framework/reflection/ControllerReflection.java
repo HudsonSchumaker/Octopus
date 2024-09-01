@@ -6,6 +6,7 @@ import br.com.schumaker.octopus.framework.annotations.controller.Get;
 import br.com.schumaker.octopus.framework.annotations.controller.Patch;
 import br.com.schumaker.octopus.framework.annotations.controller.Post;
 import br.com.schumaker.octopus.framework.annotations.controller.Put;
+import br.com.schumaker.octopus.framework.model.Triple;
 import br.com.schumaker.octopus.framework.web.http.HttpVerb;
 
 import java.lang.annotation.Annotation;
@@ -96,6 +97,8 @@ public class ControllerReflection {
      * @return the value of the route mapping annotation
      */
     private static String getAnnotationValue(Annotation routeMapping) {
+        // TODO: refactor this
+
         if (routeMapping instanceof Get) {
             return ((Get) routeMapping).value();
         }

@@ -1,7 +1,8 @@
 package br.com.schumaker.octopus.framework.exception;
 
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.reflection.Pair;
+import br.com.schumaker.octopus.framework.model.Pair;
+import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -64,7 +65,7 @@ public class GlobalExceptionHandler {
             sendResponse(exchange, exception, ((OctopusException) exception).getStatusCode());
             return;
         }
-        sendResponse(exchange, exception, 500);
+        sendResponse(exchange, exception, Http.HTTP_500);
     }
 
     /**
@@ -76,6 +77,7 @@ public class GlobalExceptionHandler {
      */
     private void sendResponse(HttpExchange exchange, String response, int httpCode) {
         try {
+            // TODO: get type from mapping annotation
             exchange.getResponseHeaders().set("Content-Type", "application/json");
             exchange.sendResponseHeaders(httpCode, response.getBytes().length);
             var os = exchange.getResponseBody();
@@ -98,12 +100,14 @@ public class GlobalExceptionHandler {
             var response = exception.getCause();
             if (response != null) {
                 var message = response.getMessage();
+                // TODO: get type from mapping annotation
                 exchange.getResponseHeaders().set("Content-Type", "application/json");
                 exchange.sendResponseHeaders(httpCode, message.getBytes().length);
                 var os = exchange.getResponseBody();
                 os.write(message.getBytes());
                 os.close();
             } else {
+                // TODO: get type from mapping annotation
                 exchange.getResponseHeaders().set("Content-Type", "application/json");
                 exchange.sendResponseHeaders(httpCode, exception.getMessage().getBytes().length);
                 var os = exchange.getResponseBody();

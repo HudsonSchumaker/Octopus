@@ -2,7 +2,7 @@ package br.com.schumaker.octopus.framework.ioc.managed;
 
 import br.com.schumaker.octopus.framework.reflection.ControllerReflection;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
-import br.com.schumaker.octopus.framework.reflection.Triple;
+import br.com.schumaker.octopus.framework.model.Triple;
 import br.com.schumaker.octopus.framework.web.http.Http;
 
 import java.lang.reflect.Method;
@@ -52,27 +52,9 @@ public class ManagedController {
     }
 
     public Triple<String, Method, List<Parameter>> getMethod(String mapping, String type) {
-        if (type.equalsIgnoreCase(Http.GET)) {
-            return search(mapping, Http.GET);
-        }
-
-        if (type.equalsIgnoreCase(Http.POST)) {
-            return search(mapping, Http.POST);
-        }
-
-        if (type.equalsIgnoreCase(Http.PUT)) {
-            return search(mapping, Http.PUT);
-        }
-
-        if (type.equalsIgnoreCase(Http.PATCH)) {
-            return search(mapping, Http.PATCH);
-        }
-
-        if (type.equalsIgnoreCase(Http.DELETE)) {
-            return search(mapping, Http.DELETE);
-        }
-
-        throw new RuntimeException(Http.HTTP_501_NOT_IMPLEMENTED);
+        return search(mapping, type.toUpperCase());
+        // TODO: add array of supported methods to the exception message
+        // throw new RuntimeException(Http.HTTP_501_NOT_IMPLEMENTED);
     }
 
     private Triple<String, Method, List<Parameter>> search(String mapping, String type) {

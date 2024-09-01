@@ -4,7 +4,7 @@ import br.com.schumaker.octopus.framework.annotations.controller.Payload;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
-import br.com.schumaker.octopus.framework.reflection.Pair;
+import br.com.schumaker.octopus.framework.model.Pair;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 import br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection;
 import br.com.schumaker.octopus.framework.web.handler.GetHandler;
@@ -12,7 +12,6 @@ import br.com.schumaker.octopus.framework.web.handler.RequestHandler;
 import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.http.HttpResponse;
-import br.com.schumaker.octopus.framework.web.view.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -20,7 +19,6 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -72,7 +70,7 @@ final class InboundHandler implements HttpHandler {
         } catch (Exception e) {
             this.handleException(exchange, e);
         }
-
+        // TOBE removed after refactor
         try {
             if (method.equalsIgnoreCase(POST)) {
                 handlePostRequest(exchange, fullUrl);
@@ -101,23 +99,6 @@ final class InboundHandler implements HttpHandler {
     }
 
     /**
-     * Handles a GET request and sends the response.
-     *
-     * @param fullUrl  the full URL of the request
-     * @param exchange the HttpExchange object containing the request and response
-     * @throws Exception if an error occurs during request handling
-     */
-    private void handleGetRequest(String fullUrl, HttpExchange exchange) throws Exception {
-        HttpRequest request = new HttpRequest(fullUrl, exchange);
-
-        // Process the request
-        // TODO: Singleton?
-        GetHandler handler = new GetHandler();
-        HttpResponse response = handler.processRequest(request);
-        outboundHandler.processResponse(response);
-    }
-
-    /**
      * Handles a POST request and sends the response.
      *
      * @param exchange the HttpExchange object containing the request and response
@@ -127,11 +108,12 @@ final class InboundHandler implements HttpHandler {
     private void handlePostRequest(HttpExchange exchange, String fullUrl) throws Exception {
         String response = "";
         int httpCode = Http.HTTP_201;
+        String applicationType = "application/json";
         String[] split = fullUrl.split("/");
         String controllerRoute = split.length > 4 ? "/" + split[4] : "/";
         String methodName = split.length > 5 ? split[5] : "/";
 
-        String requestBody = readRequestBody(exchange);
+        String requestBody = this.readRequestBody(exchange);
 
         var controller = container.getController(controllerRoute);
         if (controller != null) {
@@ -140,6 +122,7 @@ final class InboundHandler implements HttpHandler {
             if (method != null) {
                 var returnType = method.getReturnType();
                 var parameters = method.getParameters();
+                applicationType = method.getAnnotation(br.com.schumaker.octopus.framework.annotations.controller.Post.class).type();
                 Object result;
                 if (parameters.length == 1) {
                     var valueAnnotation = parameters[0].getAnnotation(Payload.class);
@@ -156,12 +139,12 @@ final class InboundHandler implements HttpHandler {
                 } else {
                     result = method.invoke(controller.getInstance());
                 }
-                HttpResponse httpResponse = new HttpResponse(returnType, result, httpCode, exchange);
+                HttpResponse httpResponse = new HttpResponse(returnType, result, httpCode, applicationType, exchange);
                 outboundHandler.processResponse(httpResponse);
             }
         }
 
-        outboundHandler.sendResponse(exchange, httpCode, response);
+        outboundHandler.sendResponse(exchange, httpCode, applicationType, response);
     }
 
     /**

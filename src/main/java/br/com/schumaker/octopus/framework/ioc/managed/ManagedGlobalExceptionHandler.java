@@ -2,7 +2,7 @@ package br.com.schumaker.octopus.framework.ioc.managed;
 
 import br.com.schumaker.octopus.framework.reflection.ClassReflection;
 import br.com.schumaker.octopus.framework.reflection.GlobalExceptionHandlerReflection;
-import br.com.schumaker.octopus.framework.reflection.Pair;
+import br.com.schumaker.octopus.framework.model.Pair;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
