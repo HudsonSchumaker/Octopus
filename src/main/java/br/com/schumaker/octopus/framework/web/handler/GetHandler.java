@@ -16,9 +16,12 @@ public final class GetHandler implements RequestHandler {
 
     @Override
     public HttpResponse processRequest(HttpRequest request) {
-        int httpCode = Http.HTTP_200;
         String fullUrl = request.fullUrl();
+        int httpCode = Http.HTTP_200;
+        String applicationType = "";
         String response = "";
+
+        var x = request.exchange().getRequestHeaders();
 
         // TODO: nightmare code, refactor this
         String[] split = fullUrl.split("/");
@@ -33,22 +36,23 @@ public final class GetHandler implements RequestHandler {
                 var mapping = mappingAndMethodAndParams.first();
                 var method = mappingAndMethodAndParams.second();
                 var methodReturnType = method.getReturnType();
-                // TODO: try to resolve this
-                httpCode = method.getAnnotation(br.com.schumaker.octopus.framework.annotations.controller.Get.class).httpCode();
-
                 var parameters = mappingAndMethodAndParams.third();
                 var args = new Object[parameters.size()];
                 var pathVariables = controller.extractPathVariables(mapping, methodPath);
 
-                for (int i = 0; i < parameters.size(); i++) {
+                for (short i = 0; i < parameters.size(); i++) {
                     if (parameters.get(i).isAnnotationPresent(PathVariable.class)) {
                         args[i] = this.convertToType(pathVariables.get(i), parameters.get(i).getType());
                     }
                 }
 
+                // TODO: try to resolve this
+                httpCode = method.getAnnotation(br.com.schumaker.octopus.framework.annotations.controller.Get.class).httpCode();
+                applicationType = method.getAnnotation(br.com.schumaker.octopus.framework.annotations.controller.Get.class).type();
+
                 try {
                     Object result = method.invoke(controller.getInstance(), args);
-                    return new HttpResponse(methodReturnType, result, httpCode, request.exchange());
+                    return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
                 } catch (Exception e) {
                     throw new OctopusException("Error invoking method", e);
                 }
@@ -61,8 +65,7 @@ public final class GetHandler implements RequestHandler {
             response = "Controller not found!";
         }
 
-        // Send the response
-       return new HttpResponse(String.class, response, httpCode, request.exchange());
+        return new HttpResponse(String.class, response, httpCode, applicationType, request.exchange());
     }
 
     private Object convertToType(Object param, Class<?> type) {

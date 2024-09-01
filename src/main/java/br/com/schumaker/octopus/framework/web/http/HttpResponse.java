@@ -11,4 +11,4 @@ import com.sun.net.httpserver.HttpExchange;
  * @author Hudson Schumaker
  * @since 1.0.0
  */
-public record HttpResponse(Class<?> typeResponseBody, Object body, int httpCode, HttpExchange exchange) {}
+public record HttpResponse(Class<?> typeResponseBody, Object body, int httpCode, String applicationType, HttpExchange exchange) {}
