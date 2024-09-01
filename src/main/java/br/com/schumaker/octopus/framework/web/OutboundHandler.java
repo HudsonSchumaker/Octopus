@@ -1,5 +1,6 @@
 package br.com.schumaker.octopus.framework.web;
 
+import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpResponse;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,6 +8,9 @@ import com.sun.net.httpserver.HttpExchange;
 
 import java.io.OutputStream;
 import java.util.Map;
+
+import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
+import static br.com.schumaker.octopus.framework.web.http.Http.CONTENT_TYPE;
 
 final class OutboundHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -22,21 +26,35 @@ final class OutboundHandler {
         var httpCode = response.httpCode();
         var exchange = response.exchange();
         var returnType = response.typeResponseBody();
+        var contentType = response.applicationType();
 
         // TODO: Check if this is necessary more types
         if (returnType.equals(String.class)) {
-            this.sendResponse(exchange, httpCode, (String) result);
+            this.sendResponse(exchange, httpCode, contentType, (String) result);
         } else if (returnType.equals(ResponseView.class)) {
-            processResponseHeaders(exchange, (ResponseView<?>) result);
+
+            // TODO: Check content type and transform the body to the correct type
+            
             var resultBody = objectMapper.writeValueAsString(((ResponseView<?>) result).getBody());
-            this.sendResponse(exchange, httpCode, resultBody);
+            this.processResponseHeaders(exchange, (ResponseView<?>) result);
+
+
+            this.sendResponse(exchange, httpCode,contentType, resultBody);
         } else {
-            this.sendResponse(exchange, httpCode, result.toString());
+            this.sendResponse(exchange, httpCode, contentType, result.toString());
         }
+    }
+
+    public void sendResponse(HttpExchange exchange) throws Exception {
+        this.sendResponse(exchange, Http.HTTP_418);
     }
 
     public void sendResponse(HttpExchange exchange, int httpCode) throws Exception {
         this.sendResponse(exchange, httpCode, "");
+    }
+
+    public void sendResponse(HttpExchange exchange, int httpCode, String response) throws Exception {
+        this.sendResponse(exchange, httpCode, APPLICATION_JSON, response);
     }
 
     /**
@@ -47,8 +65,9 @@ final class OutboundHandler {
      * @param response the response body
      * @throws Exception if an error occurs during response sending
      */
-    public void sendResponse(HttpExchange exchange, int httpCode, String response) throws Exception {
-        exchange.getResponseHeaders().set("Content-Type", "application/json");
+    public void sendResponse(HttpExchange exchange, int httpCode, String contentType, String response) throws Exception {
+        // TODO: get type from mapping annotation
+        exchange.getResponseHeaders().set(CONTENT_TYPE, contentType);
         exchange.sendResponseHeaders(httpCode, response.getBytes().length);
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(response.getBytes());
@@ -56,8 +75,12 @@ final class OutboundHandler {
     }
 
     public void sendResponse(HttpExchange exchange, int httpCode, String response, Map<String, String> headers) throws Exception {
+       this.sendResponse(exchange, httpCode, APPLICATION_JSON, response, headers);
+    }
+
+    public void sendResponse(HttpExchange exchange, int httpCode, String contentType, String response, Map<String, String> headers) throws Exception {
         headers.forEach((k, v) -> exchange.getResponseHeaders().set(k, v));
-        this.sendResponse(exchange, httpCode, response);
+        this.sendResponse(exchange, httpCode, contentType, response);
     }
 
     private void processResponseHeaders(HttpExchange exchange, ResponseView<?> responseView) {
