@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ResponseView<T> {
+public final class ResponseView<T> {
     private final T body;
     private final int httpCode;
     private final Map<String, String> headers;

@@ -19,7 +19,7 @@ import java.util.Map;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class HttpRestTemplate {
+public final class HttpRestTemplate {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
