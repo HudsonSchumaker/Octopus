@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.reflection;
+package br.com.schumaker.octopus.framework.model;
 
 /**
  * A generic record that holds a pair of values.
