@@ -67,7 +67,10 @@ final class OutboundHandler {
      */
     public void sendResponse(HttpExchange exchange, int httpCode, String contentType, String response) throws Exception {
         // TODO: get type from mapping annotation
-        exchange.getResponseHeaders().set(CONTENT_TYPE, contentType);
+        exchange.getResponseHeaders().add(CONTENT_TYPE, contentType);
+        // TODO: create a way to set the security
+        exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+
         exchange.sendResponseHeaders(httpCode, response.getBytes().length);
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(response.getBytes());
