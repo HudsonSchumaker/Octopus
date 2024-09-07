@@ -99,7 +99,12 @@ public class ValidationReflection {
         });
     }
 
-    //TODO: Document all methods
+    /**
+     * Validates that the specified field is not null.
+     *
+     * @param object the object to validate
+     * @param field the field to validate
+     */
     private void validateNotNull(Object object, Field field) {
         try {
             field.setAccessible(true);
@@ -116,6 +121,12 @@ public class ValidationReflection {
         }
     }
 
+    /**
+     * Validates that the specified field is not blank.
+     *
+     * @param object the object to validate
+     * @param field the field to validate
+     */
     private void validateNotBlank(Object object, Field field) {
         try {
             field.setAccessible(true);
@@ -134,6 +145,12 @@ public class ValidationReflection {
         }
     }
 
+    /**
+     * Validates that the specified field is not empty.
+     *
+     * @param object the object to validate
+     * @param field the field to validate
+     */
     private void validateNotEmpty(Object object, Field field) {
         try {
             field.setAccessible(true);
@@ -152,6 +169,12 @@ public class ValidationReflection {
         }
     }
 
+    /**
+     * Validates that the specified field is a valid email address.
+     *
+     * @param object the object to validate
+     * @param field the field to validate
+     */
     private void validateEmail(Object object, Field field) {
         try {
             field.setAccessible(true);
@@ -170,6 +193,12 @@ public class ValidationReflection {
         }
     }
 
+    /**
+     * Validates that the specified field is greater than or equal to the specified minimum value.
+     *
+     * @param object the object to validate
+     * @param field the field to validate
+     */
     public void validateMin(Object object, Field field) {
         try {
             field.setAccessible(true);
@@ -190,6 +219,12 @@ public class ValidationReflection {
         }
     }
 
+    /**
+     * Validates that the specified field is less than or equal to the specified maximum value.
+     *
+     * @param object the object to validate
+     * @param field the field to validate
+     */
     private void validateMax(Object object, Field field) {
         try {
             field.setAccessible(true);
