@@ -12,6 +12,9 @@ import java.util.Map;
 import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
 import static br.com.schumaker.octopus.framework.web.http.Http.CONTENT_TYPE;
 
+/**
+ * The OutboundHandler class.
+ */
 final class OutboundHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -45,14 +48,35 @@ final class OutboundHandler {
         }
     }
 
+    /**
+     * Sends the response to the client.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @throws Exception if an error occurs during response sending
+     */
     public void sendResponse(HttpExchange exchange) throws Exception {
         this.sendResponse(exchange, Http.HTTP_418);
     }
 
+    /**
+     * Sends the response to the client.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @param httpCode the HTTP status code
+     * @throws Exception if an error occurs during response sending
+     */
     public void sendResponse(HttpExchange exchange, int httpCode) throws Exception {
         this.sendResponse(exchange, httpCode, "");
     }
 
+    /**
+     * Sends the response to the client.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @param httpCode the HTTP status code
+     * @param response the response body
+     * @throws Exception if an error occurs during response sending
+     */
     public void sendResponse(HttpExchange exchange, int httpCode, String response) throws Exception {
         this.sendResponse(exchange, httpCode, APPLICATION_JSON, response);
     }
@@ -77,15 +101,39 @@ final class OutboundHandler {
         }
     }
 
+    /**
+     * Sends the response to the client.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @param httpCode the HTTP status code
+     * @param response the response body
+     * @param headers  the response headers
+     * @throws Exception if an error occurs during response sending
+     */
     public void sendResponse(HttpExchange exchange, int httpCode, String response, Map<String, String> headers) throws Exception {
        this.sendResponse(exchange, httpCode, APPLICATION_JSON, response, headers);
     }
 
+    /**
+     * Sends the response to the client.
+     *
+     * @param exchange the HttpExchange object containing the request and response
+     * @param httpCode the HTTP status code
+     * @param response the response body
+     * @param headers  the response headers
+     * @throws Exception if an error occurs during response sending
+     */
     public void sendResponse(HttpExchange exchange, int httpCode, String contentType, String response, Map<String, String> headers) throws Exception {
         headers.forEach((k, v) -> exchange.getResponseHeaders().set(k, v));
         this.sendResponse(exchange, httpCode, contentType, response);
     }
 
+    /**
+     * Processes the response headers.
+     *
+     * @param exchange     the HttpExchange object containing the request and response
+     * @param responseView the ResponseView object containing the response data
+     */
     private void processResponseHeaders(HttpExchange exchange, ResponseView<?> responseView) {
         responseView.getHeaders().forEach((k, v) -> {
             exchange.getResponseHeaders().set(k, v);
