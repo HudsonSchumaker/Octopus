@@ -9,13 +9,12 @@ import br.com.schumaker.octopus.framework.model.Mapper;
 import br.com.schumaker.octopus.framework.web.http.HttpRestTemplate;
 
 /**
- * The Config class.
+ * The Configuration class.
  * It is responsible for configuring the application.
  *
- * @see Mapper
- * @see ProductDTO
- * @see Product
- * @see HttpRestTemplate
+ * @see Bean
+ * @see Value
+ * @see Configuration
  *
  * @author Hudson Schumaker
  * @version 1.0.0

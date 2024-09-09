@@ -19,9 +19,6 @@ import br.com.schumaker.octopus.framework.model.ModelViewMapper;
  * </pre>
  *
  * @see ModelViewMapper
- * @see Product
- * @see ProductDTO
- * @see ProductView
  *
  * @author Hudson Schumaker
  * @version 1.0.0

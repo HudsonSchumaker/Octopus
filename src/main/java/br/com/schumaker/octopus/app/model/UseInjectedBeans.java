@@ -10,6 +10,9 @@ import br.com.schumaker.octopus.framework.web.http.HttpRestTemplate;
  * The UseInjectedBeans class.
  * It is responsible for using the injected beans.
  *
+ * @see Inject
+ * @see Component
+ *
  * @author Hudson Schumaker
  * @version 1.0.0
  */

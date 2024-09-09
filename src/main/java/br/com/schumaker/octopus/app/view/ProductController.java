@@ -23,6 +23,15 @@ import java.util.List;
  *  The ProductController class.
  *  It is responsible for controlling the product operations.
  *
+ * @see Controller
+ * @see Get
+ * @see Put
+ * @see Post
+ * @see Delete
+ * @see Payload
+ * @see Validate
+ * @see PathVariable
+ *
  * @author Hudson Schumaker
  * @version 1.0.0
  */

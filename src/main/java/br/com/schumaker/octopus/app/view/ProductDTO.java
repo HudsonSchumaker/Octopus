@@ -18,6 +18,10 @@ import br.com.schumaker.octopus.framework.annotations.validations.NotEmpty;
  * }
  * </pre>
  *
+ * @see Max
+ * @see NotEmpty
+ * @see NotBlank
+ *
  * @author Hudson Schumaker
  * @version 1.0.0
  */

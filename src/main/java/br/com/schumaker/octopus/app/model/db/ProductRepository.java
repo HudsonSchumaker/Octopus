@@ -10,10 +10,7 @@ import java.math.BigInteger;
  * The ProductRepository class.
  * It is responsible for controlling the product operations.
  *
- * @see Product
  * @see DbCrud
- * @see BigInteger
- * @see Product
  * @see Repository
  *
  * @author Hudson Schumaker
