@@ -11,6 +11,10 @@ import  java.util.Arrays;
 
 import static br.com.schumaker.octopus.framework.web.http.Http.GET;
 
+/**
+ * The GetHandler class.
+ * This class is responsible for processing GET requests. 
+ */
 public final class GetHandler implements RequestHandler {
     private final IoCContainer container = IoCContainer.getInstance();
 
