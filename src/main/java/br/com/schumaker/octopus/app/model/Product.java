@@ -6,6 +6,17 @@ import br.com.schumaker.octopus.framework.annotations.db.Table;
 
 import java.math.BigInteger;
 
+/**
+ * The Product class.
+ * It is responsible for controlling the product operations.
+ *
+ * @see Pk
+ * @see Table
+ * @see Column
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 @Table()
 public class Product {
 

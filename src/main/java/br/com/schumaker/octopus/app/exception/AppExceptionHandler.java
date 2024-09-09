@@ -7,6 +7,19 @@ import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
 import java.io.IOException;
 
+/**
+ * The AppExceptionHandler class.
+ * It is responsible for handling the application exceptions.
+ *
+ * @see ExceptionHandler
+ * @see GlobalExceptionHandler
+ * @see ErrorView
+ * @see IOException
+ * @see ResponseView
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 @GlobalExceptionHandler
 public class AppExceptionHandler {
 

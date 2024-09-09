@@ -19,6 +19,13 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 
+/**
+ *  The ProductController class.
+ *  It is responsible for controlling the product operations.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 @Controller("/product")
 public class ProductController {
 

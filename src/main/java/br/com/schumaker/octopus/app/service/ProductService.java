@@ -7,6 +7,17 @@ import br.com.schumaker.octopus.framework.annotations.bean.Service;
 import java.math.BigInteger;
 import java.util.List;
 
+/**
+ * The ProductService class.
+ * It is responsible for controlling the product operations.
+ *
+ * @see Product
+ * @see Service
+ * @see ProductRepository
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 @Service
 public class ProductService {
 
