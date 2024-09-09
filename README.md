@@ -1,5 +1,5 @@
 # Octopus
-Sure, here's a brief description for your project:
+A brief description for your project:
 
 ---
 
