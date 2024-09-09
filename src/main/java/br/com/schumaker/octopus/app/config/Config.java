@@ -22,14 +22,17 @@ import br.com.schumaker.octopus.framework.web.http.HttpRestTemplate;
 @Configuration
 public class Config {
 
+    // This is a value from the application.properties file
     @Value("product.name")
     private String name;
 
+    // This is a bean that will be injected into the application
     @Bean
     public Mapper<ProductDTO, Product> mapper() {
         return new Mapper<ProductDTO, Product>();
     }
 
+    // This is a bean that will be injected into the application
     @Bean
     public HttpRestTemplate httpRestTemplate() {
         return new HttpRestTemplate();

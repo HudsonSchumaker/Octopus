@@ -20,11 +20,13 @@ import java.io.IOException;
 @GlobalExceptionHandler
 public class AppExceptionHandler {
 
+    // This method will handle all exceptions
     @ExceptionHandler
     public ResponseView<String> methodHandlerException(Exception e) {
         return ResponseView.conflict().body(e.getMessage()).build();
     }
 
+    // This method will handle IOException
     @ExceptionHandler(IOException.class)
     public ResponseView<ErrorView> methodHandlerIOException(IOException e) {
         return ResponseView.badRequest().body(new ErrorView(e.getMessage(), "#8x0008")).build();
