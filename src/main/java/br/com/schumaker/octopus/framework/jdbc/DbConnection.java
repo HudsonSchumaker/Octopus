@@ -15,12 +15,10 @@ import java.sql.DriverManager;
  * @see Environment
  *
  * @author Hudson Schumaker
- * @version 1.0.0
+ * @version 1.1.0
  */
 public class DbConnection {
     private static final Environment environment = Environment.getInstance();
-
-    // TODO: add support for other database types
 
     /**
      * Establishes and returns a connection to the database using the configured properties.
@@ -30,7 +28,9 @@ public class DbConnection {
      */
     public static Connection getConnection() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            String dbType = environment.getKey(AppProperties.DB_TYPE);
+            RdbEnum rdbEnum = RdbEnum.valueOf(dbType.toUpperCase());
+            Class.forName(rdbEnum.getDriver());
             return DriverManager.getConnection(
                     environment.getKey(AppProperties.DB_URL),
                     environment.getKey(AppProperties.DB_USER),
