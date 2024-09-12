@@ -23,7 +23,7 @@ import java.util.Map;
 public class GlobalExceptionHandlerReflection {
 
     /**
-     * Retrieves the methods of the specified class that are annotated with \@ExceptionHandler.
+     * Retrieves the methods of the specified class that are annotated with @ExceptionHandler.
      *
      * @param clazz the class to inspect
      * @return a map of exception types to their corresponding handler methods and parameters

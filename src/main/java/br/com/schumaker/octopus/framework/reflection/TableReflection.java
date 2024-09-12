@@ -31,7 +31,7 @@ public class TableReflection {
      *
      * @param clazz the class to inspect
      * @return the table name
-     * @throws OctopusException if the \@Table annotation is not found
+     * @throws OctopusException if the @Table annotation is not found
      */
     public String getTableName(Class<?> clazz) {
         var tableAnnotation = clazz.getAnnotation(Table.class);
@@ -126,10 +126,10 @@ public class TableReflection {
     }
 
     /**
-     * Retrieves the fields annotated with \@Column of the specified class.
+     * Retrieves the fields annotated with @Column of the specified class.
      *
      * @param clazz the class to inspect
-     * @return a list of fields annotated with \@Column
+     * @return a list of fields annotated with @Column
      */
     public List<Field> getColumnFields(Class<?> clazz) {
         var fields = getFields(clazz);

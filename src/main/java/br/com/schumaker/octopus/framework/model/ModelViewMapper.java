@@ -57,7 +57,6 @@ public interface ModelViewMapper<S, T> {
         return targetList;
     }
 
-
     /**
      * This method converts a target object to a source object.
      *

@@ -53,6 +53,12 @@ public class DbCrud<K, T> {
         this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
+    /**
+     * Finds an entity by its primary key.
+     *
+     * @param id the primary key of the entity to find
+     * @return the entity with the given primary key, or null if not found
+     */
     public T findById(K id) {
         var primaryKey = tableReflection.getPrimaryKey(clazz);
         var tableName = tableReflection.getTableName(clazz);
@@ -90,6 +96,11 @@ public class DbCrud<K, T> {
         return null;
     }
 
+    /**
+     * Finds all entities of the type T in the database.
+     *
+     * @return a list of all entities of the type T
+     */
     public List<T> findAll() {
         var tableName = tableReflection.getTableName(clazz);
         var columnFields = tableReflection.getFields(clazz);
@@ -127,6 +138,12 @@ public class DbCrud<K, T> {
         }
     }
 
+    /**
+     * Saves an entity to the database.
+     *
+     * @param entity the entity to save
+     * @return the primary key of the saved entity
+     */
     @SuppressWarnings("unchecked")
     public K save(T entity) {
         Class<?> clazz = entity.getClass();
@@ -176,12 +193,22 @@ public class DbCrud<K, T> {
     // TODO: implement update method
     public void update(T entity) {}
 
+    /**
+     * Deletes an entity from the database.
+     *
+     * @param entity the entity to delete
+     */
     @SuppressWarnings("unchecked")
     public void delete(T entity) {
         var id = tableReflection.getPrimaryKeyValue(entity);
-        deleteById((K) id);
+        this.deleteById((K) id);
     }
 
+    /**
+     * Deletes an entity by its primary key.
+     *
+     * @param id the primary key of the entity to delete
+     */
     public void deleteById(K id) {
         var primaryKey = tableReflection.getPrimaryKey(clazz);
         var tableName = tableReflection.getTableName(clazz);

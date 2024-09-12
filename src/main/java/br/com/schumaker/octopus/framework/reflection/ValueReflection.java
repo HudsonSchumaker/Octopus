@@ -77,7 +77,7 @@ public class ValueReflection {
 
     /**
      * Injects the value of the specified parameter with the corresponding value from the environment.
-     * Parameters annotated with \@Value are set with the appropriate values.
+     * Parameters annotated with @Value are set with the appropriate values.
      *
      * @param parameter the parameter whose value is to be injected
      * @return the injected parameter value
