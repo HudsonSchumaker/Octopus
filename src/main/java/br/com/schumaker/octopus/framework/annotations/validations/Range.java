@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection.RANGE_VALIDATION_MESSAGE;
+import static br.com.schumaker.octopus.framework.reflection.validation.RangeValidation.RANGE_VALIDATION_MESSAGE;
 
 /**
  * The @Range annotation is used to mark a field as a range value.
@@ -20,9 +20,9 @@ import static br.com.schumaker.octopus.framework.reflection.validation.Validatio
  *
  * <pre>
  * {@code
- * public class User {
+ * public class Soldier {
  *
- *     @Range(min = 0, max = 100)
+ *     @Range(min = 18, max = 65)
  *     private int age;
  *
  *     // Getters and Setters
@@ -33,9 +33,10 @@ import static br.com.schumaker.octopus.framework.reflection.validation.Validatio
  * @see Max
  * @see Min
  * @see Past
- * @see NotEmpty
  * @see Email
+ * @see Future
  * @see NotNull
+ * @see NotEmpty
  * @see NotBlank
  * @see Validate
  * @see Payload
