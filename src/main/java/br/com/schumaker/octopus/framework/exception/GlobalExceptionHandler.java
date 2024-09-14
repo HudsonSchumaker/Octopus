@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     private GlobalExceptionHandler() {}
 
     /**
-     * Returns the singleton instance of the \@GlobalExceptionHandler class.
+     * Returns the singleton instance of the @GlobalExceptionHandler class.
      *
      * @return the singleton instance
      */

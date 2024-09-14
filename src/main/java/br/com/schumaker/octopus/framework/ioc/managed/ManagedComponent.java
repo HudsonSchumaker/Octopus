@@ -25,7 +25,7 @@ public class ManagedComponent implements ManagedClass<ManagedComponent> {
      * The instance is created using reflection.
      *
      * @param component the component class
-     * @return a new \@ManagedComponent instance
+     * @return a new @ManagedComponent instance
      */
     public static ManagedComponent builder(Class<?> component) {
         var fqn = component.getName();

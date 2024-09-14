@@ -25,36 +25,66 @@ public class Environment {
     private final Properties properties;
     private String environment = "";
 
-
-    //TODO: documentation
-
     private Environment() {
         properties = PropertiesReader.loadProperties(environment);
         properties.putIfAbsent(DEFAULT_VALUE_NAME, DEFAULT_VALUE_VALUE);
     }
 
+    /**
+     * Retrieves the singleton instance of the Environment class.
+     *
+     * @return the Environment instance
+     */
     public static Environment getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Sets the environment configuration using the specified environment name.
+     * The properties are loaded from the corresponding properties file.
+     *
+     * @param environment the environment name
+     */
     public void setEnvironment(String environment) {
         this.environment = environment;
         properties.clear();
         properties.putAll(PropertiesReader.loadProperties(environment));
     }
 
+    /**
+     * Retrieves the value of the specified key from the environment properties.
+     *
+     * @param key the key
+     * @return the value of the key
+     */
     public String getKey(String key) {
         return properties.getProperty(key);
     }
 
+    /**
+     * Sets the value of the specified key in the environment properties.
+     *
+     * @param key the key
+     * @param value the value
+     */
     public void setKey(String key, String value) {
         properties.putIfAbsent(key, value);
     }
 
+    /**
+     * Retrieves the server port from the environment properties.
+     *
+     * @return the server port
+     */
     public Integer getServerPort() {
         return Integer.parseInt(properties.getProperty(SERVER_PORT, SERVER_PORT_DEFAULT));
     }
 
+    /**
+     * Retrieves the server context from the environment properties.
+     *
+     * @return the server context
+     */
     public String getServerContext() {
         return properties.getProperty(SERVER_CONTEXT, SERVER_CONTEXT_DEFAULT);
     }

@@ -28,7 +28,7 @@ public class ValueReflection {
 
     /**
      * Injects the field values of the specified instance with the corresponding values from the environment.
-     * Fields annotated with \@Value are set with the appropriate values.
+     * Fields annotated with @Value are set with the appropriate values.
      *
      * @param instance the instance whose fields are to be injected
      * @return the instance with injected field values
