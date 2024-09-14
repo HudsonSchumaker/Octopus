@@ -18,7 +18,7 @@ import java.util.List;
  * If the input string does not match any of the supported formats, an IllegalArgumentException is thrown.
  *
  * @author Hudson Schumaker
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class DateParser {
     private static final List<DateTimeFormatter> DATE_FORMATTERS = Arrays.asList(
@@ -37,14 +37,11 @@ public class DateParser {
      * @throws IllegalArgumentException if the date string does not match any supported format
      */
     public static Instant parseToInstant(String dateStr) {
-        for (DateTimeFormatter formatter : DATE_FORMATTERS) {
-            try {
-                return Instant.parse(dateStr);
-            } catch (DateTimeParseException e) {
-                // Continue to the next formatter
-            }
+        try {
+            return Instant.parse(dateStr);
+        } catch (DateTimeParseException e) {
+            throw new OctopusException("Invalid date format: " + dateStr);
         }
-        throw new OctopusException("Invalid date format: " + dateStr);
     }
 
     /**
