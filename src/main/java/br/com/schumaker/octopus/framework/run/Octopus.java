@@ -24,7 +24,7 @@ import java.util.List;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class Octopus {
+public final class Octopus {
     private static final WebServer webServer;
     private static final IoCContainer container = IoCContainer.getInstance();
     private static final Environment environment = Environment.getInstance();

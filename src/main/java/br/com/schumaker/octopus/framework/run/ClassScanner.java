@@ -18,7 +18,7 @@ import java.util.jar.JarFile;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ClassScanner {
+public final class ClassScanner {
 
     /**
      * Retrieves the classes within the specified package that are annotated with the specified annotation.

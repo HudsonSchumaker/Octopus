@@ -14,7 +14,7 @@ import java.net.InetAddress;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class Machine {
+public final class Machine {
 
     /**
      * Returns the number of available processors.

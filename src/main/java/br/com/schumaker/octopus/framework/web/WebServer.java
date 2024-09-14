@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
  * @author  Hudson Schumaker
  * @version 1.0.0
  */
-public class WebServer {
+public final class WebServer {
     private final HttpServer server;
 
     /**

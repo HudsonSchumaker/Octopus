@@ -16,7 +16,7 @@ import java.lang.reflect.Parameter;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ValueReflection {
+public final class ValueReflection {
     private static final ValueReflection INSTANCE = new ValueReflection();
     private static final Environment environment = Environment.getInstance();
 

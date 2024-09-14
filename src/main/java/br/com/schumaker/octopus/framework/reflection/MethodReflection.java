@@ -13,7 +13,7 @@ import br.com.schumaker.octopus.framework.ioc.managed.ManagedBean;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class MethodReflection {
+public final class MethodReflection {
     private static final MethodReflection INSTANCE = new MethodReflection();
 
     private MethodReflection() {}

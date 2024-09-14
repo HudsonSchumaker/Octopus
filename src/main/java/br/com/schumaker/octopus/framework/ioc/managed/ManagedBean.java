@@ -10,7 +10,7 @@ package br.com.schumaker.octopus.framework.ioc.managed;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ManagedBean implements ManagedClass<ManagedBean> {
+public final class ManagedBean implements ManagedClass<ManagedBean> {
     private final String fqn;
     private final Object instance;
 

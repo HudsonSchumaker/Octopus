@@ -16,7 +16,7 @@ import static br.com.schumaker.octopus.framework.ioc.AppProperties.APPLICATION_P
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class PropertiesReader {
+public final class PropertiesReader {
 
     /**
      * Loads properties from a properties file based on the specified environment.

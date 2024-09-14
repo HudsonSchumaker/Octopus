@@ -17,7 +17,7 @@ import java.util.List;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class TableReflection {
+public final class TableReflection {
     private static final TableReflection INSTANCE = new TableReflection();
 
     private TableReflection() {}

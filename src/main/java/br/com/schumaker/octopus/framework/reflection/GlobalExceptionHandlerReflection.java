@@ -20,7 +20,7 @@ import java.util.Map;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class GlobalExceptionHandlerReflection {
+public final class GlobalExceptionHandlerReflection {
 
     /**
      * Retrieves the methods of the specified class that are annotated with @ExceptionHandler.

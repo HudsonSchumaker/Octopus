@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.run;
 
-public class ProgressBar {
+public final class ProgressBar {
     private final int total;
     private final int barLength;
     private int current;

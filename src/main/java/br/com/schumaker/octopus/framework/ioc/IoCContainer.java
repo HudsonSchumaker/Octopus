@@ -29,7 +29,7 @@ import java.util.List;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class IoCContainer {
+public final class IoCContainer {
     private static final IoCContainer INSTANCE = new IoCContainer();
     private final List<ManagedClass<?>> managedClasses = new ArrayList<>();
     private final List<ManagedController> managedController = new ArrayList<>();

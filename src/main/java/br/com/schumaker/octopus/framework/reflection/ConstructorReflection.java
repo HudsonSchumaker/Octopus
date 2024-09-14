@@ -17,7 +17,7 @@ import java.util.List;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ConstructorReflection {
+public final class ConstructorReflection {
     private static final ConstructorReflection INSTANCE = new ConstructorReflection();
     private static final IoCContainer ioCContainer = IoCContainer.getInstance();
 

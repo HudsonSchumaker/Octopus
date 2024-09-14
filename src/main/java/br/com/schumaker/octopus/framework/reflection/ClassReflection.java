@@ -21,7 +21,7 @@ import java.util.stream.Stream;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ClassReflection {
+public final class ClassReflection {
     private static final ClassReflection INSTANCE = new ClassReflection();
     private static final ConstructorReflection constructorReflection = ConstructorReflection.getInstance();
     private static final ValueReflection valueReflection = ValueReflection.getInstance();

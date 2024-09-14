@@ -12,7 +12,7 @@ import br.com.schumaker.octopus.framework.ioc.IoCContainer;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class InjectReflection {
+public final class InjectReflection {
     private static final InjectReflection INSTANCE = new InjectReflection();
 
     private InjectReflection() {}

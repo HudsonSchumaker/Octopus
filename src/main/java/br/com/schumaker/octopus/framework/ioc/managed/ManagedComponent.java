@@ -12,7 +12,7 @@ import br.com.schumaker.octopus.framework.reflection.ClassReflection;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ManagedComponent implements ManagedClass<ManagedComponent> {
+public final class ManagedComponent implements ManagedClass<ManagedComponent> {
     private final String fqn;
     private Object instance;
 

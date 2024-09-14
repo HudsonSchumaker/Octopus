@@ -35,7 +35,7 @@ import java.util.List;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ValidationReflection {
+public final class ValidationReflection {
     private static final ValidationReflection INSTANCE = new ValidationReflection();
 
     public static final String NOT_NULL_VALIDATION_MESSAGE = "Field %s cannot be null";

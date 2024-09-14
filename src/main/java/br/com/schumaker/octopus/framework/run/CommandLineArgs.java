@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class CommandLineArgs {
+public final class CommandLineArgs {
     public static final String ENV = "-env";
 
     private static final CommandLineArgs INSTANCE = new CommandLineArgs();

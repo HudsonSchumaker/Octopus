@@ -18,7 +18,7 @@ import java.util.function.Function;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class TypeConverter {
+public final class TypeConverter {
     public static final Map<Class<?>, Function<String, Object>> typeParsers = new HashMap<>();
 
     static {

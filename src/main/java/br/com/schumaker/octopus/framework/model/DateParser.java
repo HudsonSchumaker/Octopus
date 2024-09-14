@@ -20,7 +20,7 @@ import java.util.List;
  * @author Hudson Schumaker
  * @version 1.0.1
  */
-public class DateParser {
+public final class DateParser {
     private static final List<DateTimeFormatter> DATE_FORMATTERS = Arrays.asList(
             DateTimeFormatter.ISO_LOCAL_DATE,
             DateTimeFormatter.ISO_LOCAL_DATE_TIME,

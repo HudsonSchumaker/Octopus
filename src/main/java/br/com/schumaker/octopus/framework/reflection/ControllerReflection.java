@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ControllerReflection {
+public final class ControllerReflection {
 
     /**
      * Retrieves the route of the specified controller class.

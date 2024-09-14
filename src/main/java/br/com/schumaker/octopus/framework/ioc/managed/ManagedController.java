@@ -22,7 +22,7 @@ import java.util.Map;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ManagedController {
+public final class ManagedController {
     private final String fqn;
     private final String route;
     private final Map<String, List<Triple<String, Method, List<Parameter>>>> methods;  // <VERB, List<Triple<mapping, method, List<parameters>>>>

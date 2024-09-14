@@ -13,7 +13,7 @@ import br.com.schumaker.octopus.framework.reflection.MethodReflection;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class ManagedConfiguration implements ManagedClass<ManagedConfiguration> {
+public final class ManagedConfiguration implements ManagedClass<ManagedConfiguration> {
     private final String fqn;
     private Object instance;
 
