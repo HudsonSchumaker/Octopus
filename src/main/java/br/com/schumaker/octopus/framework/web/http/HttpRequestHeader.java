@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * This class represents a Http request header.
- * It is a record class.
+ * The key is the header name and the value is the header value.
  *
  * @see HttpRequest
  *

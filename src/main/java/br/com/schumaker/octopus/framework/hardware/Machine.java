@@ -17,7 +17,7 @@ import java.net.InetAddress;
 public final class Machine {
 
     /**
-     * Returns the number of available processors.
+     * Returns the number of available processors of the machine.
      *
      * @return the number of available processors
      */

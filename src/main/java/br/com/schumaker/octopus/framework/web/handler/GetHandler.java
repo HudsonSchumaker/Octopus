@@ -29,7 +29,7 @@ public final class GetHandler implements RequestHandler {
         String applicationType = "";
         String response = "";
 
-        var x = request.exchange().getRequestHeaders();
+        var requestHeaders = request.exchange().getRequestHeaders();
 
         // TODO: nightmare code, refactor this
         String[] split = fullUrl.split("/");
@@ -76,6 +76,13 @@ public final class GetHandler implements RequestHandler {
         return new HttpResponse(String.class, response, httpCode, applicationType, request.exchange());
     }
 
+    /**
+     * Converts the given parameter to the specified type.
+     *
+     * @param param the parameter to convert
+     * @param type the type to convert to
+     * @return the converted parameter
+     */
     private Object convertToType(Object param, Class<?> type) {
         var parser = TypeConverter.typeParsers.get(type);
         if (parser != null) {
