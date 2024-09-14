@@ -23,8 +23,8 @@ public class DbConnection {
     /**
      * Establishes and returns a connection to the database using the configured properties.
      *
-     * @return a Connection object to the database
-     * @throws RuntimeException if an error occurs while establishing the connection
+     * @return a Connection object to the database.
+     * @throws RuntimeException if an error occurs while establishing the connection.
      */
     public static Connection getConnection() {
         try {

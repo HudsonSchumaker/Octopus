@@ -24,8 +24,8 @@ public final class ManagedService implements ManagedClass<ManagedService> {
      * Creates a new ManagedService instance using the specified service class.
      * The instance is created using reflection.
      *
-     * @param service the service class
-     * @return a new ManagedService instance
+     * @param service the service class.
+     * @return a new ManagedService instance.
      */
     public static ManagedService builder(Class<?> service) {
         var fqn = service.getName();

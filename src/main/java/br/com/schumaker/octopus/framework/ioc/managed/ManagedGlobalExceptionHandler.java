@@ -32,8 +32,8 @@ public class ManagedGlobalExceptionHandler {
     /**
      * Creates a new ManagedGlobalExceptionHandler instance using the specified handler class.
      *
-     * @param handler the handler class
-     * @return a new ManagedGlobalExceptionHandler instance
+     * @param handler the handler class.
+     * @return a new ManagedGlobalExceptionHandler instance.
      */
     public static ManagedGlobalExceptionHandler builder(Class<?> handler) {
         var fqn = handler.getName();
@@ -48,8 +48,8 @@ public class ManagedGlobalExceptionHandler {
     /**
      * Retrieves the method and its parameters to handle the specified exception.
      *
-     * @param exception the exception class
-     * @return a pair containing the method and its parameters
+     * @param exception the exception class.
+     * @return a pair containing the method and its parameters.
      */
     public Pair<Method, List<Parameter>> geMethod(Class<?> exception) {
         return methods.get(exception);

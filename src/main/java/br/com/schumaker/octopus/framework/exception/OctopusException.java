@@ -18,7 +18,7 @@ public class OctopusException extends RuntimeException {
      * Constructs a new OctopusException with the specified detail message.
      * The status code is set to HTTP 500.
      *
-     * @param message the detail message
+     * @param message the detail message.
      */
     public OctopusException(String message) {
         super(message);
@@ -28,8 +28,8 @@ public class OctopusException extends RuntimeException {
     /**
      * Constructs a new OctopusException with the specified detail message and status code.
      *
-     * @param message the detail message
-     * @param statusCode the HTTP status code
+     * @param message the detail message.
+     * @param statusCode the HTTP status code.
      */
     public OctopusException(String message, int statusCode) {
         super(message);
@@ -40,8 +40,8 @@ public class OctopusException extends RuntimeException {
      * Constructs a new OctopusException with the specified detail message and cause.
      * The status code is set to HTTP 500.
      *
-     * @param message the detail message
-     * @param cause the cause of the exception
+     * @param message the detail message.
+     * @param cause the cause of the exception.
      */
     public OctopusException(String message, Throwable cause) {
         super(message, cause);
@@ -51,7 +51,7 @@ public class OctopusException extends RuntimeException {
     /**
      * Returns the HTTP status code associated with this exception.
      *
-     * @return the HTTP status code
+     * @return the HTTP status code.
      */
     public int getStatusCode() {
         return statusCode;

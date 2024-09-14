@@ -30,9 +30,9 @@ public final class ConstructorReflection {
     /**
      * Instantiates a class using the specified constructor and injects the required dependencies into the constructor parameters.
      *
-     * @param constructor the constructor to use for instantiation
-     * @return the instantiated object
-     * @throws OctopusException if an error occurs during instantiation
+     * @param constructor the constructor to use for instantiation.
+     * @return the instantiated object.
+     * @throws OctopusException if an error occurs during instantiation.
      */
     public Object instantiateWithInjectedBeans(Constructor<?> constructor) {
         List<Object> parameters = new ArrayList<>();
@@ -50,10 +50,10 @@ public final class ConstructorReflection {
     /**
      * Instantiates a class using the specified constructor and arguments.
      *
-     * @param constructor the constructor to use for instantiation
-     * @param args the arguments to pass to the constructor
-     * @return the instantiated object
-     * @throws OctopusException if an error occurs during instantiation
+     * @param constructor the constructor to use for instantiation.
+     * @param args the arguments to pass to the constructor.
+     * @return the instantiated object.
+     * @throws OctopusException if an error occurs during instantiation.
      */
     private Object instantiate(Constructor<?> constructor, Object... args) {
         try {
@@ -81,9 +81,9 @@ public final class ConstructorReflection {
     /**
      * Retrieves the parameters of a constructor.
      *
-     * @param constructor the constructor
-     * @return a list of parameters
-     * @throws OctopusException if an error occurs during retrieval
+     * @param constructor the constructor.
+     * @return a list of parameters.
+     * @throws OctopusException if an error occurs during retrieval.
      */
     private List<Parameter> getParameters(Constructor<?> constructor) {
         try {

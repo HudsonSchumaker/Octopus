@@ -42,9 +42,9 @@ public final class Octopus {
      * Runs the Octopus framework with the specified application class and command-line arguments.
      * It handles command-line arguments, prints the application banner, and registers various components, services, and controllers.
      *
-     * @param clazz the application class to run
-     * @param args the command-line arguments
-     * @throws Exception if an error occurs during the application startup
+     * @param clazz the application class to run.
+     * @param args the command-line arguments.
+     * @throws Exception if an error occurs during the application startup.
      */
     public static void run(Class<?> clazz, String[] args) throws Exception {
         handleCommandLineArgs(args);
@@ -54,6 +54,12 @@ public final class Octopus {
         webServer.start();
     }
 
+    /**
+     * Registers various components, services, and controllers with the IoC container.
+     *
+     * @param clazz the application class to run.
+     * @throws Exception if an error occurs during the registration of components, services, and controllers.
+     */
     private static void createManagedClasses(Class<?> clazz) throws Exception {
         OctopusApp app = clazz.getAnnotation(OctopusApp.class);
         var packageName = app.root();
@@ -92,7 +98,7 @@ public final class Octopus {
     /**
      * Handles the command-line arguments and sets the environment accordingly.
      *
-     * @param args the command-line arguments
+     * @param args the command-line arguments.
      */
     private static void handleCommandLineArgs(String[] args) {
         commandLineArgs.setArgs(args);

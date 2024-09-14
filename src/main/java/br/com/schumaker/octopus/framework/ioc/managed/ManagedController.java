@@ -37,8 +37,8 @@ public final class ManagedController {
     /**
      * Creates a new ManagedController instance using the specified controller class.
      *
-     * @param controller the controller class
-     * @return a new ManagedController instance
+     * @param controller the controller class.
+     * @return a new ManagedController instance.
      */
     public static ManagedController builder(Class<?> controller) {
         var fqn = controller.getName();

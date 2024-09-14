@@ -16,7 +16,7 @@ public enum ExceptionCodes {
     /**
      * Constructs an ExceptionCodes enum with the specified error code.
      *
-     * @param code the error code
+     * @param code the error code.
      */
     ExceptionCodes(int code) {
         this.code = code;
@@ -25,7 +25,7 @@ public enum ExceptionCodes {
     /**
      * Returns the error code associated with the enum constant.
      *
-     * @return the error code
+     * @return the error code.
      */
     public int getCode() {
         return code;

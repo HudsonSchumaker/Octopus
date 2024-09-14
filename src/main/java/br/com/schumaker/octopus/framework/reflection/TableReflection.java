@@ -29,9 +29,9 @@ public final class TableReflection {
     /**
      * Retrieves the table name of the specified class.
      *
-     * @param clazz the class to inspect
-     * @return the table name
-     * @throws OctopusException if the @Table annotation is not found
+     * @param clazz the class to inspect.
+     * @return the table name.
+     * @throws OctopusException if the @Table annotation is not found.
      */
     public String getTableName(Class<?> clazz) {
         var tableAnnotation = clazz.getAnnotation(Table.class);
@@ -49,9 +49,9 @@ public final class TableReflection {
     /**
      * Retrieves the primary key of the specified class.
      *
-     * @param clazz the class to inspect
-     * @return the primary key
-     * @throws OctopusException if the primary key is not found
+     * @param clazz the class to inspect.
+     * @return the primary key.
+     * @throws OctopusException if the primary key is not found.
      */
     public String getPrimaryKey(Class<?> clazz) {
         var fields = getFields(clazz);
@@ -72,8 +72,8 @@ public final class TableReflection {
     /**
      * Retrieves the primary key value of the specified entity.
      *
-     * @param entity the entity to inspect
-     * @return the primary key value
+     * @param entity the entity to inspect.
+     * @return the primary key value.
      */
     public Object getPrimaryKeyValue(Object entity) {
         var fields = getFields(entity.getClass());
@@ -94,8 +94,8 @@ public final class TableReflection {
     /**
      * Retrieves the column names of the specified class.
      *
-     * @param clazz the class to inspect
-     * @return a list of column names
+     * @param clazz the class to inspect.
+     * @return a list of column names.
      */
     public List<String> getColumnNames(Class<?> clazz) {
         var fields = getFields(clazz);
@@ -118,8 +118,8 @@ public final class TableReflection {
     /**
      * Retrieves the fields of the specified class.
      *
-     * @param clazz the class to inspect
-     * @return an array of fields
+     * @param clazz the class to inspect.
+     * @return an array of fields.
      */
     public Field[] getFields(Class<?> clazz) {
         return clazz.getDeclaredFields();
@@ -128,8 +128,8 @@ public final class TableReflection {
     /**
      * Retrieves the fields annotated with @Column of the specified class.
      *
-     * @param clazz the class to inspect
-     * @return a list of fields annotated with @Column
+     * @param clazz the class to inspect.
+     * @return a list of fields annotated with @Column.
      */
     public List<Field> getColumnFields(Class<?> clazz) {
         var fields = getFields(clazz);

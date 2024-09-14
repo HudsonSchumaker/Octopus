@@ -27,7 +27,7 @@ public final class CommandLineArgs {
      * Parses and stores the command-line arguments in a map.
      * Arguments should be in the format "-key=value".
      *
-     * @param args the command-line arguments to parse
+     * @param args the command-line arguments to parse.
      */
     public void setArgs(String[] args) {
         for (String arg : args) {
@@ -43,8 +43,8 @@ public final class CommandLineArgs {
     /**
      * Retrieves the value of the specified command-line argument.
      *
-     * @param key the key of the argument to retrieve
-     * @return the value of the specified argument, or null if not found
+     * @param key the key of the argument to retrieve.
+     * @return the value of the specified argument, or null if not found.
      */
     public String getArg(String key) {
         return argsMap.get(key);

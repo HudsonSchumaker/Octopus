@@ -15,6 +15,7 @@ public interface RequestHandler {
 
     /**
      * Process the HTTP request.
+     *
      * @param request the HTTP request to be processed.
      * @return the HTTP response.
      */

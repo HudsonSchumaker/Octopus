@@ -22,9 +22,9 @@ public final class PropertiesReader {
      * Loads properties from a properties file based on the specified environment.
      * If the environment is not specified or is blank, it loads the default properties file.
      *
-     * @param environment the environment name (e.g., "development", "production")
-     * @return the loaded properties
-     * @throws OctopusException if an error occurs while loading the properties
+     * @param environment the environment name (e.g., "development", "production").
+     * @return the loaded properties.
+     * @throws OctopusException if an error occurs while loading the properties.
      */
     public static Properties loadProperties(String environment) {
         Properties properties = new Properties();

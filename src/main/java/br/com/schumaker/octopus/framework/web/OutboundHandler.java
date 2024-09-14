@@ -21,8 +21,8 @@ final class OutboundHandler {
     /**
      * Processes the response and sends it to the client.
      *
-     * @param response the HttpResponse object containing the response data
-     * @throws Exception if an error occurs during response processing
+     * @param response the HttpResponse object containing the response data.
+     * @throws Exception if an error occurs during response processing.
      */
     public void processResponse(HttpResponse response) throws Exception {
         var result = response.body();
@@ -51,8 +51,8 @@ final class OutboundHandler {
     /**
      * Sends the response to the client.
      *
-     * @param exchange the HttpExchange object containing the request and response
-     * @throws Exception if an error occurs during response sending
+     * @param exchange the HttpExchange object containing the request and response.
+     * @throws Exception if an error occurs during response sending.
      */
     public void sendResponse(HttpExchange exchange) throws Exception {
         this.sendResponse(exchange, Http.HTTP_418);
@@ -61,9 +61,9 @@ final class OutboundHandler {
     /**
      * Sends the response to the client.
      *
-     * @param exchange the HttpExchange object containing the request and response
-     * @param httpCode the HTTP status code
-     * @throws Exception if an error occurs during response sending
+     * @param exchange the HttpExchange object containing the request and response.
+     * @param httpCode the HTTP status code.
+     * @throws Exception if an error occurs during response sending.
      */
     public void sendResponse(HttpExchange exchange, int httpCode) throws Exception {
         this.sendResponse(exchange, httpCode, "");
@@ -72,10 +72,10 @@ final class OutboundHandler {
     /**
      * Sends the response to the client.
      *
-     * @param exchange the HttpExchange object containing the request and response
-     * @param httpCode the HTTP status code
-     * @param response the response body
-     * @throws Exception if an error occurs during response sending
+     * @param exchange the HttpExchange object containing the request and response.
+     * @param httpCode the HTTP status code.
+     * @param response the response body.
+     * @throws Exception if an error occurs during response sending.
      */
     public void sendResponse(HttpExchange exchange, int httpCode, String response) throws Exception {
         this.sendResponse(exchange, httpCode, APPLICATION_JSON, response);
@@ -84,10 +84,10 @@ final class OutboundHandler {
     /**
      * Sends the response to the client.
      *
-     * @param exchange the HttpExchange object containing the request and response
-     * @param httpCode the HTTP status code
-     * @param response the response body
-     * @throws Exception if an error occurs during response sending
+     * @param exchange the HttpExchange object containing the request and response.
+     * @param httpCode the HTTP status code.
+     * @param response the response body.
+     * @throws Exception if an error occurs during response sending.
      */
     public void sendResponse(HttpExchange exchange, int httpCode, String contentType, String response) throws Exception {
         // TODO: get type from mapping annotation
@@ -104,11 +104,11 @@ final class OutboundHandler {
     /**
      * Sends the response to the client.
      *
-     * @param exchange the HttpExchange object containing the request and response
-     * @param httpCode the HTTP status code
-     * @param response the response body
-     * @param headers  the response headers
-     * @throws Exception if an error occurs during response sending
+     * @param exchange the HttpExchange object containing the request and response.
+     * @param httpCode the HTTP status code,
+     * @param response the response body.
+     * @param headers  the response headers.
+     * @throws Exception if an error occurs during response sending.
      */
     public void sendResponse(HttpExchange exchange, int httpCode, String response, Map<String, String> headers) throws Exception {
        this.sendResponse(exchange, httpCode, APPLICATION_JSON, response, headers);
@@ -117,11 +117,11 @@ final class OutboundHandler {
     /**
      * Sends the response to the client.
      *
-     * @param exchange the HttpExchange object containing the request and response
-     * @param httpCode the HTTP status code
-     * @param response the response body
-     * @param headers  the response headers
-     * @throws Exception if an error occurs during response sending
+     * @param exchange the HttpExchange object containing the request and response.
+     * @param httpCode the HTTP status code.
+     * @param response the response body.
+     * @param headers  the response headers.
+     * @throws Exception if an error occurs during response sending.
      */
     public void sendResponse(HttpExchange exchange, int httpCode, String contentType, String response, Map<String, String> headers) throws Exception {
         headers.forEach((k, v) -> exchange.getResponseHeaders().set(k, v));
@@ -131,8 +131,8 @@ final class OutboundHandler {
     /**
      * Processes the response headers.
      *
-     * @param exchange     the HttpExchange object containing the request and response
-     * @param responseView the ResponseView object containing the response data
+     * @param exchange the HttpExchange object containing the request and response.
+     * @param responseView the ResponseView object containing the response data.
      */
     private void processResponseHeaders(HttpExchange exchange, ResponseView<?> responseView) {
         responseView.getHeaders().forEach((k, v) -> {

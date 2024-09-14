@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     /**
      * Returns the singleton instance of the @GlobalExceptionHandler class.
      *
-     * @return the singleton instance
+     * @return the singleton instance.
      */
     public static GlobalExceptionHandler getInstance() {
         return INSTANCE;
@@ -38,8 +38,8 @@ public class GlobalExceptionHandler {
      * Handles the given exception by invoking the appropriate global exception handler method, if available.
      * Sends the response back to the client.
      *
-     * @param exchange the HttpExchange object
-     * @param exception the exception to handle
+     * @param exchange the HttpExchange object.
+     * @param exception the exception to handle.
      */
     public void handleException(HttpExchange exchange, Exception exception) {
         var handler = container.getGlobalExceptionHandler();
@@ -71,9 +71,9 @@ public class GlobalExceptionHandler {
     /**
      * Sends a response with the given string message and HTTP status code.
      *
-     * @param exchange the HttpExchange object
-     * @param response the response message
-     * @param httpCode the HTTP status code
+     * @param exchange the HttpExchange object.
+     * @param response the response message.
+     * @param httpCode the HTTP status code.
      */
     private void sendResponse(HttpExchange exchange, String response, int httpCode) {
         try {
@@ -90,9 +90,9 @@ public class GlobalExceptionHandler {
     /**
      * Sends a response with the exception message and HTTP status code.
      *
-     * @param exchange the HttpExchange object
-     * @param exception the exception to handle
-     * @param httpCode the HTTP status code
+     * @param exchange the HttpExchange object.
+     * @param exception the exception to handle.
+     * @param httpCode the HTTP status code.
      */
     private void sendResponse(HttpExchange exchange, Exception exception, int httpCode) {
         try {
@@ -123,10 +123,10 @@ public class GlobalExceptionHandler {
     /**
      * Processes the result returned by the global exception handler method and converts it to a string and HTTP status code.
      *
-     * @param result the result object
-     * @param returnType the return type of the handler method
-     * @return a pair containing the response string and HTTP status code
-     * @throws Exception if an error occurs during processing
+     * @param result the result object.
+     * @param returnType the return type of the handler method.
+     * @return a pair containing the response string and HTTP status code.
+     * @throws Exception if an error occurs during processing.
      */
     private Pair<String, Integer> processResult(Object result, Class<?> returnType) throws Exception {
         if (returnType.equals(String.class)) {

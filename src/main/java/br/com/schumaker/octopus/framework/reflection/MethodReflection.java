@@ -25,8 +25,8 @@ public final class MethodReflection {
     /**
      * Instantiates beans for methods annotated with @Bean in the specified instance and registers them with the IoC container.
      *
-     * @param instance the instance whose methods are to be processed
-     * @throws OctopusException if an error occurs during bean instantiation
+     * @param instance the instance whose methods are to be processed.
+     * @throws OctopusException if an error occurs during bean instantiation.
      */
     public void instantiateBean(Object instance) {
         try {

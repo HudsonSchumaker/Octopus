@@ -58,10 +58,10 @@ public class Mapper <S, T> {
     /**
      * Maps fields from the source object to the target object.
      *
-     * @param source the source object
-     * @param targetClass the class of the target object
-     * @return the target object with fields mapped from the source object
-     * @throws OctopusException if an error occurs during mapping
+     * @param source the source object.
+     * @param targetClass the class of the target object.
+     * @return the target object with fields mapped from the source object.
+     * @throws OctopusException if an error occurs during mapping.
      */
     public T map(S source, Class<T> targetClass) {
         try {

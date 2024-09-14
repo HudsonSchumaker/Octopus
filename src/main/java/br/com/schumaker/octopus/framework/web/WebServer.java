@@ -20,9 +20,9 @@ public final class WebServer {
      * Constructs a new WebServer instance with the specified port and context.
      * Initializes the HTTP server and sets up the request handler.
      *
-     * @param port the port number on which the server will listen
-     * @param context the context path for the server
-     * @throws Exception if an error occurs during server initialization
+     * @param port the port number on which the server will listen.
+     * @param context the context path for the server.
+     * @throws Exception if an error occurs during server initialization.
      */
     public WebServer(Integer port, String context) throws Exception {
         server = HttpServer.create(new InetSocketAddress(port), 512);

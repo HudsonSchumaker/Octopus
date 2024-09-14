@@ -25,8 +25,8 @@ public final class GlobalExceptionHandlerReflection {
     /**
      * Retrieves the methods of the specified class that are annotated with @ExceptionHandler.
      *
-     * @param clazz the class to inspect
-     * @return a map of exception types to their corresponding handler methods and parameters
+     * @param clazz the class to inspect.
+     * @return a map of exception types to their corresponding handler methods and parameters.
      */
     public static Map<Class<?>, Pair<Method, List<Parameter>>> getMethods(Class<?> clazz) {
         Map<Class<?>, Pair<Method, List<Parameter>>> methods = new HashMap<>();

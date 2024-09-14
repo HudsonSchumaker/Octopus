@@ -25,8 +25,8 @@ public final class ManagedConfiguration implements ManagedClass<ManagedConfigura
      * Creates a new ManagedConfiguration instance using the specified configuration class.
      * The instance is created using reflection.
      *
-     * @param configuration the configuration class
-     * @return a new ManagedConfiguration instance
+     * @param configuration the configuration class.
+     * @return a new ManagedConfiguration instance.
      */
     public static ManagedConfiguration builder(Class<?> configuration) {
         var fqn = configuration.getName();

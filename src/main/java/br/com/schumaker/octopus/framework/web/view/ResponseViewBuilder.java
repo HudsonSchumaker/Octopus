@@ -28,8 +28,8 @@ public final class ResponseViewBuilder<T> {
     /**
      * Sets the response body for the response.
      *
-     * @param body the response body
-     * @return this ResponseViewBuilder
+     * @param body the response body.
+     * @return this ResponseViewBuilder.
      */
     public ResponseViewBuilder<T> body(T body) {
         this.body = body;
@@ -39,8 +39,8 @@ public final class ResponseViewBuilder<T> {
     /**
      * Sets the HTTP status code for the response.
      *
-     * @param httpCode the HTTP status code
-     * @return this ResponseViewBuilder
+     * @param httpCode the HTTP status code.
+     * @return this ResponseViewBuilder.
      */
     public ResponseViewBuilder<T> httpCode(int httpCode) {
         this.httpCode = httpCode;
@@ -50,8 +50,8 @@ public final class ResponseViewBuilder<T> {
     /**
      * Sets the headers for the response.
      *
-     * @param headers a map of header names and values
-     * @return this ResponseViewBuilder
+     * @param headers a map of header names and values.
+     * @return this ResponseViewBuilder.
      */
     public ResponseViewBuilder<T> headers(Map<String, String> headers) {
         this.headers = headers;
@@ -61,9 +61,9 @@ public final class ResponseViewBuilder<T> {
     /**
      * Adds a header to the response.
      *
-     * @param key the header name
-     * @param value the header value
-     * @return this ResponseViewBuilder
+     * @param key the header name.
+     * @param value the header value.
+     * @return this ResponseViewBuilder.
      */
     public ResponseViewBuilder<T> headers(String key, String value) {
         this.headers.put(key, value);
@@ -73,7 +73,7 @@ public final class ResponseViewBuilder<T> {
     /**
      * Builds a new ResponseView object with the specified HTTP status code, response body,and headers.
      *
-     * @return a new ResponseView object
+     * @return a new ResponseView object.
      */
     @SuppressWarnings("unchecked")
     public <T> ResponseView<T> build() {

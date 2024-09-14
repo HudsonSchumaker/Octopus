@@ -33,7 +33,7 @@ public class Environment {
     /**
      * Retrieves the singleton instance of the Environment class.
      *
-     * @return the Environment instance
+     * @return the Environment instance.
      */
     public static Environment getInstance() {
         return INSTANCE;
@@ -43,7 +43,7 @@ public class Environment {
      * Sets the environment configuration using the specified environment name.
      * The properties are loaded from the corresponding properties file.
      *
-     * @param environment the environment name
+     * @param environment the environment name.
      */
     public void setEnvironment(String environment) {
         this.environment = environment;
@@ -54,8 +54,8 @@ public class Environment {
     /**
      * Retrieves the value of the specified key from the environment properties.
      *
-     * @param key the key
-     * @return the value of the key
+     * @param key the key.
+     * @return the value of the key.
      */
     public String getKey(String key) {
         return properties.getProperty(key);
@@ -64,8 +64,8 @@ public class Environment {
     /**
      * Sets the value of the specified key in the environment properties.
      *
-     * @param key the key
-     * @param value the value
+     * @param key the key.
+     * @param value the value.
      */
     public void setKey(String key, String value) {
         properties.putIfAbsent(key, value);
@@ -74,7 +74,7 @@ public class Environment {
     /**
      * Retrieves the server port from the environment properties.
      *
-     * @return the server port
+     * @return the server port.
      */
     public Integer getServerPort() {
         return Integer.parseInt(properties.getProperty(SERVER_PORT, SERVER_PORT_DEFAULT));
@@ -83,7 +83,7 @@ public class Environment {
     /**
      * Retrieves the server context from the environment properties.
      *
-     * @return the server context
+     * @return the server context.
      */
     public String getServerContext() {
         return properties.getProperty(SERVER_CONTEXT, SERVER_CONTEXT_DEFAULT);

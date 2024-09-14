@@ -24,8 +24,8 @@ public final class ManagedRepository implements ManagedClass<ManagedRepository> 
      * Creates a new ManagedRepository instance using the specified repository class.
      * The instance is created using reflection.
      *
-     * @param repository the repository class
-     * @return a new ManagedRepository instance
+     * @param repository the repository class.
+     * @return a new ManagedRepository instance.
      */
     public static ManagedRepository builder(Class<?> repository) {
         var fqn = repository.getName();

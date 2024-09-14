@@ -19,7 +19,7 @@ public final class Machine {
     /**
      * Returns the number of available processors of the machine.
      *
-     * @return the number of available processors
+     * @return the number of available processors.
      */
     public static int getNumberProcessors() {
         return Runtime.getRuntime().availableProcessors();
@@ -28,8 +28,8 @@ public final class Machine {
     /**
      * Returns the host name of the machine.
      *
-     * @return the host name of the machine
-     * @throws OctopusException if an error occurs while retrieving the host name
+     * @return the host name of the machine.
+     * @throws OctopusException if an error occurs while retrieving the host name.
      */
     public static String getHostName() {
         try {
@@ -42,8 +42,8 @@ public final class Machine {
     /**
      * Returns the IP address of the machine.
      *
-     * @return the IP address of the machine
-     * @throws OctopusException if an error occurs while retrieving the IP address
+     * @return the IP address of the machine.
+     * @throws OctopusException if an error occurs while retrieving the IP address.
      */
     public static String getIp() {
         try {
@@ -56,7 +56,7 @@ public final class Machine {
     /**
      * Returns the installation directory of the application.
      *
-     * @return the installation directory of the application
+     * @return the installation directory of the application.
      */
     public static String getInstallDir() {
         return System.getProperty("user.dir");
@@ -65,7 +65,7 @@ public final class Machine {
     /**
      * Returns the name of the operating system.
      *
-     * @return the name of the operating system
+     * @return the name of the operating system.
      */
     public static String getOsName() {
         return System.getProperty("os.name");
@@ -74,7 +74,7 @@ public final class Machine {
     /**
      * Returns the version of the operating system.
      *
-     * @return the version of the operating system
+     * @return the version of the operating system.
      */
     public static String getOsVersion() {
         return System.getProperty("os.version");
@@ -83,7 +83,7 @@ public final class Machine {
     /**
      * Returns the architecture of the operating system.
      *
-     * @return the architecture of the operating system
+     * @return the architecture of the operating system.
      */
     public static String getOsArch() {
         return System.getProperty("os.arch");
@@ -92,7 +92,7 @@ public final class Machine {
     /**
      * Returns the version of Java.
      *
-     * @return the version of Java
+     * @return the version of Java.
      */
     public static String getJavaVersion() {
         return System.getProperty("java.version");
@@ -101,7 +101,7 @@ public final class Machine {
     /**
      * Returns the vendor of the Java runtime.
      *
-     * @return the vendor of the Java runtime
+     * @return the vendor of the Java runtime.
      */
     public static String getJavaVendor() {
         return System.getProperty("java.vendor");
@@ -110,7 +110,7 @@ public final class Machine {
     /**
      * Returns the name of the Java Virtual Machine.
      *
-     * @return the name of the Java Virtual Machine
+     * @return the name of the Java Virtual Machine.
      */
     public static String getJvmName() {
         return System.getProperty("java.vm.name");
@@ -119,7 +119,7 @@ public final class Machine {
     /**
      * Returns the name of the logged-in user.
      *
-     * @return the name of the logged-in user
+     * @return the name of the logged-in user.
      */
     public static String getLoggedUserName() {
         return System.getProperty("user.name");

@@ -32,9 +32,9 @@ public final class DateParser {
     /**
      * Parses a date string to an Instant.
      *
-     * @param dateStr the date string to be parsed
-     * @return the parsed Instant
-     * @throws OctopusException if the date string does not match any supported format
+     * @param dateStr the date string to be parsed.
+     * @return the parsed Instant.
+     * @throws OctopusException if the date string does not match any supported format.
      */
     public static Instant parseToInstant(String dateStr) {
         try {
@@ -47,9 +47,9 @@ public final class DateParser {
     /**
      * Parses a date string to a LocalDate.
      *
-     * @param dateStr the date string to be parsed
-     * @return the parsed LocalDate
-     * @throws OctopusException if the date string does not match any supported format
+     * @param dateStr the date string to be parsed.
+     * @return the parsed LocalDate.
+     * @throws OctopusException if the date string does not match any supported format.
      */
     public static LocalDate parseToLocalDate(String dateStr) {
         for (DateTimeFormatter formatter : DATE_FORMATTERS) {
@@ -69,9 +69,9 @@ public final class DateParser {
     /**
      * Parses a date string to a LocalDateTime.
      *
-     * @param dateStr the date string to be parsed
-     * @return the parsed LocalDateTime
-     * @throws OctopusException if the date string does not match any supported format
+     * @param dateStr the date string to be parsed.
+     * @return the parsed LocalDateTime.
+     * @throws OctopusException if the date string does not match any supported format.
      */
     public static LocalDateTime parseToLocalDateTime(String dateStr) {
         for (DateTimeFormatter formatter : DATE_FORMATTERS) {

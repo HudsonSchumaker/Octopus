@@ -56,8 +56,8 @@ public class DbCrud<K, T> {
     /**
      * Finds an entity by its primary key.
      *
-     * @param id the primary key of the entity to find
-     * @return the entity with the given primary key, or null if not found
+     * @param id the primary key of the entity to find.
+     * @return the entity with the given primary key, or null if not found.
      */
     public T findById(K id) {
         var primaryKey = tableReflection.getPrimaryKey(clazz);
@@ -99,7 +99,7 @@ public class DbCrud<K, T> {
     /**
      * Finds all entities of the type T in the database.
      *
-     * @return a list of all entities of the type T
+     * @return a list of all entities of the type T.
      */
     public List<T> findAll() {
         var tableName = tableReflection.getTableName(clazz);
@@ -141,8 +141,8 @@ public class DbCrud<K, T> {
     /**
      * Saves an entity to the database.
      *
-     * @param entity the entity to save
-     * @return the primary key of the saved entity
+     * @param entity the entity to save.
+     * @return the primary key of the saved entity.
      */
     @SuppressWarnings("unchecked")
     public K save(T entity) {
@@ -196,7 +196,7 @@ public class DbCrud<K, T> {
     /**
      * Deletes an entity from the database.
      *
-     * @param entity the entity to delete
+     * @param entity the entity to delete.
      */
     @SuppressWarnings("unchecked")
     public void delete(T entity) {
@@ -207,7 +207,7 @@ public class DbCrud<K, T> {
     /**
      * Deletes an entity by its primary key.
      *
-     * @param id the primary key of the entity to delete
+     * @param id the primary key of the entity to delete.
      */
     public void deleteById(K id) {
         var primaryKey = tableReflection.getPrimaryKey(clazz);

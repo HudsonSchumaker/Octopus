@@ -25,8 +25,8 @@ public final class InjectReflection {
      * Injects the field values of the specified instance with the corresponding beans from the IoC container.
      * Fields annotated with @Inject are set with the appropriate bean instances.
      *
-     * @param instance the instance whose fields are to be injected
-     * @throws OctopusException if an error occurs during field injection
+     * @param instance the instance whose fields are to be injected.
+     * @throws OctopusException if an error occurs during field injection.
      */
     public void injectFieldBean(Object instance) {
         try {

@@ -30,9 +30,9 @@ public final class ValueReflection {
      * Injects the field values of the specified instance with the corresponding values from the environment.
      * Fields annotated with @Value are set with the appropriate values.
      *
-     * @param instance the instance whose fields are to be injected
-     * @return the instance with injected field values
-     * @throws OctopusException if an error occurs during field injection
+     * @param instance the instance whose fields are to be injected.
+     * @return the instance with injected field values.
+     * @throws OctopusException if an error occurs during field injection.
      */
     public Object injectFieldValue(Object instance) {
         try {
@@ -59,9 +59,9 @@ public final class ValueReflection {
      * Injects the value of the specified parameter with the corresponding value from the environment.
      * Parameters annotated with @Value are set with the appropriate values.
      *
-     * @param parameter the parameter whose value is to be injected
-     * @return the injected parameter value
-     * @throws OctopusException if an error occurs during parameter injection
+     * @param parameter the parameter whose value is to be injected.
+     * @return the injected parameter value.
+     * @throws OctopusException if an error occurs during parameter injection.
      */
     public Object injectParameterValue(Parameter parameter) {
         try {
