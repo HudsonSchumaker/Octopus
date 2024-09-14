@@ -25,14 +25,14 @@ import java.util.List;
  * @version 1.0.0
  */
 public class Octopus {
-    private static final WebServer ws;
+    private static final WebServer webServer;
     private static final IoCContainer container = IoCContainer.getInstance();
     private static final Environment environment = Environment.getInstance();
     private static final CommandLineArgs commandLineArgs = CommandLineArgs.getInstance();
 
     static {
         try {
-            ws = new WebServer(environment.getServerPort(), environment.getServerContext());
+            webServer = new WebServer(environment.getServerPort(), environment.getServerContext());
         } catch (Exception e) {
             throw new OctopusException(e.getMessage(), ExceptionCodes.WEB_SERVER_INIT_ERROR.getCode());
         }
@@ -51,7 +51,7 @@ public class Octopus {
         printBanner();
         createManagedClasses(clazz);
 
-        ws.start();
+        webServer.start();
     }
 
     private static void createManagedClasses(Class<?> clazz) throws Exception {
@@ -74,6 +74,7 @@ public class Octopus {
         progressBar.update(1, "Component");
 
         List<Class<?>> repositoryClasses = ClassScanner.getClassesWithAnnotation(packageName, Repository.class);
+        // TODO: change for interface
         // container.registerRepository(repositoryClasses);
         progressBar.update(1, "Repository");
 

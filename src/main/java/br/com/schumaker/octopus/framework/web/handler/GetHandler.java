@@ -3,6 +3,7 @@ package br.com.schumaker.octopus.framework.web.handler;
 import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
+import br.com.schumaker.octopus.framework.model.TypeConverter;
 import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.http.HttpResponse;
@@ -13,7 +14,10 @@ import static br.com.schumaker.octopus.framework.web.http.Http.GET;
 
 /**
  * The GetHandler class.
- * This class is responsible for processing GET requests. 
+ * This class is responsible for processing GET requests.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 public final class GetHandler implements RequestHandler {
     private final IoCContainer container = IoCContainer.getInstance();
@@ -73,18 +77,10 @@ public final class GetHandler implements RequestHandler {
     }
 
     private Object convertToType(Object param, Class<?> type) {
-        //TODO: check this
-        if (type == int.class || type == Integer.class) {
-            var rawCast = (String) param;
-            return Integer.parseInt(rawCast);
+        var parser = TypeConverter.typeParsers.get(type);
+        if (parser != null) {
+            return parser.apply((String) param);
         }
-
-        if (type == double.class || type == Double.class) {
-            var rawCast = (String) param;
-            return Double.parseDouble(rawCast);
-        }
-
-        // Add more type conversions as needed
         return param;
     }
 }
