@@ -4,10 +4,10 @@ import br.com.schumaker.octopus.framework.exception.OctopusException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MapperTest {
+public class MapperTest {
 
     @Test
-    void testMap() {
+    public void testMap() {
         // Arrange
         Source source = new Source();
         source.setId(100L);
@@ -24,7 +24,7 @@ class MapperTest {
     }
 
     @Test
-    void testMapWithException() {
+    public void testMapWithException() {
         // Arrange
         Source source = new Source();
         Mapper<Source, Target> mapper = new Mapper<>();
@@ -35,7 +35,7 @@ class MapperTest {
         });
     }
 
-    static class Source {
+    public static class Source {
         private Long id;
         private String name;
         private int age;
@@ -66,11 +66,11 @@ class MapperTest {
         }
     }
 
-    static class Target {
+    public static class Target {
         private String name;
         private int age;
 
-        // Getters and setters
+
         public String getName() {
             return name;
         }

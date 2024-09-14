@@ -8,9 +8,8 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ValidationReflectionTest {
-
-    static class TestClass {
+public class ValidationReflectionTest {
+    public static class TestClass {
         @NotNull
         private String notNullField;
 
@@ -47,7 +46,7 @@ class ValidationReflectionTest {
     }
 
     @Test
-    void testNotNullValidation() {
+    public void testNotNullValidation() {
         TestClass testClass = new TestClass();
         testClass.setNotNullField(null);
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
@@ -55,7 +54,7 @@ class ValidationReflectionTest {
     }
 
     @Test
-    void testNotBlankValidation() {
+    public void testNotBlankValidation() {
         TestClass testClass = new TestClass();
 
         testClass.setNotNullField("notNull");
@@ -65,7 +64,6 @@ class ValidationReflectionTest {
         testClass.setMaxField(64);
         testClass.setRangeField(8);
         testClass.setPastField(LocalDate.now().minusDays(1));
-
         testClass.setNotBlankField(" ");
 
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
@@ -73,7 +71,7 @@ class ValidationReflectionTest {
     }
 
     @Test
-    void testNotEmptyValidation() {
+    public void testNotEmptyValidation() {
         TestClass testClass = new TestClass();
         testClass.setNotNullField("notNull");
         testClass.setNotBlankField("notBlank");
@@ -89,7 +87,7 @@ class ValidationReflectionTest {
     }
 
     @Test
-    void testEmailValidation() {
+    public void testEmailValidation() {
         TestClass testClass = new TestClass();
         testClass.setNotNullField("notNull");
         testClass.setNotBlankField("notBlank");
@@ -105,7 +103,7 @@ class ValidationReflectionTest {
     }
 
     @Test
-    void testMinValidation() {
+    public void testMinValidation() {
         TestClass testClass = new TestClass();
         testClass.setNotNullField("notNull");
         testClass.setNotBlankField("notBlank");
@@ -121,7 +119,7 @@ class ValidationReflectionTest {
     }
 
     @Test
-    void testMaxValidation() {
+    public void testMaxValidation() {
         TestClass testClass = new TestClass();
         testClass.setNotNullField("notNull");
         testClass.setNotBlankField("notBlank");
@@ -137,7 +135,7 @@ class ValidationReflectionTest {
     }
 
     @Test
-    void testRangeValidation() {
+    public void testRangeValidation() {
         TestClass testClass = new TestClass();
         testClass.setNotNullField("notNull");
         testClass.setNotBlankField("notBlank");
@@ -153,7 +151,7 @@ class ValidationReflectionTest {
     }
 
     @Test
-    void testPastValidation() {
+    public void testPastValidation() {
         TestClass testClass = new TestClass();
         testClass.setNotNullField("notNull");
         testClass.setNotBlankField("notBlank");
