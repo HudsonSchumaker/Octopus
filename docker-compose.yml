@@ -2,7 +2,10 @@ version: '3.8'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: octopus-app:1.0.0
     ports:
       - "80:80"
     depends_on:
