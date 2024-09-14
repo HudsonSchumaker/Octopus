@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection.NOT_NULL_VALIDATION_MESSAGE;
+import static br.com.schumaker.octopus.framework.reflection.validation.NotNullValidation.NOT_NULL_VALIDATION_MESSAGE;
 
 /**
  * The @NotNull annotation is used to mark a field as a not null value.
@@ -35,6 +35,7 @@ import static br.com.schumaker.octopus.framework.reflection.validation.Validatio
  * @see Past
  * @see Range
  * @see Email
+ * @see Future
  * @see NotEmpty
  * @see NotBlank
  * @see Validate
