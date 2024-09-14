@@ -5,6 +5,7 @@ import br.com.schumaker.octopus.framework.exception.OctopusException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,6 +35,15 @@ public class ValidationReflectionTest {
         @Past
         private LocalDate pastField;
 
+        @Future
+        private LocalDate futureField;
+
+        @Past("Not in the past")
+        private LocalDateTime pastDateTimeField;
+
+        @Future("Not in the future")
+        private LocalDateTime futureDateTimeField;
+
         // Getters and setters
         public void setNotNullField(String notNullField) { this.notNullField = notNullField; }
         public void setNotBlankField(String notBlankField) { this.notBlankField = notBlankField; }
@@ -43,6 +53,9 @@ public class ValidationReflectionTest {
         public void setMaxField(int maxField) { this.maxField = maxField; }
         public void setRangeField(int rangeField) { this.rangeField = rangeField; }
         public void setPastField(LocalDate pastField) { this.pastField = pastField; }
+        public void setFutureField(LocalDate futureField) { this.futureField = futureField; }
+        public void setPastDateTimeField(LocalDateTime pastDateTimeField) { this.pastDateTimeField = pastDateTimeField; }
+        public void setFutureDateTimeField(LocalDateTime futureDateTimeField) { this.futureDateTimeField = futureDateTimeField; }
     }
 
     @Test
@@ -50,7 +63,7 @@ public class ValidationReflectionTest {
         TestClass testClass = new TestClass();
         testClass.setNotNullField(null);
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
-        assertTrue(exception.getMessage().contains("Field notNullField cannot be null"));
+        assertTrue(exception.getMessage().contains("Field notNullField cannot be null."));
     }
 
     @Test
@@ -67,7 +80,7 @@ public class ValidationReflectionTest {
         testClass.setNotBlankField(" ");
 
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
-        assertTrue(exception.getMessage().contains("Field notBlankField cannot be blank"));
+        assertTrue(exception.getMessage().contains("Field notBlankField cannot be blank."));
     }
 
     @Test
@@ -83,7 +96,7 @@ public class ValidationReflectionTest {
 
         testClass.setNotEmptyField("");
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
-        assertTrue(exception.getMessage().contains("Field notEmptyField cannot be empty"));
+        assertTrue(exception.getMessage().contains("Field notEmptyField cannot be empty."));
     }
 
     @Test
@@ -99,7 +112,7 @@ public class ValidationReflectionTest {
 
         testClass.setEmailField("invalid-email");
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
-        assertTrue(exception.getMessage().contains("Field emailField is not a valid email address"));
+        assertTrue(exception.getMessage().contains("Field emailField is not a valid email address."));
     }
 
     @Test
@@ -115,7 +128,7 @@ public class ValidationReflectionTest {
 
         testClass.setMinField(5);
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
-        assertTrue(exception.getMessage().contains("Field minField is below min value of 10.0"));
+        assertTrue(exception.getMessage().contains("Field minField is below min value of 10.0."));
     }
 
     @Test
@@ -131,7 +144,7 @@ public class ValidationReflectionTest {
 
         testClass.setMaxField(150);
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
-        assertTrue(exception.getMessage().contains("Field maxField exceeds max value of 100.0"));
+        assertTrue(exception.getMessage().contains("Field maxField exceeds max value of 100.0."));
     }
 
     @Test
@@ -147,7 +160,7 @@ public class ValidationReflectionTest {
 
         testClass.setRangeField(15);
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
-        assertTrue(exception.getMessage().contains("Field rangeField is out of range 1.0 to 10.0"));
+        assertTrue(exception.getMessage().contains("Field rangeField is out of range 1.0 to 10.0."));
     }
 
     @Test
@@ -163,6 +176,59 @@ public class ValidationReflectionTest {
 
         testClass.setPastField(LocalDate.now().plusDays(1));
         OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
-        assertTrue(exception.getMessage().contains("Field pastField must be in the past"));
+        assertTrue(exception.getMessage().contains("Field pastField must be a past date."));
+    }
+
+    @Test
+    public void testFutureValidation() {
+        TestClass testClass = new TestClass();
+        testClass.setNotNullField("notNull");
+        testClass.setNotBlankField("notBlank");
+        testClass.setNotEmptyField("notEmpty");
+        testClass.setEmailField("jhonny@mail.com");
+        testClass.setMinField(15);
+        testClass.setMaxField(64);
+        testClass.setRangeField(8);
+        testClass.setPastField(LocalDate.now().minusDays(1));
+
+        testClass.setFutureField(LocalDate.now().minusDays(1));
+        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        assertTrue(exception.getMessage().contains("Field futureField must be a future date."));
+    }
+
+    @Test
+    public void testPastValidationWithLocalDateTime() {
+        TestClass testClass = new TestClass();
+        testClass.setNotNullField("notNull");
+        testClass.setNotBlankField("notBlank");
+        testClass.setNotEmptyField("notEmpty");
+        testClass.setEmailField("jhonny@mail.com");
+        testClass.setMinField(15);
+        testClass.setMaxField(64);
+        testClass.setRangeField(8);
+        testClass.setPastField(LocalDate.now().minusDays(1));
+        testClass.setFutureField(LocalDate.now().plusDays(1));
+
+        testClass.setPastDateTimeField(LocalDateTime.now().plusDays(1));
+        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        assertTrue(exception.getMessage().contains("Not in the past"));
+    }
+
+    @Test
+    public void testFutureValidationWithLocalDateTime() {
+        TestClass testClass = new TestClass();
+        testClass.setNotNullField("notNull");
+        testClass.setNotBlankField("notBlank");
+        testClass.setNotEmptyField("notEmpty");
+        testClass.setEmailField("jhonny@mail.com");
+        testClass.setMinField(15);
+        testClass.setMaxField(64);
+        testClass.setRangeField(8);
+        testClass.setPastField(LocalDate.now().minusDays(1));
+        testClass.setFutureField(LocalDate.now().plusDays(1));
+
+        testClass.setFutureDateTimeField(LocalDateTime.now().minusDays(1));
+        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        assertTrue(exception.getMessage().contains("Not in the future"));
     }
 }

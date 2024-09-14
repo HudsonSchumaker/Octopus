@@ -8,7 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection.PAST_VALIDATION_MESSAGE;
+import static br.com.schumaker.octopus.framework.reflection.validation.PastValidation.PAST_VALIDATION_MESSAGE;
 
 /**
  * The @Past annotation is used to mark a field as a past date.
@@ -33,13 +33,14 @@ import static br.com.schumaker.octopus.framework.reflection.validation.Validatio
  *
  * @see Max
  * @see Min
- * @see NotEmpty
  * @see Range
  * @see Email
+ * @see Future
  * @see NotNull
+ * @see Payload
  * @see NotBlank
  * @see Validate
- * @see Payload
+ * @see NotEmpty
  *
  * @author Hudson Schumaker
  * @since 1.0.0
@@ -48,5 +49,7 @@ import static br.com.schumaker.octopus.framework.reflection.validation.Validatio
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Past {
     String value() default PAST_VALIDATION_MESSAGE;
-    Class<?>[] allowedTypes() default {java.util.Date.class, java.time.LocalDate.class, java.time.LocalDateTime.class};
+    Class<?>[] allowedTypes() default { java.util.Date.class, java.time.LocalDate.class,
+            java.time.LocalDateTime.class, java.time.Instant.class
+    };
 }

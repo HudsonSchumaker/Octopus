@@ -35,9 +35,10 @@ import java.lang.annotation.Target;
  * @see Past
  * @see Range
  * @see Email
- * @see NotEmpty
+ * @see Future
  * @see NotNull
  * @see NotBlank
+ * @see NotEmpty
  * @see Payload
  *
  * @author Hudson Schumaker

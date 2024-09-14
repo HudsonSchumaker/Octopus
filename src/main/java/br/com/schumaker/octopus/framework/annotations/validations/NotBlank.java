@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection.NOT_BLANK_VALIDATION_MESSAGE;
+import static br.com.schumaker.octopus.framework.reflection.validation.NotBlankValidation.NOT_BLANK_VALIDATION_MESSAGE;
 
 /**
  * The @NotBlank annotation is used to mark a field as a not blank value.
@@ -35,6 +35,7 @@ import static br.com.schumaker.octopus.framework.reflection.validation.Validatio
  * @see Past
  * @see Range
  * @see Email
+ * @see Future
  * @see NotNull
  * @see NotEmpty
  * @see Validate

@@ -18,8 +18,8 @@ public final class EmailValidator {
     /**
      * Validate an email.
      *
-     * @param email the email to be validated
-     * @return true if the email is valid, false otherwise
+     * @param email the email to be validated.
+     * @return true if the email is valid, false otherwise.
      */
     public static boolean isValidEmail(String email) {
         if (email == null) {

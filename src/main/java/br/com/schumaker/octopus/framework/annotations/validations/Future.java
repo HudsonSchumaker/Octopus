@@ -7,12 +7,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static br.com.schumaker.octopus.framework.reflection.validation.RangeValidation.RANGE_VALIDATION_MESSAGE;
+import static br.com.schumaker.octopus.framework.reflection.validation.FutureValidation.FUTURE_VALIDATION_MESSAGE;
 
 /**
- * The @Range annotation is used to mark a field as a range value.
+ * The @Future annotation is used to mark a field as a future date.
  * This annotation can be applied to fields to indicate that the field should be
- * validated as a range value.
+ * validated as a future date.
  *
  * <p>
  * Example usage:
@@ -20,10 +20,10 @@ import static br.com.schumaker.octopus.framework.reflection.validation.RangeVali
  *
  * <pre>
  * {@code
- * public class Soldier {
+ * public class Invoice {
  *
- *     @Range(min = 18, max = 65)
- *     private int age;
+ *     @Future
+ *     private Date dueDate;
  *
  *     // Getters and Setters
  * }
@@ -33,21 +33,22 @@ import static br.com.schumaker.octopus.framework.reflection.validation.RangeVali
  * @see Max
  * @see Min
  * @see Past
+ * @see Range
  * @see Email
- * @see Future
  * @see NotNull
- * @see NotEmpty
+ * @see Payload
  * @see NotBlank
  * @see Validate
- * @see Payload
+ * @see NotEmpty
  *
  * @author Hudson Schumaker
  * @since 1.0.0
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Range {
-    double min() default Double.MIN_VALUE;
-    double max() default Double.MAX_VALUE;
-    String message() default RANGE_VALIDATION_MESSAGE;
+public @interface Future {
+    String value() default FUTURE_VALIDATION_MESSAGE;
+    Class<?>[] allowedTypes() default { java.util.Date.class, java.time.LocalDate.class,
+            java.time.LocalDateTime.class, java.time.Instant.class
+    };
 }

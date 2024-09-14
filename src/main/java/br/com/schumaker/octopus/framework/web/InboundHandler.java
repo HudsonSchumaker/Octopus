@@ -50,7 +50,6 @@ final class InboundHandler implements HttpHandler {
         handlers.put(GET, new GetHandler());
     }
 
-
     // TODO: improve the conditional
     @Override
     public void handle(HttpExchange exchange) {
@@ -59,7 +58,6 @@ final class InboundHandler implements HttpHandler {
         HttpRequest request = new HttpRequest(fullUrl, exchange);
 
         // TODO: interceptors?
-
         try {
             RequestHandler handler = handlers.get(method.toUpperCase());
             if (handler != null) {
@@ -72,7 +70,7 @@ final class InboundHandler implements HttpHandler {
         } catch (Exception e) {
             this.handleException(exchange, e);
         }
-        // TOBE removed after refactor
+        // TODO: TO be removed after refactor
         try {
             if (method.equalsIgnoreCase(POST)) {
                 handlePostRequest(exchange, fullUrl);
