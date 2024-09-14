@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection.EMAIL_VALIDATION_MESSAGE;
+import static br.com.schumaker.octopus.framework.reflection.validation.EmailValidation.EMAIL_VALIDATION_MESSAGE;
 
 /**
  * The @Email annotation is used to mark a field as an email address.
@@ -35,6 +35,7 @@ import static br.com.schumaker.octopus.framework.reflection.validation.Validatio
  * @see Past
  * @see Range
  * @see Email
+ * @see Future
  * @see NotNull
  * @see NotBlank
  * @see NotEmpty
