@@ -116,10 +116,6 @@ public class GlobalExceptionHandler {
         }
     }
 
-    private void sendResponse(HttpExchange exchange, Object response, int httpCode) {
-        //TODO: check this
-    }
-
     /**
      * Processes the result returned by the global exception handler method and converts it to a string and HTTP status code.
      *
