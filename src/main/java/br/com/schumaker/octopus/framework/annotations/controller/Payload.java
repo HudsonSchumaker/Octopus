@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  *
  *     @Post(value = "/submit", type = "application/json")
  *     public ResponseView<ProductView> submitData(@Payload Form form) {
- *         // Handle POST request
+ *         // Handle HTTP_POST request
  *         return ResponseView.of(new ProductView(), Http.HTTP_201);
  *     }
  * }

@@ -8,13 +8,13 @@ package br.com.schumaker.octopus.framework.web.http;
  * @version 1.0.0
  */
 public enum HttpVerb {
-    GET("GET"),
-    POST("POST"),
-    PUT("PUT"),
-    PATCH("PATCH"),
-    DELETE("DELETE"),
-    HEADER("HEADER"),
-    OPTIONS("OPTIONS");
+    GET("HTTP_GET"),
+    POST("HTTP_POST"),
+    PUT("HTTP_PUT"),
+    PATCH("HTTP_PATCH"),
+    DELETE("HTTP_DELETE"),
+    HEADER("HTTP_HEADER"),
+    OPTIONS("HTTP_OPTIONS");
 
     private final String verb;
 

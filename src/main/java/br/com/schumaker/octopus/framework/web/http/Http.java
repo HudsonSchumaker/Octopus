@@ -9,13 +9,13 @@ package br.com.schumaker.octopus.framework.web.http;
  */
 public final class Http {
     // HTTP Methods
-    public static final String GET = HttpVerb.GET.name();
-    public static final String POST = HttpVerb.POST.name();
-    public static final String PUT = HttpVerb.PUT.name();
-    public static final String PATCH = HttpVerb.PATCH.name();
-    public static final String DELETE = HttpVerb.DELETE.name();
-    public static final String HEADER = HttpVerb.HEADER.name();
-    public static final String OPTIONS = HttpVerb.OPTIONS.name();
+    public static final String HTTP_GET = HttpVerb.GET.name();
+    public static final String HTTP_POST = HttpVerb.POST.name();
+    public static final String HTTP_PUT = HttpVerb.PUT.name();
+    public static final String HTTP_PATCH = HttpVerb.PATCH.name();
+    public static final String HTTP_DELETE = HttpVerb.DELETE.name();
+    public static final String HTTP_HEADER = HttpVerb.HEADER.name();
+    public static final String HTTP_OPTIONS = HttpVerb.OPTIONS.name();
 
     // Content Types
     public static final String CONTENT_TYPE = "Content-Type";

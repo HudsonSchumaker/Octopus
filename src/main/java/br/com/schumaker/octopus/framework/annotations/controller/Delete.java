@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
 import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
 
 /**
- * The @Delete annotation is used to specify the HTTP DELETE method.
+ * The @Delete annotation is used to specify the HTTP HTTP_DELETE method.
  * This annotation can be applied to methods to indicate that the method
- * should be executed when an HTTP DELETE request is sent to the specified path.
+ * should be executed when an HTTP HTTP_DELETE request is sent to the specified path.
  *
  * <p>
  * The value attribute specifies the path to which the method should respond.

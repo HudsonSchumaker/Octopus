@@ -10,12 +10,12 @@ import java.lang.annotation.Target;
 import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
 
 /**
- * The @Put annotation is used to map HTTP PUT requests onto specific handler methods.
+ * The @Put annotation is used to map HTTP HTTP_PUT requests onto specific handler methods.
  * This annotation can be applied to methods to indicate that the method should handle
- * HTTP PUT requests for the specified path.
+ * HTTP HTTP_PUT requests for the specified path.
  *
  * <p>
- * The value attribute specifies the path for the PUT request. If no value is provided,
+ * The value attribute specifies the path for the HTTP_PUT request. If no value is provided,
  * the default is "/".
  * </p>
  *
@@ -35,7 +35,7 @@ import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
  *
  *     @Put(value = "/update", type = "application/json")
  *     public ResponseView<ProductView> updateData(@Payload Form form) {
- *         // Handle PUT request
+ *         // Handle HTTP_PUT request
  *         return ResponseView.of(new ProductView(), Http.HTTP_200);
  *     }
  * }
