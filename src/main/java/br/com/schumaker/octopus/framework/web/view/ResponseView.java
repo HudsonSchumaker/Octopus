@@ -102,7 +102,7 @@ public final class ResponseView<T> {
      * @return a new ResponseViewBuilder.
      */
     public static <T> ResponseViewBuilder<T> ok() {
-        return new ResponseViewBuilder<T>(Http.HTTP_200);
+        return new ResponseViewBuilder<>(Http.HTTP_200);
     }
 
     /**
@@ -112,7 +112,7 @@ public final class ResponseView<T> {
      * @return a new ResponseViewBuilder.
      */
     public static <T> ResponseViewBuilder<T> created() {
-        return new ResponseViewBuilder<T>(Http.HTTP_201);
+        return new ResponseViewBuilder<>(Http.HTTP_201);
     }
 
     /**
@@ -122,7 +122,7 @@ public final class ResponseView<T> {
      * @return a new ResponseViewBuilder.
      */
     public static <T> ResponseViewBuilder<T> accepted() {
-        return new ResponseViewBuilder<T>(Http.HTTP_202);
+        return new ResponseViewBuilder<>(Http.HTTP_202);
     }
 
     /**
@@ -132,7 +132,7 @@ public final class ResponseView<T> {
      * @return a new ResponseViewBuilder.
      */
     public static <T> ResponseViewBuilder<T> noContent() {
-        return new ResponseViewBuilder<T>(Http.HTTP_204);
+        return new ResponseViewBuilder<>(Http.HTTP_204);
     }
 
     /**
@@ -142,7 +142,7 @@ public final class ResponseView<T> {
      * @return a new ResponseViewBuilder.
      */
     public static <T> ResponseViewBuilder<T> badRequest() {
-        return new ResponseViewBuilder<T>(Http.HTTP_400);
+        return new ResponseViewBuilder<>(Http.HTTP_400);
     }
 
     /**
@@ -152,7 +152,7 @@ public final class ResponseView<T> {
      * @return a new ResponseViewBuilder.
      */
     public static <T> ResponseViewBuilder<T> unauthorized() {
-        return new ResponseViewBuilder<T>(Http.HTTP_401);
+        return new ResponseViewBuilder<>(Http.HTTP_401);
     }
 
     /**
@@ -172,7 +172,7 @@ public final class ResponseView<T> {
      * @return a new ResponseViewBuilder.
      */
     public static <T> ResponseViewBuilder<T> notFound() {
-        return new ResponseViewBuilder<T>(Http.HTTP_404);
+        return new ResponseViewBuilder<>(Http.HTTP_404);
     }
 
     /**
@@ -182,7 +182,7 @@ public final class ResponseView<T> {
      * @return a new ResponseViewBuilder
      */
     public static <T> ResponseViewBuilder<T> conflict() {
-        return new ResponseViewBuilder<T>(Http.HTTP_409);
+        return new ResponseViewBuilder<>(Http.HTTP_409);
     }
 
     /**
@@ -192,6 +192,6 @@ public final class ResponseView<T> {
      * @return a new ResponseViewBuilder.
      */
     public static <T> ResponseViewBuilder<T> internalServerError() {
-        return new ResponseViewBuilder<T>(Http.HTTP_500);
+        return new ResponseViewBuilder<>(Http.HTTP_500);
     }
 }

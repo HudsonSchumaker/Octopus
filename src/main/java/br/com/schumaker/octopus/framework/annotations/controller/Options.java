@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
 import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
 
 /**
- * Annotation to map HTTP OPTIONS requests onto specific handler methods.
+ * Annotation to map HTTP HTTP_OPTIONS requests onto specific handler methods.
  *
- * <p>This annotation can be used on methods to define them as handlers for HTTP OPTIONS requests.
+ * <p>This annotation can be used on methods to define them as handlers for HTTP HTTP_OPTIONS requests.
  * The default path is "/", the default content type is "application/json", and the default HTTP response code is 200.</p>
  *
  * <pre>

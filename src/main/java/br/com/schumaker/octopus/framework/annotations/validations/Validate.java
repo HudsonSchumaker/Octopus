@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
  *
  *     @Post(value = "/submit")
  *     public ResponseView<ProductView> submitData(@Payload @Validate Form form) {
- *         // Handle POST request
+ *         // Handle HTTP_POST request
  *         return ResponseView.of(new ProductView(), Http.HTTP_201);
  *     }
  * }

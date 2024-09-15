@@ -10,12 +10,12 @@ import java.lang.annotation.Target;
 import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
 
 /**
- * The @Post annotation is used to map HTTP POST requests onto specific handler methods.
+ * The @Post annotation is used to map HTTP HTTP_POST requests onto specific handler methods.
  * This annotation can be applied to methods to indicate that the method should handle
- * HTTP POST requests for the specified path.
+ * HTTP HTTP_POST requests for the specified path.
  *
  * <p>
- * The value attribute specifies the path for the POST request. If no value is provided,
+ * The value attribute specifies the path for the HTTP_POST request. If no value is provided,
  * the default is "/".
  * </p>
  *
@@ -35,7 +35,7 @@ import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
  *
  *     @Post(value = "/submit", type = "application/json")
  *     public ResponseView<ProductView> submitData(@Payload Form form) {
- *         // Handle POST request
+ *         // Handle HTTP_POST request
  *         return ResponseView.of(new ProductView(), Http.HTTP_201);
  *     }
  * }

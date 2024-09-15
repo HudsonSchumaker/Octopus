@@ -13,6 +13,7 @@ import br.com.schumaker.octopus.framework.annotations.controller.Put;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.model.Mapper;
 import br.com.schumaker.octopus.framework.web.http.Http;
+import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
 import java.io.IOException;
@@ -49,9 +50,11 @@ public class ProductController {
     }
 
     @Get
-    public ResponseView<List<Product>> list() {
+    public ResponseView<List<ProductDTO>> list(HttpRequestHeader headers) {
         var list = service.list();
         var listDTO = mapper.from(list);
+
+        System.out.println(headers.headers().get("User-agent"));
         return ResponseView.ok().body(listDTO).headers("info", name).build();
     }
 

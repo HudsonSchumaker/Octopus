@@ -11,9 +11,9 @@ import java.lang.annotation.Target;
 import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
 
 /**
- * The @Patch annotation is used to mark a method to handle HTTP PATCH requests.
+ * The @Patch annotation is used to mark a method to handle HTTP HTTP_PATCH requests.
  * This annotation can be applied to methods in a controller class to indicate that the method
- * should be invoked to handle PATCH requests to the specified URL.
+ * should be invoked to handle HTTP_PATCH requests to the specified URL.
  *
  * <p>
  * The value attribute specifies the URL pattern to which the method should respond.

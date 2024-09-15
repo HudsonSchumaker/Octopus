@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * The HttpRestTemplate class provides utility methods for making HTTP requests.
- * It supports GET, POST, PUT, and DELETE methods and can handle JSON responses.
+ * It supports HTTP_GET, HTTP_POST, HTTP_PUT, and HTTP_DELETE methods and can handle JSON responses.
  * This class uses Java's HttpClient and Jackson's ObjectMapper for HTTP communication and JSON parsing.
  *
  * @author Hudson Schumaker
@@ -29,9 +29,9 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a GET request to the specified URL with the given headers and returns the response body as an object of the specified type.
+     * Sends a HTTP_GET request to the specified URL with the given headers and returns the response body as an object of the specified type.
      *
-     * @param url the URL to send the GET request to.
+     * @param url the URL to send the HTTP_GET request to.
      * @param headers the headers to include in the request.
      * @param responseType the class of the response type.
      * @param <T> the type of the response.
@@ -45,9 +45,9 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a GET request to the specified URL with the given headers and returns the response body as a string.
+     * Sends a HTTP_GET request to the specified URL with the given headers and returns the response body as a string.
      *
-     * @param url the URL to send the GET request to.
+     * @param url the URL to send the HTTP_GET request to.
      * @param headers the headers to include in the request.
      * @return the response body as a string.
      * @throws IOException if an I/O error occurs.
@@ -67,9 +67,9 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a POST request to the specified URL with the given body and headers and returns the response body as an object of the specified type.
+     * Sends a HTTP_POST request to the specified URL with the given body and headers and returns the response body as an object of the specified type.
      *
-     * @param url the URL to send the POST request to.
+     * @param url the URL to send the HTTP_POST request to.
      * @param body the body to include in the request.
      * @param headers the headers to include in the request.
      * @param responseType the class of the response type.
@@ -84,9 +84,9 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a POST request to the specified URL with the given body and headers and returns the response body as a string.
+     * Sends a HTTP_POST request to the specified URL with the given body and headers and returns the response body as a string.
      *
-     * @param url the URL to send the POST request to.
+     * @param url the URL to send the HTTP_POST request to.
      * @param body the body to include in the request.
      * @param headers the headers to include in the request.
      * @return the response body as a string.
@@ -107,9 +107,9 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a PUT request to the specified URL with the given body and headers and returns the response body as an object of the specified type.
+     * Sends a HTTP_PUT request to the specified URL with the given body and headers and returns the response body as an object of the specified type.
      *
-     * @param url the URL to send the PUT request to.
+     * @param url the URL to send the HTTP_PUT request to.
      * @param body the body to include in the request.
      * @param headers the headers to include in the request.
      * @param responseType the class of the response type.
@@ -124,9 +124,9 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a PUT request to the specified URL with the given body and headers and returns the response body as a string.
+     * Sends a HTTP_PUT request to the specified URL with the given body and headers and returns the response body as a string.
      *
-     * @param url the URL to send the PUT request to.
+     * @param url the URL to send the HTTP_PUT request to.
      * @param body the body to include in the request.
      * @param headers the headers to include in the request.
      * @return the response body as a string.
@@ -147,9 +147,9 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a DELETE request to the specified URL with the given headers and returns the response body as an object of the specified type.
+     * Sends a HTTP_DELETE request to the specified URL with the given headers and returns the response body as an object of the specified type.
      *
-     * @param url the URL to send the DELETE request to.
+     * @param url the URL to send the HTTP_DELETE request to.
      * @param headers the headers to include in the request.
      * @param responseType the class of the response type.
      * @param <T> the type of the response.
@@ -163,9 +163,9 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a DELETE request to the specified URL with the given headers and returns the response body as a string.
+     * Sends a HTTP_DELETE request to the specified URL with the given headers and returns the response body as a string.
      *
-     * @param url the URL to send the DELETE request to.
+     * @param url the URL to send the HTTP_DELETE request to.
      * @param headers the headers to include in the request.
      * @return the response body as a string.
      * @throws IOException if an I/O error occurs.

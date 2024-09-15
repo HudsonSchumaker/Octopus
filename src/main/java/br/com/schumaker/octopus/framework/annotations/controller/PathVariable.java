@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  *
  *     @Get(value = "/product/{id}")
  *     public ResponseView<ProductView> getProduct(@PathVariable("id") String id) {
- *         // Handle GET request
+ *         // Handle HTTP_GET request
  *         return ResponseView.of(new ProductView(), Http.HTTP_200);
  *     }
  * }

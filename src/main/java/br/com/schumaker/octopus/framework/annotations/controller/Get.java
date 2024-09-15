@@ -10,12 +10,12 @@ import java.lang.annotation.Target;
 import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
 
 /**
- * The @Get annotation is used to map HTTP GET requests onto specific handler methods.
+ * The @Get annotation is used to map HTTP HTTP_GET requests onto specific handler methods.
  * This annotation can be applied to methods to indicate that the method should handle
- * HTTP GET requests for the specified path.
+ * HTTP HTTP_GET requests for the specified path.
  *
  * <p>
- * The value attribute specifies the path for the GET request. If no value is provided,
+ * The value attribute specifies the path for the HTTP_GET request. If no value is provided,
  * the default is "/".
  * </p>
  *

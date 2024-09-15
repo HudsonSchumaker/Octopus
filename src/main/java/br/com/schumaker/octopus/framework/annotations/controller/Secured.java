@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
  *     @Secured
  *     @Get(value = "/search")
  *     public ResponseView<ProductView> searchProduct(@QueryParam("q") String query) {
- *         // Handle GET request
+ *         // Handle HTTP_GET request
  *         return ResponseView.of(new ProductView(), Http.HTTP_200);
  *     }
  * }
