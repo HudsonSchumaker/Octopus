@@ -105,8 +105,9 @@ public class DbCrud<K, T> {
         var tableName = tableReflection.getTableName(clazz);
         var columnFields = tableReflection.getFields(clazz);
 
+        // TODO: use a StringBuilder and join the column names
         String sql = "SELECT * FROM " + tableName;
-        System.out.println("SQL:" + sql);
+        System.out.println("SQL: " + sql);
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -213,7 +214,7 @@ public class DbCrud<K, T> {
         var primaryKey = tableReflection.getPrimaryKey(clazz);
         var tableName = tableReflection.getTableName(clazz);
 
-        String sql = "DELETE FROM " + tableName + " WHERE " + primaryKey + " = ?";
+        String sql = "HTTP_DELETE FROM " + tableName + " WHERE " + primaryKey + " = ?";
         System.out.println("SQL: " + sql);
 
         try (Connection connection = DbConnection.getConnection();

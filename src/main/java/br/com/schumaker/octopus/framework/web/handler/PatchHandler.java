@@ -3,6 +3,13 @@ package br.com.schumaker.octopus.framework.web.handler;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.http.HttpResponse;
 
+/**
+ * The PatchHandler class.
+ * This class is responsible for processing HTTP_PATCH requests.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public final class PatchHandler implements RequestHandler {
 
     /**
