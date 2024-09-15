@@ -68,7 +68,7 @@ public final class ManagedController {
         throw new RuntimeException(Http.HTTP_404_NOT_FOUND);
     }
 
-    private boolean pathMatches(String pattern, String path) {
+    public boolean pathMatches(String pattern, String path) {
         var patternParts = splitAndFilter(pattern);
         var pathParts = splitAndFilter(path);
 
