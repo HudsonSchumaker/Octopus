@@ -3,6 +3,8 @@ package br.com.schumaker.octopus.framework.reflection;
 import br.com.schumaker.octopus.framework.annotations.controller.Controller;
 import br.com.schumaker.octopus.framework.annotations.controller.Delete;
 import br.com.schumaker.octopus.framework.annotations.controller.Get;
+import br.com.schumaker.octopus.framework.annotations.controller.Head;
+import br.com.schumaker.octopus.framework.annotations.controller.Options;
 import br.com.schumaker.octopus.framework.annotations.controller.Patch;
 import br.com.schumaker.octopus.framework.annotations.controller.Post;
 import br.com.schumaker.octopus.framework.annotations.controller.Put;
@@ -52,12 +54,16 @@ public final class ControllerReflection {
         var putMappingMethods = getMapping(controller, Put.class, HttpVerb.PUT);
         var patchMappingMethods = getMapping(controller, Patch.class, HttpVerb.PATCH);
         var deleteMappingMethods = getMapping(controller, Delete.class, HttpVerb.DELETE);
+        var headMappingMethods = getMapping(controller, Head.class, HttpVerb.HEAD);
+        var optionsMappingMethods = getMapping(controller, Options.class, HttpVerb.OPTIONS);
 
         methods.putAll(getMappingMethods);
         methods.putAll(postMappingMethods);
         methods.putAll(putMappingMethods);
         methods.putAll(patchMappingMethods);
         methods.putAll(deleteMappingMethods);
+        methods.putAll(headMappingMethods);
+        methods.putAll(optionsMappingMethods);
 
         return methods;
     }

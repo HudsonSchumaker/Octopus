@@ -13,7 +13,7 @@ public enum HttpVerb {
     PUT("HTTP_PUT"),
     PATCH("HTTP_PATCH"),
     DELETE("HTTP_DELETE"),
-    HEADER("HTTP_HEADER"),
+    HEAD("HTTP_HEAD"),
     OPTIONS("HTTP_OPTIONS");
 
     private final String verb;

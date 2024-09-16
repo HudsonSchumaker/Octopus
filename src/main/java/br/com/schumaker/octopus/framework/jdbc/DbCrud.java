@@ -214,7 +214,7 @@ public class DbCrud<K, T> {
         var primaryKey = tableReflection.getPrimaryKey(clazz);
         var tableName = tableReflection.getTableName(clazz);
 
-        String sql = "HTTP_DELETE FROM " + tableName + " WHERE " + primaryKey + " = ?";
+        String sql = "DELETE FROM " + tableName + " WHERE " + primaryKey + " = ?";
         System.out.println("SQL: " + sql);
 
         try (Connection connection = DbConnection.getConnection();
