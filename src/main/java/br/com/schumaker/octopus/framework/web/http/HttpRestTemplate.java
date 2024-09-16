@@ -29,7 +29,7 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a HTTP_GET request to the specified URL with the given headers and returns the response body as an object of the specified type.
+     * Sends an HTTP_GET request to the specified URL with the given headers and returns the response body as an object of the specified type.
      *
      * @param url the URL to send the HTTP_GET request to.
      * @param headers the headers to include in the request.
@@ -45,7 +45,7 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a HTTP_GET request to the specified URL with the given headers and returns the response body as a string.
+     * Sends an HTTP_GET request to the specified URL with the given headers and returns the response body as a string.
      *
      * @param url the URL to send the HTTP_GET request to.
      * @param headers the headers to include in the request.
@@ -67,7 +67,7 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a HTTP_POST request to the specified URL with the given body and headers and returns the response body as an object of the specified type.
+     * Sends an HTTP_POST request to the specified URL with the given body and headers and returns the response body as an object of the specified type.
      *
      * @param url the URL to send the HTTP_POST request to.
      * @param body the body to include in the request.
@@ -84,7 +84,7 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a HTTP_POST request to the specified URL with the given body and headers and returns the response body as a string.
+     * Sends an HTTP_POST request to the specified URL with the given body and headers and returns the response body as a string.
      *
      * @param url the URL to send the HTTP_POST request to.
      * @param body the body to include in the request.
@@ -107,7 +107,7 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a HTTP_PUT request to the specified URL with the given body and headers and returns the response body as an object of the specified type.
+     * Sends an HTTP_PUT request to the specified URL with the given body and headers and returns the response body as an object of the specified type.
      *
      * @param url the URL to send the HTTP_PUT request to.
      * @param body the body to include in the request.
@@ -124,7 +124,7 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a HTTP_PUT request to the specified URL with the given body and headers and returns the response body as a string.
+     * Sends an HTTP_PUT request to the specified URL with the given body and headers and returns the response body as a string.
      *
      * @param url the URL to send the HTTP_PUT request to.
      * @param body the body to include in the request.
@@ -147,7 +147,7 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a HTTP_DELETE request to the specified URL with the given headers and returns the response body as an object of the specified type.
+     * Sends an HTTP_DELETE request to the specified URL with the given headers and returns the response body as an object of the specified type.
      *
      * @param url the URL to send the HTTP_DELETE request to.
      * @param headers the headers to include in the request.
@@ -163,7 +163,7 @@ public final class HttpRestTemplate {
     }
 
     /**
-     * Sends a HTTP_DELETE request to the specified URL with the given headers and returns the response body as a string.
+     * Sends an HTTP_DELETE request to the specified URL with the given headers and returns the response body as a string.
      *
      * @param url the URL to send the HTTP_DELETE request to.
      * @param headers the headers to include in the request.
