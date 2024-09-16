@@ -61,6 +61,7 @@ public final class ControllerReflection {
         // <VERB, List<Triple<mapping, method, List<parameters>>>>
         Map<String, List<Triple<String, Method, List<Parameter>>>> methods = new HashMap<>();
 
+        // Get all methods annotated with the specified annotation and HTTP verb
         for (var entry : annotationMap.entrySet()) {
             methods.putAll(getMapping(controller, entry.getKey(), entry.getValue()));
         }
