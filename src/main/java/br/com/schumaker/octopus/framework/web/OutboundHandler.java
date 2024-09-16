@@ -91,8 +91,10 @@ final class OutboundHandler {
      */
     public void sendResponse(HttpExchange exchange, int httpCode, String contentType, String response) throws Exception {
         exchange.getResponseHeaders().add(CONTENT_TYPE, contentType);
-        // TODO: create a way to set the security
+        // TODO: create a way to set the security, and check CORS
         exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+        exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, HEAD, OPTIONS");
+        exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
 
         exchange.sendResponseHeaders(httpCode, response.getBytes().length);
         try (OutputStream os = exchange.getResponseBody()) {
