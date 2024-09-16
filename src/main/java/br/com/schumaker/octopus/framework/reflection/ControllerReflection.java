@@ -8,6 +8,7 @@ import br.com.schumaker.octopus.framework.annotations.controller.Options;
 import br.com.schumaker.octopus.framework.annotations.controller.Patch;
 import br.com.schumaker.octopus.framework.annotations.controller.Post;
 import br.com.schumaker.octopus.framework.annotations.controller.Put;
+import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.model.Triple;
 import br.com.schumaker.octopus.framework.web.http.HttpVerb;
 
@@ -28,6 +29,17 @@ import java.util.Map;
  * @version 1.0.0
  */
 public final class ControllerReflection {
+    private static final Map<Class<? extends Annotation>, HttpVerb> annotationMap = new HashMap<>();
+
+    static {
+        annotationMap.put(Get.class, HttpVerb.GET);
+        annotationMap.put(Post.class, HttpVerb.POST);
+        annotationMap.put(Put.class, HttpVerb.PUT);
+        annotationMap.put(Patch.class, HttpVerb.PATCH);
+        annotationMap.put(Delete.class, HttpVerb.DELETE);
+        annotationMap.put(Head.class, HttpVerb.HEAD);
+        annotationMap.put(Options.class, HttpVerb.OPTIONS);
+    }
 
     /**
      * Retrieves the route of the specified controller class.
@@ -49,21 +61,9 @@ public final class ControllerReflection {
         // <VERB, List<Triple<mapping, method, List<parameters>>>>
         Map<String, List<Triple<String, Method, List<Parameter>>>> methods = new HashMap<>();
 
-        var getMappingMethods = getMapping(controller, Get.class, HttpVerb.GET);
-        var postMappingMethods = getMapping(controller, Post.class, HttpVerb.POST);
-        var putMappingMethods = getMapping(controller, Put.class, HttpVerb.PUT);
-        var patchMappingMethods = getMapping(controller, Patch.class, HttpVerb.PATCH);
-        var deleteMappingMethods = getMapping(controller, Delete.class, HttpVerb.DELETE);
-        var headMappingMethods = getMapping(controller, Head.class, HttpVerb.HEAD);
-        var optionsMappingMethods = getMapping(controller, Options.class, HttpVerb.OPTIONS);
-
-        methods.putAll(getMappingMethods);
-        methods.putAll(postMappingMethods);
-        methods.putAll(putMappingMethods);
-        methods.putAll(patchMappingMethods);
-        methods.putAll(deleteMappingMethods);
-        methods.putAll(headMappingMethods);
-        methods.putAll(optionsMappingMethods);
+        for (var entry : annotationMap.entrySet()) {
+            methods.putAll(getMapping(controller, entry.getKey(), entry.getValue()));
+        }
 
         return methods;
     }
@@ -100,31 +100,15 @@ public final class ControllerReflection {
      * Retrieves the value of the specified route mapping annotation.
      *
      * @param routeMapping the route mapping annotation.
+     * @throws OctopusException if an error occurs while retrieving the annotation value.
      * @return the value of the route mapping annotation.
      */
     private static String getAnnotationValue(Annotation routeMapping) {
-        // TODO: refactor this (if)
-
-        if (routeMapping instanceof Get) {
-            return ((Get) routeMapping).value();
+        try {
+            Method valueMethod = routeMapping.annotationType().getMethod("value");
+            return (String) valueMethod.invoke(routeMapping);
+        } catch (Exception e) {
+            throw new OctopusException("Failed to retrieve annotation value.", e);
         }
-
-        if (routeMapping instanceof Post) {
-            return ((Post) routeMapping).value();
-        }
-
-        if (routeMapping instanceof Put) {
-            return ((Put) routeMapping).value();
-        }
-
-        if (routeMapping instanceof Patch) {
-            return ((Patch) routeMapping).value();
-        }
-
-        if (routeMapping instanceof Delete) {
-            return ((Delete) routeMapping).value();
-        }
-
-        return "";
     }
 }

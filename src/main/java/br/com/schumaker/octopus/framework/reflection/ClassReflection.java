@@ -23,10 +23,10 @@ import java.util.stream.Stream;
  */
 public final class ClassReflection {
     private static final ClassReflection INSTANCE = new ClassReflection();
-    private static final ConstructorReflection constructorReflection = ConstructorReflection.getInstance();
+    private static final IoCContainer iocContainer = IoCContainer.getInstance();
     private static final ValueReflection valueReflection = ValueReflection.getInstance();
     private static final InjectReflection injectReflection = InjectReflection.getInstance();
-    private static final IoCContainer iocContainer = IoCContainer.getInstance();
+    private static final ConstructorReflection constructorReflection = ConstructorReflection.getInstance();
 
     private ClassReflection() {}
 
