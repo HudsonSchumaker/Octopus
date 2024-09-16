@@ -2,8 +2,6 @@ package br.com.schumaker.octopus.framework.web;
 
 import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.model.Pair;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection;
 import br.com.schumaker.octopus.framework.web.handler.DeleteHandler;
 import br.com.schumaker.octopus.framework.web.handler.GetHandler;
 import br.com.schumaker.octopus.framework.web.handler.HeaderHandler;
@@ -39,8 +37,6 @@ import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_PUT;
  * @version 1.0.0
  */
 final class InboundHandler implements HttpHandler {
-    private final IoCContainer container = IoCContainer.getInstance();
-    private final ValidationReflection validationReflection = ValidationReflection.getInstance();
     private final OutboundHandler outboundHandler = new OutboundHandler();
     private final Map<String, RequestHandler> handlers = new HashMap<>();
 
@@ -61,12 +57,12 @@ final class InboundHandler implements HttpHandler {
      */
     @Override
     public void handle(HttpExchange exchange) {
-        String method = exchange.getRequestMethod();
-        String fullUrl = this.getFullUrl(exchange).first();
-        HttpRequest request = new HttpRequest(fullUrl, exchange);
-
-        // TODO: interceptors?
         try {
+            String method = exchange.getRequestMethod();
+            String fullUrl = this.getFullUrl(exchange).first();
+            HttpRequest request = new HttpRequest(fullUrl, exchange);
+
+            // TODO: interceptors?
             RequestHandler handler = handlers.get(method.toUpperCase());
             if (handler != null) {
                 HttpResponse response = handler.processRequest(request);
