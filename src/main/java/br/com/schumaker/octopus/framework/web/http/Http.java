@@ -14,7 +14,7 @@ public final class Http {
     public static final String HTTP_PUT = HttpVerb.PUT.name();
     public static final String HTTP_PATCH = HttpVerb.PATCH.name();
     public static final String HTTP_DELETE = HttpVerb.DELETE.name();
-    public static final String HTTP_HEADER = HttpVerb.HEADER.name();
+    public static final String HTTP_HEADER = HttpVerb.HEAD.name();
     public static final String HTTP_OPTIONS = HttpVerb.OPTIONS.name();
 
     // Content Types
