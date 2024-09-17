@@ -45,8 +45,6 @@ public class DbCrud<K, T> {
     private final Class<K> pk;
     private final Class<T> clazz;
 
-    // TODO: documentation
-
     @SuppressWarnings("unchecked")
     public DbCrud() {
         this.pk = (Class<K>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -84,8 +82,8 @@ public class DbCrud<K, T> {
      * @return the entity with the given primary key, or null if not found.
      */
     public T findById(K id) {
-        var primaryKey = tableReflection.getPrimaryKey(clazz);
         var tableName = tableReflection.getTableName(clazz);
+        var primaryKey = tableReflection.getPrimaryKey(clazz);
         var columnFields = tableReflection.getFields(clazz);
 
         String sql = "SELECT * FROM " + tableName + " WHERE " + primaryKey + " = ?";
@@ -168,7 +166,6 @@ public class DbCrud<K, T> {
      */
     @SuppressWarnings("unchecked")
     public K save(T entity) {
-        Class<?> clazz = entity.getClass();
         var tableName = tableReflection.getTableName(clazz);
         var columnFields = tableReflection.getColumnNames(clazz);
 
@@ -192,7 +189,7 @@ public class DbCrud<K, T> {
              PreparedStatement preparedStatement =
                      connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
 
-            int index = 1;
+            int index = 1; // index of the prepared statement parameter starting at 1
             for (Field field : tableReflection.getColumnFields(clazz)) {
                 field.setAccessible(true);
                 preparedStatement.setObject(index++, field.get(entity));
@@ -218,9 +215,9 @@ public class DbCrud<K, T> {
      * @param entity the entity to update.
      */
     public void update(T entity) {
-        var tableName = tableReflection.getTableName(entity.getClass());
-        var columnFields = tableReflection.getColumnFields(entity.getClass());
-        var primaryKey = tableReflection.getPrimaryKey(entity.getClass());
+        var tableName = tableReflection.getTableName(clazz);
+        var columnFields = tableReflection.getColumnFields(clazz);
+        var primaryKey = tableReflection.getPrimaryKey(clazz);
         var primaryKeyValue = tableReflection.getPrimaryKeyValue(entity);
 
         StringBuilder sql = new StringBuilder("UPDATE ");
@@ -238,7 +235,7 @@ public class DbCrud<K, T> {
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
 
-            int index = 1;
+            int index = 1; // index of the prepared statement parameter starting at 1
             for (Field field : columnFields) {
                 field.setAccessible(true);
                 preparedStatement.setObject(index++, field.get(entity));
@@ -268,8 +265,8 @@ public class DbCrud<K, T> {
      * @param id the primary key of the entity to delete.
      */
     public void deleteById(K id) {
-        var primaryKey = tableReflection.getPrimaryKey(clazz);
         var tableName = tableReflection.getTableName(clazz);
+        var primaryKey = tableReflection.getPrimaryKey(clazz);
 
         String sql = "DELETE FROM " + tableName + " WHERE " + primaryKey + " = ?";
         System.out.println("SQL: " + sql);
