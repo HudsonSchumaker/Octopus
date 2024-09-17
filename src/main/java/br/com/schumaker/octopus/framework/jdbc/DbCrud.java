@@ -54,6 +54,30 @@ public class DbCrud<K, T> {
     }
 
     /**
+     * Counts the number of entities of the type T in the database.
+     *
+     * @return the number of entities of the type T.
+     */
+    public Long count() {
+        var tableName = tableReflection.getTableName(clazz);
+        String sql = "SELECT COUNT(*) FROM " + tableName;
+        System.out.println("SQL: " + sql);
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (Exception e) {
+            throw new OctopusException(e.getMessage(), e);
+        }
+
+        return 0L;
+    }
+
+    /**
      * Finds an entity by its primary key.
      *
      * @param id the primary key of the entity to find.
@@ -74,7 +98,6 @@ public class DbCrud<K, T> {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     T entity = clazz.getDeclaredConstructor().newInstance();
-
                     for (Field field : columnFields) {
                         field.setAccessible(true);
                         Object value = resultSet.getObject(field.getName());
@@ -82,10 +105,8 @@ public class DbCrud<K, T> {
                         if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
                             value = java.math.BigInteger.valueOf((Long) value);
                         }
-
                         field.set(entity, value);
                     }
-
                     return entity;
                 }
             }
@@ -191,8 +212,44 @@ public class DbCrud<K, T> {
         return null;
     }
 
-    // TODO: implement update method
-    public void update(T entity) {}
+    /**
+     * Updates an entity in the database.
+     *
+     * @param entity the entity to update.
+     */
+    public void update(T entity) {
+        var tableName = tableReflection.getTableName(entity.getClass());
+        var columnFields = tableReflection.getColumnFields(entity.getClass());
+        var primaryKey = tableReflection.getPrimaryKey(entity.getClass());
+        var primaryKeyValue = tableReflection.getPrimaryKeyValue(entity);
+
+        StringBuilder sql = new StringBuilder("UPDATE ");
+        sql.append(tableName).append(" SET ");
+
+        for (Field field : columnFields) {
+            sql.append(field.getName()).append(" = ?, ");
+        }
+
+        // Remove the trailing comma and space
+        sql.setLength(sql.length() - 2);
+        sql.append(" WHERE ").append(primaryKey).append(" = ?");
+        System.out.println("SQL: " + sql);
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
+
+            int index = 1;
+            for (Field field : columnFields) {
+                field.setAccessible(true);
+                preparedStatement.setObject(index++, field.get(entity));
+            }
+
+            preparedStatement.setObject(index, primaryKeyValue);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new OctopusException(e.getMessage(), e);
+        }
+    }
 
     /**
      * Deletes an entity from the database.
