@@ -30,10 +30,6 @@ public final class GetHandler implements RequestHandler {
      */
     @Override
     public HttpResponse processRequest(HttpRequest request) {
-        int httpCode = Http.HTTP_200;
-        String applicationType = "";
-        String response = "";
-
         var routeAndMethodPath = request.getControllerRouteAndMethodPath();
         String controllerRoute = routeAndMethodPath.first();
         String methodPath = routeAndMethodPath.second();
@@ -60,8 +56,8 @@ public final class GetHandler implements RequestHandler {
                 }
             }
 
-            httpCode = method.getAnnotation(Get.class).httpCode();
-            applicationType = method.getAnnotation(Get.class).type();
+            var httpCode = method.getAnnotation(Get.class).httpCode();
+            var applicationType = method.getAnnotation(Get.class).type();
 
             try {
                 Object result = method.invoke(controller.getInstance(), arguments);
@@ -70,11 +66,10 @@ public final class GetHandler implements RequestHandler {
                 throw new OctopusException("Error invoking method", e);
             }
         } else {
-            httpCode = Http.HTTP_404;
-            response = "Controller not found!";
+            var httpCode = Http.HTTP_404;
+            var response = "Controller not found!";
+            return new HttpResponse(String.class, response, httpCode, Http.APPLICATION_JSON, request.exchange());
         }
-
-        return new HttpResponse(String.class, response, httpCode, applicationType, request.exchange());
     }
 
     /**

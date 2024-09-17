@@ -1,7 +1,10 @@
 package br.com.schumaker.octopus.framework.web.handler;
 
+import br.com.schumaker.octopus.framework.annotations.controller.Put;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.http.HttpResponse;
+
+import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_PUT;
 
 /**
  * The PutHandler class.
@@ -10,7 +13,7 @@ import br.com.schumaker.octopus.framework.web.http.HttpResponse;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public final class PutHandler implements RequestHandler {
+public final class PutHandler extends AbstractRequestHandler {
 
     /**
      * Process the HTTP_PUT request.
@@ -20,7 +23,6 @@ public final class PutHandler implements RequestHandler {
      */
     @Override
     public HttpResponse processRequest(HttpRequest request) {
-        // TODO: implement
-        return null;
+        return processRequest(request, HTTP_PUT, Put.class);
     }
 }
