@@ -16,7 +16,7 @@ public class PropertiesReaderTest {
 
         // Act & Assert
         assertNotNull(properties);
-        assertEquals("8080", properties.getProperty("server.port"));
-        assertEquals("/", properties.getProperty("server.context"));
+        assertEquals("8080", properties.getProperty("oc.server.port"));
+        assertEquals("/", properties.getProperty("oc.server.context"));
     }
 }
