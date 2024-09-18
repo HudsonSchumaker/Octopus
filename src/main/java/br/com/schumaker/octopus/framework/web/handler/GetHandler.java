@@ -47,7 +47,7 @@ public final class GetHandler implements RequestHandler {
 
             for (short i = 0; i < parameters.size(); i++) {
                 if (parameters.get(i).isAnnotationPresent(PathVariable.class)) {
-                    arguments[i] = this.convertToType(pathVariables.get(i), parameters.get(i).getType());
+                    arguments[i] = AbstractRequestHandler.convertToType(pathVariables.get(i), parameters.get(i).getType());
                     continue;
                 }
 
@@ -70,20 +70,5 @@ public final class GetHandler implements RequestHandler {
             var response = "Controller not found!";
             return new HttpResponse(String.class, response, httpCode, Http.APPLICATION_JSON, request.exchange());
         }
-    }
-
-    /**
-     * Converts the given parameter to the specified type.
-     *
-     * @param param the parameter to convert
-     * @param type the type to convert to
-     * @return the converted parameter
-     */
-    private Object convertToType(Object param, Class<?> type) {
-        var parser = TypeConverter.typeParsers.get(type);
-        if (parser != null) {
-            return parser.apply((String) param);
-        }
-        return param;
     }
 }
