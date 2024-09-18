@@ -2,6 +2,7 @@ package br.com.schumaker.octopus.framework.web;
 
 import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
 import br.com.schumaker.octopus.framework.model.Pair;
+import br.com.schumaker.octopus.framework.security.SecurityFilter;
 import br.com.schumaker.octopus.framework.web.handler.DeleteHandler;
 import br.com.schumaker.octopus.framework.web.handler.GetHandler;
 import br.com.schumaker.octopus.framework.web.handler.HeaderHandler;
@@ -11,6 +12,7 @@ import br.com.schumaker.octopus.framework.web.handler.PostHandler;
 import br.com.schumaker.octopus.framework.web.handler.PutHandler;
 import br.com.schumaker.octopus.framework.web.handler.RequestHandler;
 import br.com.schumaker.octopus.framework.web.http.Http;
+import br.com.schumaker.octopus.framework.web.http.HttpFilter;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.http.HttpResponse;
 import com.sun.net.httpserver.HttpExchange;
@@ -18,6 +20,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_DELETE;
@@ -39,6 +42,9 @@ import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_PUT;
 final class InboundHandler implements HttpHandler {
     private final OutboundHandler outboundHandler = new OutboundHandler();
     private final Map<String, RequestHandler> handlers = new HashMap<>();
+
+    
+    private final List<HttpFilter> filters = List.of(new SecurityFilter());
 
     public InboundHandler() {
         handlers.put(HTTP_GET, new GetHandler());
@@ -62,7 +68,8 @@ final class InboundHandler implements HttpHandler {
             String fullUrl = this.getFullUrl(exchange).first();
             HttpRequest request = new HttpRequest(fullUrl, exchange);
 
-            // TODO: interceptors?
+            filters.forEach(filter -> filter.doFilter(request));
+
             RequestHandler handler = handlers.get(method.toUpperCase());
             if (handler != null) {
                 HttpResponse response = handler.processRequest(request);
