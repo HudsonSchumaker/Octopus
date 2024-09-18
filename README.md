@@ -35,19 +35,19 @@ mysql -u root -p
 CREATE DATABASE octopus;
 USE octopus;
 CREATE TABLE product (
-           id BIGINT AUTO_INCREMENT PRIMARY KEY,
-           name VARCHAR(255) NOT NULL,
-           description VARCHAR(255),
-           price DOUBLE NOT NULL
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    price DOUBLE NOT NULL
 );
 ```
 4. Run the `Main` class to start the application.
 **Sample Data:**
 ```json
 {
-"name": "Sample Product",
-"description": "This is a sample product description.",
-"price": 19.99
+  "name": "Sample Product",
+  "description": "This is a sample product description.",
+  "price": 19.99
 }
 ```
 ---
