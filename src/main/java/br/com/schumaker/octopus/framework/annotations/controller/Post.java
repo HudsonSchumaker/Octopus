@@ -1,5 +1,6 @@
 package br.com.schumaker.octopus.framework.annotations.controller;
 
+import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.web.http.Http;
 
 import java.lang.annotation.ElementType;
@@ -42,8 +43,9 @@ import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
  * }
  * </pre>
  *
- * @see Controller
  * @see Payload
+ * @see Validate
+ * @see Controller
  *
  * @author Hudson Schumaker
  * @version 1.0.0

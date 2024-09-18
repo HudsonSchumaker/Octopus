@@ -1,5 +1,6 @@
 package br.com.schumaker.octopus.framework.annotations.controller;
 
+import br.com.schumaker.octopus.framework.model.PatchHelper;
 import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
 
@@ -26,15 +27,20 @@ import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
  *
  * <pre>
  * {@code
- * @Patch(value = "/update", type = "application/json")
- * public ResponseView<MyEntity> updateEntity(@Payload MyEntity entity) {
- *     // Method implementation
+ * @Patch(value = "/update/{id}", type = "application/json")
+ * public ResponseView<Entity> updateEntity(@PathVariable Long id, @Payload Map<String, Object> patchMessage) {
+ *     var oldEntity = entityRepository.findById(id);
+ *     PatchHelper.applyPatch(oldEntity, patch);
+ *     entityRepository.update(oldEntity);
+ *     ...
  * }
  * }
  * </pre>
  *
  * @see Controller
  * @see Payload
+ * @see PathVariable
+ * @see PatchHelper
  * @see ResponseView
  *
  * @author Hudson Schumaker

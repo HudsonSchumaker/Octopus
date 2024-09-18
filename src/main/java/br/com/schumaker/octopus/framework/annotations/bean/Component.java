@@ -28,6 +28,7 @@ import java.lang.annotation.Target;
  *     public void doSomething() {
  *         // Component logic
  *     }
+ *     ...
  * }
  * }
  * </pre>

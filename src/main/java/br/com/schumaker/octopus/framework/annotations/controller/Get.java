@@ -46,6 +46,8 @@ import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
  * @see Patch
  * @see Delete
  * @see Controller
+ * @see Head
+ * @see Options
  *
  * @author Hudson Schumaker
  * @version 1.0.0
