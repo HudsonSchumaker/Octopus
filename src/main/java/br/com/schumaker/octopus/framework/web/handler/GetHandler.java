@@ -62,8 +62,8 @@ public final class GetHandler implements RequestHandler {
             try {
                 Object result = method.invoke(controller.getInstance(), arguments);
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
-            } catch (Exception e) {
-                throw new OctopusException("Error invoking method", e);
+            } catch (Exception ex) {
+                throw new OctopusException("Error invoking method", ex);
             }
         } else {
             var httpCode = Http.HTTP_404;

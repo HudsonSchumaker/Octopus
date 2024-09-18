@@ -10,7 +10,7 @@ package br.com.schumaker.octopus.framework.ioc;
  */
 public class AppProperties {
     public static final String APP_NAME = "Octopus";
-    public static final String APP_VERSION = "0.15.0";
+    public static final String APP_VERSION = "0.16.0";
     public static final String DB_TYPE = "oc.db.type";
     public static final String DB_URL = "oc.db.url";
     public static final String DB_USER = "oc.db.user";

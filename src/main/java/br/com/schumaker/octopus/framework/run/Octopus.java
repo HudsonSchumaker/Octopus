@@ -33,8 +33,8 @@ public final class Octopus {
     static {
         try {
             webServer = new WebServer(environment.getServerPort(), environment.getServerContext());
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage(), ExceptionCodes.WEB_SERVER_INIT_ERROR.getCode());
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage(), ExceptionCodes.WEB_SERVER_INIT_ERROR.getCode());
         }
     }
 

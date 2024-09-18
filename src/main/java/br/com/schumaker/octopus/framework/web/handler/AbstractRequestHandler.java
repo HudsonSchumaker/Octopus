@@ -79,8 +79,8 @@ public abstract class AbstractRequestHandler implements RequestHandler {
 
                 Object result = method.invoke(controller.getInstance(), arguments);
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
-            } catch (Exception e) {
-                throw new OctopusException("Error invoking method.", e);
+            } catch (Exception ex) {
+                throw new OctopusException("Error invoking method.", ex);
             }
         } else {
             int httpCode = Http.HTTP_404;
@@ -107,8 +107,8 @@ public abstract class AbstractRequestHandler implements RequestHandler {
                 validationReflection.validate(paramObject);
                 arguments[index] = paramObject;
             }
-        } catch (Exception e) {
-            throw new OctopusException("Error reading request body.", e);
+        } catch (Exception ex) {
+            throw new OctopusException("Error reading request body.", ex);
         }
     }
 

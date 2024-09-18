@@ -68,8 +68,8 @@ public class DbCrud<K, T> {
             if (resultSet.next()) {
                 return resultSet.getLong(1);
             }
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage(), e);
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage(), ex);
         }
 
         return 0L;
@@ -108,8 +108,8 @@ public class DbCrud<K, T> {
                     return entity;
                 }
             }
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage(), e);
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage(), ex);
         }
 
         return null;
@@ -153,8 +153,8 @@ public class DbCrud<K, T> {
             }
 
             return results;
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage(), e);
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage(), ex);
         }
     }
 
@@ -202,8 +202,8 @@ public class DbCrud<K, T> {
                     return (K) resultSet.getObject(1);
                 }
             }
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage(), e);
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage(), ex);
         }
 
         return null;
@@ -243,8 +243,8 @@ public class DbCrud<K, T> {
 
             preparedStatement.setObject(index, primaryKeyValue);
             preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage(), e);
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage(), ex);
         }
     }
 
@@ -276,8 +276,8 @@ public class DbCrud<K, T> {
 
             preparedStatement.setObject(1, id);
             preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage(), e);
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage(), ex);
         }
     }
 }
