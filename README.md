@@ -32,8 +32,10 @@ docker run -d -ti --name local-mysql-8 -p 3306:3306 -p 33060:33060 -v mysql-data
 ```
 ```sql 
 mysql -u root -p
+
 CREATE DATABASE octopus;
 USE octopus;
+
 CREATE TABLE product (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
