@@ -17,7 +17,7 @@ import java.math.BigInteger;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-@Table()
+@Table
 public class Product {
 
     @Pk("id")

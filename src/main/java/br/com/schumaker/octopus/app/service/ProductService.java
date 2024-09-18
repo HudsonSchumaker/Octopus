@@ -37,6 +37,17 @@ public class ProductService {
        return productRepository.save(product);
     }
 
+    public Product update(BigInteger id, Product newProduct) {
+        var oldProduct = productRepository.findById(id);
+        oldProduct.setName(newProduct.getName());
+        oldProduct.setDescription(newProduct.getDescription());
+        oldProduct.setPrice(newProduct.getPrice());
+
+        productRepository.update(oldProduct);
+
+        return productRepository.findById(id);
+    }
+
     public void delete(Product product) {
         productRepository.delete(product);
     }
