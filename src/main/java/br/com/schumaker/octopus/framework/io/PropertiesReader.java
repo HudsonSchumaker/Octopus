@@ -5,7 +5,7 @@ import br.com.schumaker.octopus.framework.exception.OctopusException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import static br.com.schumaker.octopus.framework.ioc.AppProperties.APPLICATION_PROPERTIES_FILE_NAME;
+import static br.com.schumaker.octopus.framework.ioc.AppProperties.APP_PROPERTIES_FILE_NAME;
 
 /**
  * The PropertiesReader class is responsible for loading properties from a properties file.
@@ -28,7 +28,7 @@ public final class PropertiesReader {
      */
     public static Properties loadProperties(String environment) {
         Properties properties = new Properties();
-        String fileName = APPLICATION_PROPERTIES_FILE_NAME;
+        String fileName = APP_PROPERTIES_FILE_NAME;
 
         if (environment != null && !environment.isBlank()) {
             fileName = "application-" + environment + ".properties";

@@ -1,7 +1,6 @@
 package br.com.schumaker.octopus.framework.ioc;
 
 import br.com.schumaker.octopus.framework.io.PropertiesReader;
-
 import java.util.Properties;
 
 import static br.com.schumaker.octopus.framework.ioc.AppProperties.DEFAULT_VALUE_NAME;
@@ -21,6 +20,8 @@ public class Environment {
     private static final String DEFAULT_VALUE_VALUE = "0";
     private static final String SERVER_PORT_DEFAULT = "8080";
     private static final String SERVER_CONTEXT_DEFAULT = "/";
+    private static final String JWT_EXPIRATION_DEFAULT = "3600";
+
     private static final Environment INSTANCE = new Environment();
     private final Properties properties;
     private String environment = "";
@@ -87,5 +88,14 @@ public class Environment {
      */
     public String getServerContext() {
         return properties.getProperty(SERVER_CONTEXT, SERVER_CONTEXT_DEFAULT);
+    }
+
+    /**
+     * Retrieves the JWT expiration time from the environment properties.
+     *
+     * @return the JWT expiration time.
+     */
+    public Long getJwtExpiration() {
+        return Long.parseLong(properties.getProperty(AppProperties.JWT_EXPIRATION, JWT_EXPIRATION_DEFAULT));
     }
 }

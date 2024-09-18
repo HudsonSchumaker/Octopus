@@ -12,7 +12,7 @@ public class EnvironmentTest {
         Environment env = Environment.getInstance();
 
         // Act
-        String result = env.getKey("server.port");
+        String result = env.getKey("oc.server.port");
 
         // Assert
         assertEquals("8080", result);
