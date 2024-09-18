@@ -3,9 +3,11 @@ package br.com.schumaker.octopus.app.service;
 import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.model.db.ProductRepository;
 import br.com.schumaker.octopus.framework.annotations.bean.Service;
+import br.com.schumaker.octopus.framework.model.PatchHelper;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The ProductService class.
@@ -45,6 +47,13 @@ public class ProductService {
 
         productRepository.update(oldProduct);
 
+        return productRepository.findById(id);
+    }
+
+    public Product patch(BigInteger id, Map<String, Object> patch) {
+        var oldProduct = productRepository.findById(id);
+        PatchHelper.applyPatch(oldProduct, patch);
+        productRepository.update(oldProduct);
         return productRepository.findById(id);
     }
 
