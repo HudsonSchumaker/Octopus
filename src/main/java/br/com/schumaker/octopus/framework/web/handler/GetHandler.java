@@ -37,10 +37,7 @@ public final class GetHandler implements RequestHandler {
         var controller = container.getController(controllerRoute);
         if (controller != null) {
             var mappingAndMethodAndParams = controller.getMethod(methodPath, HTTP_GET);
-
             var mapping = mappingAndMethodAndParams.first();
-            var method = mappingAndMethodAndParams.second();
-            var methodReturnType = method.getReturnType();
             var parameters = mappingAndMethodAndParams.third();
             var arguments = new Object[parameters.size()];
             var pathVariables = controller.extractPathVariables(mapping, methodPath);
@@ -56,11 +53,13 @@ public final class GetHandler implements RequestHandler {
                 }
             }
 
+            var method = mappingAndMethodAndParams.second();
             var httpCode = method.getAnnotation(Get.class).httpCode();
             var applicationType = method.getAnnotation(Get.class).type();
 
             try {
                 Object result = method.invoke(controller.getInstance(), arguments);
+                var methodReturnType = method.getReturnType();
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
             } catch (Exception ex) {
                 throw new OctopusException("Error invoking method", ex);
