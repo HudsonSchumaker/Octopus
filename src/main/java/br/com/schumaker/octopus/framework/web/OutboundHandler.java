@@ -14,6 +14,10 @@ import static br.com.schumaker.octopus.framework.web.http.Http.CONTENT_TYPE;
 
 /**
  * The OutboundHandler class.
+ * This class is responsible for processing the response and sending it to the client.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
  */
 final class OutboundHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -37,10 +41,8 @@ final class OutboundHandler {
         } else if (returnType.equals(ResponseView.class)) {
 
             // TODO: Check content type and transform the body to the correct type
-            
             var resultBody = objectMapper.writeValueAsString(((ResponseView<?>) result).getBody());
             this.processResponseHeaders(exchange, (ResponseView<?>) result);
-
 
             this.sendResponse(exchange, httpCode,contentType, resultBody);
         } else {
@@ -106,7 +108,7 @@ final class OutboundHandler {
      * Sends the response to the client.
      *
      * @param exchange the HttpExchange object containing the request and response.
-     * @param httpCode the HTTP status code,
+     * @param httpCode the HTTP status code.
      * @param response the response body.
      * @param headers  the response headers.
      * @throws Exception if an error occurs during response sending.

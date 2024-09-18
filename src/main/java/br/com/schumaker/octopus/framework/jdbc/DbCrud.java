@@ -45,12 +45,34 @@ public class DbCrud<K, T> {
     private final Class<K> pk;
     private final Class<T> clazz;
 
-    // TODO: documentation
-
     @SuppressWarnings("unchecked")
     public DbCrud() {
         this.pk = (Class<K>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+    }
+
+    /**
+     * Counts the number of entities of the type T in the database.
+     *
+     * @return the number of entities of the type T.
+     */
+    public Long count() {
+        var tableName = tableReflection.getTableName(clazz);
+        String sql = "SELECT COUNT(*) FROM " + tableName;
+        System.out.println("SQL: " + sql);
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (Exception e) {
+            throw new OctopusException(e.getMessage(), e);
+        }
+
+        return 0L;
     }
 
     /**
@@ -60,8 +82,8 @@ public class DbCrud<K, T> {
      * @return the entity with the given primary key, or null if not found.
      */
     public T findById(K id) {
-        var primaryKey = tableReflection.getPrimaryKey(clazz);
         var tableName = tableReflection.getTableName(clazz);
+        var primaryKey = tableReflection.getPrimaryKey(clazz);
         var columnFields = tableReflection.getFields(clazz);
 
         String sql = "SELECT * FROM " + tableName + " WHERE " + primaryKey + " = ?";
@@ -74,7 +96,6 @@ public class DbCrud<K, T> {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     T entity = clazz.getDeclaredConstructor().newInstance();
-
                     for (Field field : columnFields) {
                         field.setAccessible(true);
                         Object value = resultSet.getObject(field.getName());
@@ -82,10 +103,8 @@ public class DbCrud<K, T> {
                         if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
                             value = java.math.BigInteger.valueOf((Long) value);
                         }
-
                         field.set(entity, value);
                     }
-
                     return entity;
                 }
             }
@@ -147,7 +166,6 @@ public class DbCrud<K, T> {
      */
     @SuppressWarnings("unchecked")
     public K save(T entity) {
-        Class<?> clazz = entity.getClass();
         var tableName = tableReflection.getTableName(clazz);
         var columnFields = tableReflection.getColumnNames(clazz);
 
@@ -171,7 +189,7 @@ public class DbCrud<K, T> {
              PreparedStatement preparedStatement =
                      connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
 
-            int index = 1;
+            int index = 1; // index of the prepared statement parameter starting at 1
             for (Field field : tableReflection.getColumnFields(clazz)) {
                 field.setAccessible(true);
                 preparedStatement.setObject(index++, field.get(entity));
@@ -191,8 +209,44 @@ public class DbCrud<K, T> {
         return null;
     }
 
-    // TODO: implement update method
-    public void update(T entity) {}
+    /**
+     * Updates an entity in the database.
+     *
+     * @param entity the entity to update.
+     */
+    public void update(T entity) {
+        var tableName = tableReflection.getTableName(clazz);
+        var columnFields = tableReflection.getColumnFields(clazz);
+        var primaryKey = tableReflection.getPrimaryKey(clazz);
+        var primaryKeyValue = tableReflection.getPrimaryKeyValue(entity);
+
+        StringBuilder sql = new StringBuilder("UPDATE ");
+        sql.append(tableName).append(" SET ");
+
+        for (Field field : columnFields) {
+            sql.append(field.getName()).append(" = ?, ");
+        }
+
+        // Remove the trailing comma and space
+        sql.setLength(sql.length() - 2);
+        sql.append(" WHERE ").append(primaryKey).append(" = ?");
+        System.out.println("SQL: " + sql);
+
+        try (Connection connection = DbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
+
+            int index = 1; // index of the prepared statement parameter starting at 1
+            for (Field field : columnFields) {
+                field.setAccessible(true);
+                preparedStatement.setObject(index++, field.get(entity));
+            }
+
+            preparedStatement.setObject(index, primaryKeyValue);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new OctopusException(e.getMessage(), e);
+        }
+    }
 
     /**
      * Deletes an entity from the database.
@@ -211,8 +265,8 @@ public class DbCrud<K, T> {
      * @param id the primary key of the entity to delete.
      */
     public void deleteById(K id) {
-        var primaryKey = tableReflection.getPrimaryKey(clazz);
         var tableName = tableReflection.getTableName(clazz);
+        var primaryKey = tableReflection.getPrimaryKey(clazz);
 
         String sql = "DELETE FROM " + tableName + " WHERE " + primaryKey + " = ?";
         System.out.println("SQL: " + sql);

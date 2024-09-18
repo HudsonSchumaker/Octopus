@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     implementation("mysql:mysql-connector-java:8.0.33")
-    implementation("org.postgresql:postgresql:42.5.0")
+    implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
 
     testRuntimeOnly( "org.junit.jupiter:junit-jupiter-engine:5.8.1")

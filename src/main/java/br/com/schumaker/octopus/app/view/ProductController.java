@@ -68,7 +68,7 @@ public class ProductController {
                 .build();
     }
 
-    @Get("/info/{id}/{name}")
+    @Get("/info/{id}/{name}") // TODO: fix type
     public ResponseView<ProductView> getInfo(@PathVariable("id") int id, @PathVariable("name") String name) {
         var product = service.getById(BigInteger.valueOf(id));
         return ResponseView.ok()
@@ -78,11 +78,6 @@ public class ProductController {
                         product.getDescription(),
                         product.getPrice()))
                 .build();
-    }
-
-    @Put
-    public String update() throws IOException {
-        throw new IOException("Not implemented");
     }
 
     @Post
@@ -100,15 +95,26 @@ public class ProductController {
                 .build();
     }
 
+    @Put("/{id}")
+    public ResponseView<ProductView> update(@PathVariable("id") int id, @Payload @Validate ProductDTO dto) throws IOException {
+        Mapper<ProductDTO, Product> mapper = new Mapper<>();
+        var product = mapper.map(dto, Product.class);
+        var updated = service.update(BigInteger.valueOf(id), product);
+
+        return ResponseView.ok()
+                .body(new ProductView(
+                    updated.getId(),
+                    updated.getName(),
+                    updated.getDescription(),
+                    updated.getPrice()))
+                .build();
+    }
+
     @Delete("/{id}")
     public ResponseView<Void> delete(@PathVariable("id") int id) {
         var product = service.getById(BigInteger.valueOf(id));
         service.delete(product);
 
         return ResponseView.noContent().build();
-    }
-
-    private String info() {
-        return name;
     }
 }

@@ -49,8 +49,8 @@ public record HttpRequest (String fullUrl, HttpExchange exchange) {
     /**
      * Reads the request body from the HttpExchange object.
      *
-     * @return the request body as a string
-     * @throws Exception if an error occurs during request body reading
+     * @return the request body as a string.
+     * @throws Exception if an error occurs during request body reading.
      */
     public String readRequestBody() throws Exception {
         StringBuilder requestBody = new StringBuilder();
