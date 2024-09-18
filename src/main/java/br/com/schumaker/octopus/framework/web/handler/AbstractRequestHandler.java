@@ -26,9 +26,9 @@ import java.util.List;
  * @version 1.0.0
  */
 public abstract class AbstractRequestHandler implements RequestHandler {
-    protected final IoCContainer container = IoCContainer.getInstance();
-    protected final ObjectMapper objectMapper = new ObjectMapper();
-    protected final ValidationReflection validationReflection = ValidationReflection.getInstance();
+    protected static final IoCContainer container = IoCContainer.getInstance();
+    protected static final ObjectMapper objectMapper = new ObjectMapper();
+    protected static final ValidationReflection validationReflection = ValidationReflection.getInstance();
 
     /**
      * Processes the request.
@@ -55,12 +55,12 @@ public abstract class AbstractRequestHandler implements RequestHandler {
 
             for (short i = 0; i < parameters.size(); i++) {
                 if (parameters.get(i).isAnnotationPresent(PathVariable.class)) {
-                    arguments[i] = this.convertToType(pathVariables.get(i), parameters.get(i).getType());
+                    arguments[i] = convertToType(pathVariables.get(i), parameters.get(i).getType());
                     continue;
                 }
 
                 if (parameters.get(i).isAnnotationPresent(Payload.class)) {
-                    this.validateBody(request, parameters, i, arguments);
+                    validateBody(request, parameters.get(i), i, arguments);
                     continue;
                 }
 
@@ -79,8 +79,8 @@ public abstract class AbstractRequestHandler implements RequestHandler {
 
                 Object result = method.invoke(controller.getInstance(), arguments);
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
-            } catch (Exception e) {
-                throw new OctopusException("Error invoking method.", e);
+            } catch (Exception ex) {
+                throw new OctopusException("Error invoking method.", ex);
             }
         } else {
             int httpCode = Http.HTTP_404;
@@ -93,22 +93,22 @@ public abstract class AbstractRequestHandler implements RequestHandler {
      * Validates the request body.
      *
      * @param request    the request to be validated.
-     * @param parameters the parameters to be validated.
-     * @param index      the index of the parameter to be validated.
+     * @param parameter  the parameter to be validated.
+     * @param index      the index of the argument.
      * @param arguments  the arguments to be validated.
      */
-    private void validateBody(HttpRequest request, List<Parameter> parameters, short index, Object[] arguments) {
+    public static void validateBody(HttpRequest request, Parameter parameter, short index, Object[] arguments) {
         try {
-            if (parameters.get(index).isAnnotationPresent(Validate.class)) {
+            if (parameter.isAnnotationPresent(Validate.class)) {
                 var requestBody = request.readRequestBody();
-                var paramType = parameters.get(index).getType();
+                var paramType = parameter.getType();
 
                 Object paramObject = objectMapper.readValue(requestBody, paramType);
                 validationReflection.validate(paramObject);
                 arguments[index] = paramObject;
             }
-        } catch (Exception e) {
-            throw new OctopusException("Error reading request body.", e);
+        } catch (Exception ex) {
+            throw new OctopusException("Error reading request body.", ex);
         }
     }
 
@@ -119,7 +119,7 @@ public abstract class AbstractRequestHandler implements RequestHandler {
      * @param type  the type to convert to.
      * @return the converted parameter.
      */
-    private Object convertToType(Object param, Class<?> type) {
+    public static Object convertToType(Object param, Class<?> type) {
         var parser = TypeConverter.typeParsers.get(type);
         if (parser != null) {
             return parser.apply((String) param);

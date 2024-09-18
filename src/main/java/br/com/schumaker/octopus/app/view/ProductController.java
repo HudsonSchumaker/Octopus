@@ -6,6 +6,7 @@ import br.com.schumaker.octopus.framework.annotations.bean.Value;
 import br.com.schumaker.octopus.framework.annotations.controller.Controller;
 import br.com.schumaker.octopus.framework.annotations.controller.Delete;
 import br.com.schumaker.octopus.framework.annotations.controller.Get;
+import br.com.schumaker.octopus.framework.annotations.controller.Patch;
 import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.annotations.controller.Payload;
 import br.com.schumaker.octopus.framework.annotations.controller.Post;
@@ -19,6 +20,7 @@ import br.com.schumaker.octopus.framework.web.view.ResponseView;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  The ProductController class.
@@ -107,6 +109,19 @@ public class ProductController {
                     updated.getName(),
                     updated.getDescription(),
                     updated.getPrice()))
+                .build();
+    }
+
+    @Patch("/{id}")
+    public ResponseView<ProductView> patch(@PathVariable("id") BigInteger id, @Payload Map<String, Object> patch) throws IOException {
+        var patched = service.patch(id, patch);
+
+        return ResponseView.ok()
+                .body(new ProductView(
+                        patched.getId(),
+                        patched.getName(),
+                        patched.getDescription(),
+                        patched.getPrice()))
                 .build();
     }
 

@@ -81,8 +81,8 @@ public class Mapper <S, T> {
                 sourceField.setAccessible(false);
             }
             return target;
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage());
         }
     }
 }

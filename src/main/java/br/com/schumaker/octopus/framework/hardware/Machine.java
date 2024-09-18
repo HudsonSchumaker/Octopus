@@ -34,8 +34,8 @@ public final class Machine {
     public static String getHostName() {
         try {
             return InetAddress.getLocalHost().getHostName();
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage());
         }
     }
 
@@ -48,8 +48,8 @@ public final class Machine {
     public static String getIp() {
         try {
             return InetAddress.getLocalHost().getHostAddress();
-        } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage());
         }
     }
 

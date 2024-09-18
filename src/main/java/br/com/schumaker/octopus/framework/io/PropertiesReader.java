@@ -40,8 +40,8 @@ public final class PropertiesReader {
             }
 
             properties.load(inputStream);
-        } catch (Exception e) {
-           throw new OctopusException(e.getMessage());
+        } catch (Exception ex) {
+           throw new OctopusException(ex.getMessage());
         }
 
         return properties;

@@ -22,6 +22,7 @@ import java.lang.annotation.Target;
  *     public void performService() {
  *         // Service logic
  *     }
+ *     ...
  * }
  * }
  * </pre>

@@ -82,8 +82,8 @@ public class GlobalExceptionHandler {
             var os = exchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -111,8 +111,8 @@ public class GlobalExceptionHandler {
                 os.write(exception.getMessage().getBytes());
                 os.close();
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 
