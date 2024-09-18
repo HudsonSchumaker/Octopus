@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * The ResponseViewBuilder class is a builder for creating ResponseView objects.
  *
- * @param <T> the type of the response body
+ * @param <T> the type of the response body.
  *
  * @author Hudson Schumaker
  * @version 1.0.0

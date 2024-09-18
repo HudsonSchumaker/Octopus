@@ -2,7 +2,6 @@ package br.com.schumaker.octopus.framework.web.handler;
 
 import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.annotations.controller.Payload;
-import br.com.schumaker.octopus.framework.annotations.controller.Put;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
@@ -31,6 +30,14 @@ public abstract class AbstractRequestHandler implements RequestHandler {
     protected final ObjectMapper objectMapper = new ObjectMapper();
     protected final ValidationReflection validationReflection = ValidationReflection.getInstance();
 
+    /**
+     * Processes the request.
+     *
+     * @param request         the request to be processed.
+     * @param httpMethod      the HTTP method to be processed.
+     * @param annotationClass the annotation class to be processed.
+     * @return the response.
+     */
     protected HttpResponse processRequest(HttpRequest request, String httpMethod, Class<? extends Annotation> annotationClass) {
         var routeAndMethodPath = request.getControllerRouteAndMethodPath();
         String controllerRoute = routeAndMethodPath.first();
@@ -82,13 +89,21 @@ public abstract class AbstractRequestHandler implements RequestHandler {
         }
     }
 
+    /**
+     * Validates the request body.
+     *
+     * @param request    the request to be validated.
+     * @param parameters the parameters to be validated.
+     * @param index      the index of the parameter to be validated.
+     * @param arguments  the arguments to be validated.
+     */
     private void validateBody(HttpRequest request, List<Parameter> parameters, short index, Object[] arguments) {
         try {
-            var requestBody = request.readRequestBody();
-            var paramType = parameters.get(index).getType();
-            Object paramObject = objectMapper.readValue(requestBody, paramType);
-
             if (parameters.get(index).isAnnotationPresent(Validate.class)) {
+                var requestBody = request.readRequestBody();
+                var paramType = parameters.get(index).getType();
+
+                Object paramObject = objectMapper.readValue(requestBody, paramType);
                 validationReflection.validate(paramObject);
                 arguments[index] = paramObject;
             }
@@ -97,6 +112,13 @@ public abstract class AbstractRequestHandler implements RequestHandler {
         }
     }
 
+    /**
+     * Converts the parameter to the specified type.
+     *
+     * @param param the parameter to be converted.
+     * @param type  the type to convert to.
+     * @return the converted parameter.
+     */
     private Object convertToType(Object param, Class<?> type) {
         var parser = TypeConverter.typeParsers.get(type);
         if (parser != null) {

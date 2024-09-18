@@ -108,7 +108,7 @@ final class OutboundHandler {
      * Sends the response to the client.
      *
      * @param exchange the HttpExchange object containing the request and response.
-     * @param httpCode the HTTP status code,
+     * @param httpCode the HTTP status code.
      * @param response the response body.
      * @param headers  the response headers.
      * @throws Exception if an error occurs during response sending.

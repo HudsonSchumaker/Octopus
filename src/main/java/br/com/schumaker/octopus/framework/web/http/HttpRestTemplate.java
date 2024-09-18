@@ -59,7 +59,6 @@ public final class HttpRestTemplate {
                 .GET();
 
         headers.forEach(requestBuilder::header);
-
         HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 
@@ -99,7 +98,6 @@ public final class HttpRestTemplate {
                 .POST(BodyPublishers.ofString(body));
 
         headers.forEach(requestBuilder::header);
-
         HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 
@@ -139,7 +137,6 @@ public final class HttpRestTemplate {
                 .PUT(BodyPublishers.ofString(body));
 
         headers.forEach(requestBuilder::header);
-
         HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 
@@ -177,7 +174,6 @@ public final class HttpRestTemplate {
                 .DELETE();
 
         headers.forEach(requestBuilder::header);
-
         HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 
