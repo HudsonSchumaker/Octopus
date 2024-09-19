@@ -133,7 +133,6 @@ public class DbCrud<K, T> {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             List<T> results = new ArrayList<>();
-
             while (resultSet.next()) {
                 T entity = clazz.getDeclaredConstructor().newInstance();
 
@@ -148,10 +147,8 @@ public class DbCrud<K, T> {
 
                     field.set(entity, value);
                 }
-
                 results.add(entity);
             }
-
             return results;
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
