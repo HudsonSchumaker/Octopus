@@ -126,8 +126,8 @@ public final class Octopus {
                      \\/__/         \\/__/                       \\/__/                       \\/__/         \\/__/   \s
                 
                 """);
-        System.out.print(AppProperties.APP_NAME + ", ");
-        System.out.print("Version: " + AppProperties.APP_VERSION + ", ");
+        System.out.print(AppProperties.FMK_NAME + ", ");
+        System.out.print("Version: " + AppProperties.FMK_VERSION + ", ");
         System.out.print("Server Port: " + environment.getServerPort() + ", ");
         System.out.println("Environment: " + (commandLineArgs.getArg("-env") == null ? "default" : commandLineArgs.getArg("-env")));
     }

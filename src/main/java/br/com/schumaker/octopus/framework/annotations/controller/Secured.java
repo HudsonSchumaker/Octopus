@@ -5,6 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import static br.com.schumaker.octopus.framework.security.JwtManager.JWT_MESSAGE;
+
 /**
  * The @Secured annotation is used to mark a method as requiring authentication.
  * This annotation can be applied to methods to indicate that the method should be
@@ -37,4 +39,6 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Secured {}
+public @interface Secured {
+    String value() default JWT_MESSAGE;
+}

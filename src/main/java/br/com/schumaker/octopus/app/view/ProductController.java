@@ -11,6 +11,7 @@ import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.annotations.controller.Payload;
 import br.com.schumaker.octopus.framework.annotations.controller.Post;
 import br.com.schumaker.octopus.framework.annotations.controller.Put;
+import br.com.schumaker.octopus.framework.annotations.controller.Secured;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.model.Mapper;
 import br.com.schumaker.octopus.framework.web.http.Http;
@@ -126,6 +127,7 @@ public class ProductController {
     }
 
     @Delete("/{id}")
+    @Secured
     public ResponseView<Void> delete(@PathVariable("id") int id) {
         var product = service.getById(BigInteger.valueOf(id));
         service.delete(product);
