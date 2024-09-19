@@ -68,6 +68,7 @@ final class InboundHandler implements HttpHandler {
             String fullUrl = this.getFullUrl(exchange).first();
             HttpRequest request = new HttpRequest(fullUrl, exchange);
 
+            // TODO: improve filter
             filters.forEach(filter -> filter.doFilter(request));
 
             RequestHandler handler = handlers.get(method.toUpperCase());

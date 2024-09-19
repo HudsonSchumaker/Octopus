@@ -1,5 +1,6 @@
 package br.com.schumaker.octopus.framework.security;
 
+import br.com.schumaker.octopus.framework.annotations.bean.Filter;
 import br.com.schumaker.octopus.framework.annotations.controller.Secured;
 import br.com.schumaker.octopus.framework.exception.OctopusSecurityException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
@@ -7,6 +8,7 @@ import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpFilter;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 
+@Filter
 public class SecurityFilter implements HttpFilter {
     private static final IoCContainer container = IoCContainer.getInstance();
 
