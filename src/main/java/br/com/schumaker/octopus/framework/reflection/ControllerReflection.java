@@ -31,6 +31,9 @@ import java.util.Map;
 public final class ControllerReflection {
     private static final Map<Class<? extends Annotation>, HttpVerb> annotationMap = new HashMap<>();
 
+    /*
+     * Initializes the annotation map with the supported HTTP verbs.
+     */
     static {
         annotationMap.put(Get.class, HttpVerb.GET);
         annotationMap.put(Post.class, HttpVerb.POST);

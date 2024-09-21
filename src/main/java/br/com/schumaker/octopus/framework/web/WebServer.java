@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
  * It initializes the server with a specified port and context, and sets up a request handler.
  * The server uses a fixed thread pool executor based on the number of processors available on the machine.
  *
- * @author  Hudson Schumaker
+ * @author Hudson Schumaker
  * @version 1.0.0
  */
 public final class WebServer {

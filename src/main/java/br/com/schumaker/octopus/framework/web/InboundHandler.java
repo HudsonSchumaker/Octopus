@@ -42,9 +42,12 @@ import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_PUT;
 final class InboundHandler implements HttpHandler {
     private final OutboundHandler outboundHandler = new OutboundHandler();
     private final Map<String, RequestHandler> handlers = new HashMap<>();
-
     private final List<HttpFilter> filters = List.of(new SecurityFilter());
 
+    /**
+     * Constructs a new InboundHandler instance.
+     * Initializes the request handlers for supported HTTP methods.
+     */
     public InboundHandler() {
         handlers.put(HTTP_GET, new GetHandler());
         handlers.put(HTTP_POST, new PostHandler());

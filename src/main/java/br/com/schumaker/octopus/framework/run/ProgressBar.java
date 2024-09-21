@@ -1,11 +1,24 @@
 package br.com.schumaker.octopus.framework.run;
 
+/**
+ * The ProgressBar class.
+ * This class is responsible for displaying a progress bar.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public final class ProgressBar {
     private final int total;
     private final int barLength;
     private int current;
     private String progressBar;
 
+    /**
+     * Constructor.
+     *
+     * @param total     the total.
+     * @param barLength the bar length.
+     */
     public ProgressBar(int total, int barLength) {
         this.total = total;
         this.barLength = barLength;
@@ -13,6 +26,12 @@ public final class ProgressBar {
         this.progressBar = "";
     }
 
+    /**
+     * Update the progress bar.
+     *
+     * @param progress the progress.
+     * @param message  the message.
+     */
     public void update(int progress, String message) {
         current += progress;
         int progressPercentage = (int) ((double) current / total * 100);
@@ -25,11 +44,17 @@ public final class ProgressBar {
         display();
     }
 
+    /**
+     * Complete the progress bar.
+     */
     public void complete() {
         update(total - current, "Complete");
         System.out.println();
     }
 
+    /**
+     * Display the progress bar.
+     */
     private void display() {
         System.out.print("\r" + progressBar);
     }
