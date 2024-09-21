@@ -4,6 +4,7 @@ import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.app.model.db.ProductRepository;
 import br.com.schumaker.octopus.framework.annotations.bean.Service;
 import br.com.schumaker.octopus.framework.model.PatchHelper;
+import br.com.schumaker.octopus.framework.web.view.Page;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -35,7 +36,7 @@ public class ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
-    public List<Product> list() {
+    public Page<Product> list() {
         return productRepository.findAll();
     }
 
