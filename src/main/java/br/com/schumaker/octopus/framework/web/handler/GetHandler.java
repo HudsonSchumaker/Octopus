@@ -4,7 +4,6 @@ import br.com.schumaker.octopus.framework.annotations.controller.Get;
 import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.model.TypeConverter;
 import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;

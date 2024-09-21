@@ -12,6 +12,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The ManagedControllerTest class.
+ * This class is responsible for testing the ManagedController class.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class ManagedControllerTest {
     private ManagedController managedController;
 
@@ -22,13 +29,17 @@ public class ManagedControllerTest {
 
     @Test
     void testGetMethod_Found() {
+        // Arrange & Act
         Triple<String, Method, List<Parameter>> result = managedController.getMethod("/users/123", "GET");
+
+        // Assert
         assertNotNull(result);
         assertEquals("/users/{id}", result.first());
     }
 
     @Test
     void testGetMethod_NotFound() {
+        // Arrange & Act & Assert
         assertThrows(RuntimeException.class, () -> {
             managedController.getMethod("/invalidRoute", "GET");
         });
@@ -36,13 +47,17 @@ public class ManagedControllerTest {
 
     @Test
     void testPathMatches() {
+        // Assert & Act
         assertTrue(managedController.pathMatches("/users/{id}", "/users/123"));
         assertFalse(managedController.pathMatches("/users/{id}", "/users"));
     }
 
     @Test
     void testExtractPathVariables() {
+        // Arrange & Act
         List<Object> pathVariables = managedController.extractPathVariables("/users/{id}", "/users/123");
+
+        // Assert
         assertEquals(1, pathVariables.size());
         assertEquals("123", pathVariables.getFirst());
     }

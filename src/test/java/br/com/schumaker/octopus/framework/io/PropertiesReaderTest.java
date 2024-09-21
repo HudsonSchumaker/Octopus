@@ -7,6 +7,13 @@ import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * The PropertiesReaderTest class.
+ * This class is responsible for testing the PropertiesReader class.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class PropertiesReaderTest {
 
     @Test
