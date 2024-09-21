@@ -21,26 +21,29 @@ import java.util.function.Function;
 public final class TypeConverter {
     public static final Map<Class<?>, Function<String, Object>> typeParsers = new HashMap<>();
 
+    /*
+     * Private constructor to prevent instantiation.
+     */
     static {
         typeParsers.put(String.class, value -> value);
         typeParsers.put(BigInteger.class, BigInteger::new);
         typeParsers.put(BigDecimal.class, BigDecimal::new);
         typeParsers.put(Integer.class, Integer::parseInt);
         typeParsers.put(int.class, Integer::parseInt);
-        typeParsers.put(Float.class, Float::parseFloat);
         typeParsers.put(float.class, Float::parseFloat);
-        typeParsers.put(Double.class, Double::parseDouble);
+        typeParsers.put(Float.class, Float::parseFloat);
         typeParsers.put(double.class, Double::parseDouble);
-        typeParsers.put(Long.class, Long::parseLong);
+        typeParsers.put(Double.class, Double::parseDouble);
         typeParsers.put(long.class, Long::parseLong);
-        typeParsers.put(Boolean.class, Boolean::parseBoolean);
+        typeParsers.put(Long.class, Long::parseLong);
         typeParsers.put(boolean.class, Boolean::parseBoolean);
-        typeParsers.put(Short.class, Short::parseShort);
+        typeParsers.put(Boolean.class, Boolean::parseBoolean);
         typeParsers.put(short.class, Short::parseShort);
-        typeParsers.put(Byte.class, Byte::parseByte);
+        typeParsers.put(Short.class, Short::parseShort);
         typeParsers.put(byte.class, Byte::parseByte);
-        typeParsers.put(Character.class, value -> value.charAt(0));
+        typeParsers.put(Byte.class, Byte::parseByte);
         typeParsers.put(char.class, value -> value.charAt(0));
+        typeParsers.put(Character.class, value -> value.charAt(0));
         typeParsers.put(Instant.class, DateParser::parseToInstant);
         typeParsers.put(LocalDate.class, DateParser::parseToLocalDate);
         typeParsers.put(LocalDateTime.class, DateParser::parseToLocalDateTime);

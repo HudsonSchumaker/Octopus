@@ -21,6 +21,10 @@ import java.util.List;
  * @version 1.0.1
  */
 public final class DateParser {
+
+    /**
+     * The list of supported date formatters.
+     */
     private static final List<DateTimeFormatter> DATE_FORMATTERS = Arrays.asList(
             DateTimeFormatter.ISO_LOCAL_DATE,
             DateTimeFormatter.ISO_LOCAL_DATE_TIME,

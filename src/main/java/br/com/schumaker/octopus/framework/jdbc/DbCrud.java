@@ -25,11 +25,34 @@ import java.util.Optional;
  *
  * <pre>
  * {@code
- * DbCrud<Integer, User> userCrud = new DbCrud<>();
- * User user = userCrud.findById(1);
- * List<User> users = userCrud.findAll();
- * Integer userId = userCrud.save(new User());
- * }
+ * @Repository
+ * public class MyRepository extends DbCrud<BigInteger, MyEntity> {}
+ *
+ * @Service
+ * public class MyEntityService {
+ *
+ *     private final MyRepository repository;
+ *
+ *     public ProductService(MyRepository repository) {
+ *         this.MyRepository = repository;
+ *     }
+ *
+ *     public Long count() {
+ *         return repository.count();
+ *     }
+ *
+ *     public MyEntity getById(BigInteger id) {
+ *         return repository.findById(id).orElse(null);
+ *     }
+ *
+ *     public List<MyEntity> list() {
+ *         return repository.findAll();
+ *     }
+ *
+ *     public BigInteger save(MyEntity myEntity) {
+ *        return repository.save(myEntity).orElse(null);
+ *     }
+ * }}
  * </pre>
  *
  * @param <K> the type of the primary key
@@ -46,6 +69,7 @@ public class DbCrud<K, T> {
     private final Class<K> pk;
     private final Class<T> clazz;
 
+    // SQL keywords
     private static final String SELECT = "SELECT ";
     private static final String UPDATE = "UPDATE ";
     private static final String FROM = " FROM ";

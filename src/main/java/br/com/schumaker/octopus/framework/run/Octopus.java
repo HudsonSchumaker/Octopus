@@ -10,6 +10,7 @@ import br.com.schumaker.octopus.framework.annotations.exception.GlobalExceptionH
 import br.com.schumaker.octopus.framework.exception.ExceptionCodes;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.AppProperties;
+import br.com.schumaker.octopus.framework.jdbc.SqlExecutor;
 import br.com.schumaker.octopus.framework.web.WebServer;
 import br.com.schumaker.octopus.framework.ioc.Environment;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
@@ -30,6 +31,9 @@ public final class Octopus {
     private static final Environment environment = Environment.getInstance();
     private static final CommandLineArgs commandLineArgs = CommandLineArgs.getInstance();
 
+    /*
+     * Initializes the web server.
+     */
     static {
         try {
             webServer = new WebServer(environment.getServerPort(), environment.getServerContext());
@@ -49,6 +53,7 @@ public final class Octopus {
     public static void run(Class<?> clazz, String[] args) throws Exception {
         handleCommandLineArgs(args);
         printBanner();
+        executeSqlScripts();
         createManagedClasses(clazz);
 
         webServer.start();
@@ -106,6 +111,14 @@ public final class Octopus {
         if (env != null) {
             environment.setEnvironment(env);
         }
+    }
+
+    /**
+     * Executes the DDL scripts to create the database schema.
+     */
+    private static void executeSqlScripts() {
+        SqlExecutor.executeFromFile("/schema.sql"); // Execute DDL
+        SqlExecutor.executeFromFile("/data.sql");   // Execute DML
     }
 
     /**

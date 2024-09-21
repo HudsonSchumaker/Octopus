@@ -13,7 +13,6 @@ import java.util.Map;
  */
 public final class CommandLineArgs {
     public static final String ENV = "-env";
-
     private static final CommandLineArgs INSTANCE = new CommandLineArgs();
     private final Map<String, String> argsMap = new HashMap<>();
 

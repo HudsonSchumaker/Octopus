@@ -33,6 +33,9 @@ public final class JwtManager {
     private static final String ISSUER;
     private static final Long EXPIRATION;
 
+    /*
+     * Static block to initialize the secret key, issuer, and expiration time.
+     */
     static {
         Environment environment = Environment.getInstance();
         SECRET_KEY = Optional.ofNullable(environment.getKey(AppProperties.JWT_SECRET))

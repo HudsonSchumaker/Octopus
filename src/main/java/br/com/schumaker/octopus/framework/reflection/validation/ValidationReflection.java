@@ -19,7 +19,8 @@ import java.util.Map;
 
 /**
  * The ValidationReflection class provides utility methods for validating objects using reflection.
- * It validates fields annotated with validation annotations such as @NotNull, @NotBlank, @NotEmpty, @Email, @Min, @Max, @Range, and @Past.
+ * It validates fields annotated with validation annotations such as @NotNull, @NotBlank, @NotEmpty, @Email
+ * , @Min, @Max, @Range, @Past and @Future.
  * This class is a singleton and provides a global point of access to its instance.
  *
  * @see NotNull
@@ -30,6 +31,7 @@ import java.util.Map;
  * @see Max
  * @see Range
  * @see Past
+ * @see Future
  *
  * @author Hudson Schumaker
  * @version 1.0.0
@@ -38,6 +40,9 @@ public final class ValidationReflection {
     private static final ValidationReflection INSTANCE = new ValidationReflection();
     private final Map<Class<? extends Annotation>, Validation> validationStrategies = new HashMap<>();
 
+    /**
+     * Constructs a new ValidationReflection instance.
+     */
     private ValidationReflection() {
         validationStrategies.put(Email.class, new EmailValidation());
         validationStrategies.put(NotNull.class, new NotNullValidation());
