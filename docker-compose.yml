@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: octopus-app:0.20.12
+    image: octopus-app:0.21.0
     ports:
       - "80:80"
     depends_on:

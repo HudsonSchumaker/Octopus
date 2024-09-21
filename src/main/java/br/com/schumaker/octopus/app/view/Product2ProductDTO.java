@@ -2,6 +2,11 @@ package br.com.schumaker.octopus.app.view;
 
 import br.com.schumaker.octopus.app.model.Product;
 import br.com.schumaker.octopus.framework.model.ModelViewMapper;
+import br.com.schumaker.octopus.framework.web.view.Page;
+import br.com.schumaker.octopus.framework.web.view.PageImpl;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The Product2ProductDTO class.
@@ -31,5 +36,18 @@ public class Product2ProductDTO implements ModelViewMapper<Product, ProductDTO> 
                 product.getName(),
                 product.getDescription(),
                 product.getPrice());
+    }
+
+    public Page<ProductDTO> from(Page<Product> productPage) {
+        List<ProductDTO> content = productPage.getContent().stream()
+                .map(this::from)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(
+                content,
+                productPage.getPageNumber(),
+                productPage.getPageSize(),
+                productPage.getTotalElements()
+        );
     }
 }
