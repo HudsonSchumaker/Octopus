@@ -24,7 +24,6 @@ import static br.com.schumaker.octopus.framework.reflection.validation.MaxValida
  *
  *     @Max(100)
  *     private int age;
- *
  *     // Getters and Setters
  * }
  * }

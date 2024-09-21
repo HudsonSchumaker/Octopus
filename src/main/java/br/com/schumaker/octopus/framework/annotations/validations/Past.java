@@ -25,7 +25,6 @@ import static br.com.schumaker.octopus.framework.reflection.validation.PastValid
  *
  *     @Past
  *     private Date birthDate;
- *
  *     // Getters and Setters
  * }
  * }

@@ -24,7 +24,6 @@ import static br.com.schumaker.octopus.framework.reflection.validation.RangeVali
  *
  *     @Range(min = 18, max = 65)
  *     private int age;
- *
  *     // Getters and Setters
  * }
  * }

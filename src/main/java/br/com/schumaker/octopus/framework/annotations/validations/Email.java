@@ -24,7 +24,6 @@ import static br.com.schumaker.octopus.framework.reflection.validation.EmailVali
  *
  *     @Email
  *     private String email;
- *
  *     // Getters and Setters
  * }
  * }

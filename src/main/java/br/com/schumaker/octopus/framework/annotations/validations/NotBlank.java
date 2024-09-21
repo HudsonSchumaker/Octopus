@@ -24,7 +24,6 @@ import static br.com.schumaker.octopus.framework.reflection.validation.NotBlankV
  *
  *     @NotBlank
  *     private String name;
- *
  *     // Getters and Setters
  * }
  * }

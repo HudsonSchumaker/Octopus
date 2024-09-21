@@ -43,7 +43,6 @@ final class InboundHandler implements HttpHandler {
     private final OutboundHandler outboundHandler = new OutboundHandler();
     private final Map<String, RequestHandler> handlers = new HashMap<>();
 
-    
     private final List<HttpFilter> filters = List.of(new SecurityFilter());
 
     public InboundHandler() {

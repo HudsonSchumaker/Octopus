@@ -24,7 +24,6 @@ import static br.com.schumaker.octopus.framework.reflection.validation.MinValida
  *
  *     @Min(value = 18)
  *     private int age;
- *
  *     // Getters and Setters
  * }
  * }

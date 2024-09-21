@@ -24,7 +24,6 @@ import static br.com.schumaker.octopus.framework.reflection.validation.FutureVal
  *
  *     @Future
  *     private Date dueDate;
- *
  *     // Getters and Setters
  * }
  * }
