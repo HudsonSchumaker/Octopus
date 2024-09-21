@@ -11,7 +11,7 @@ package br.com.schumaker.octopus.framework.ioc;
 public class AppProperties {
     // Framework properties
     public static final String FMK_NAME = "Octopus";
-    public static final String FMK_VERSION = "0.19.4";
+    public static final String FMK_VERSION = "0.20.12";
     public static final String FMK_AUTHOR = "Hudson Schumaker";
 
     // Application properties
