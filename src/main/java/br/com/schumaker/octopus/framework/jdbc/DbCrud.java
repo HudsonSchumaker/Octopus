@@ -3,6 +3,10 @@ package br.com.schumaker.octopus.framework.jdbc;
 import br.com.schumaker.octopus.framework.annotations.db.Table;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.reflection.TableReflection;
+import br.com.schumaker.octopus.framework.web.view.Page;
+import br.com.schumaker.octopus.framework.web.view.PageImpl;
+import br.com.schumaker.octopus.framework.web.view.PageRequest;
+import br.com.schumaker.octopus.framework.web.view.Pageable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -55,8 +59,8 @@ import java.util.Optional;
  * }}
  * </pre>
  *
- * @param <K> the type of the primary key
- * @param <T> the type of the entity
+ * @param <K> the type of the primary key.
+ * @param <T> the type of the entity.
  *
  * @see Table
  * @see DbConnection
@@ -77,7 +81,14 @@ public class DbCrud<K, T> {
     private static final String SET = " SET ";
     private static final String INSERT = "INSERT INTO ";
     private static final String DELETE = "DELETE FROM ";
+    private static final String VALUES = ") VALUES (";
+    private static final String LIMIT = " LIMIT ";
+    private static final String OFFSET = " OFFSET ";
+    private static final String ORDER_BY = " ORDER BY ";
     private static final String SELECT_COUNT = "SELECT COUNT(*) FROM ";
+
+    public static final int DEFAULT_PAGE_SIZE = 16;
+    public static final int DEFAULT_PAGE_NUMBER = 0;
 
     @SuppressWarnings("unchecked")
     public DbCrud() {
@@ -133,7 +144,6 @@ public class DbCrud<K, T> {
              PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
 
             preparedStatement.setObject(1, id);
-
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     T entity = clazz.getDeclaredConstructor().newInstance();
@@ -161,7 +171,13 @@ public class DbCrud<K, T> {
      *
      * @return a list of all entities of the type T.
      */
-    public List<T> findAll() {
+    public Page<T> findAll() {
+        var idColumName = tableReflection.getPrimaryKey(clazz);
+        Sort sort = new Sort(List.of(new Sort.Order(Sort.Direction.ASC, idColumName)));
+        return this.findAll(new PageRequest(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, sort));
+    }
+
+    public Page<T> findAll(Pageable pageable) {
         var tableName = tableReflection.getTableName(clazz);
         var columnFields = tableReflection.getFields(clazz);
 
@@ -171,13 +187,29 @@ public class DbCrud<K, T> {
         }
         sql.setLength(sql.length() - 2); // Remove the trailing comma and space
         sql.append(FROM).append(tableName);
+
+        // Add sorting
+        Sort sort = pageable.sort();
+        if (sort != null && !sort.orders().isEmpty()) {
+            sql.append(ORDER_BY);
+            for (Sort.Order order : sort.orders()) {
+                sql.append(order.property()).append(" ").append(order.direction()).append(", ");
+            }
+            sql.setLength(sql.length() - 2); // Remove the trailing comma and space
+        }
+
+        // Add pagination
+        sql.append(LIMIT).append(pageable.pageSize());
+        sql.append(OFFSET).append(pageable.pageNumber() * pageable.pageSize());
         System.out.println("SQL: " + sql); // Debug statement to print the SQL value
+
+        List<T> results = new ArrayList<>();
+        long totalElements = 0;
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            List<T> results = new ArrayList<>();
             while (resultSet.next()) {
                 T entity = clazz.getDeclaredConstructor().newInstance();
 
@@ -185,7 +217,6 @@ public class DbCrud<K, T> {
                     field.setAccessible(true);
                     Object value = resultSet.getObject(field.getName());
 
-                    // convert Long to BigInteger ???
                     if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
                         value = java.math.BigInteger.valueOf((Long) value);
                     }
@@ -194,10 +225,21 @@ public class DbCrud<K, T> {
                 }
                 results.add(entity);
             }
-            return results;
+
+            // Count total elements
+            String countSql = SELECT_COUNT + tableName;
+            System.out.println("SQL: " + countSql); // Debug statement to print the SQL value
+            try (PreparedStatement countStatement = connection.prepareStatement(countSql);
+                 ResultSet countResultSet = countStatement.executeQuery()) {
+                if (countResultSet.next()) {
+                    totalElements = countResultSet.getLong(1);
+                }
+            }
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
         }
+
+        return new PageImpl<>(results, pageable.pageNumber(), pageable.pageSize(), totalElements);
     }
 
     /**
@@ -223,7 +265,7 @@ public class DbCrud<K, T> {
         sql.setLength(sql.length() - 2); // Remove the trailing comma and space
         placeholders.setLength(placeholders.length() - 2);
 
-        sql.append(") VALUES (").append(placeholders).append(")");
+        sql.append(VALUES).append(placeholders).append(")");
         System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
         try (Connection connection = DbConnection.getConnection();
@@ -237,7 +279,6 @@ public class DbCrud<K, T> {
             }
 
             preparedStatement.executeUpdate();
-
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                 if (resultSet.next()) {
                     return Optional.of((K) resultSet.getObject(1));
