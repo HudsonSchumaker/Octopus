@@ -16,8 +16,8 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: tester
       MYSQL_DATABASE: octopus
+      MYSQL_ROOT_PASSWORD: tester
     ports:
       - "3306:3306"
       - "33060:33060"
