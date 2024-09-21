@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The DbCrud class provides generic CRUD (Create, Read, Update, Delete) operations for database entities.
@@ -45,6 +46,15 @@ public class DbCrud<K, T> {
     private final Class<K> pk;
     private final Class<T> clazz;
 
+    private static final String SELECT = "SELECT ";
+    private static final String UPDATE = "UPDATE ";
+    private static final String FROM = " FROM ";
+    private static final String WHERE = " WHERE ";
+    private static final String SET = " SET ";
+    private static final String INSERT = "INSERT INTO ";
+    private static final String DELETE = "DELETE FROM ";
+    private static final String SELECT_COUNT = "SELECT COUNT(*) FROM ";
+
     @SuppressWarnings("unchecked")
     public DbCrud() {
         this.pk = (Class<K>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -58,11 +68,12 @@ public class DbCrud<K, T> {
      */
     public Long count() {
         var tableName = tableReflection.getTableName(clazz);
-        String sql = "SELECT COUNT(*) FROM " + tableName;
-        System.out.println("SQL: " + sql);
+        StringBuilder sql = new StringBuilder(SELECT_COUNT);
+        sql.append(tableName);
+        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
         try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             if (resultSet.next()) {
@@ -81,15 +92,21 @@ public class DbCrud<K, T> {
      * @param id the primary key of the entity to find.
      * @return the entity with the given primary key, or null if not found.
      */
-    public T findById(K id) {
+    public Optional<T> findById(K id) {
         var tableName = tableReflection.getTableName(clazz);
         var primaryKey = tableReflection.getPrimaryKey(clazz);
         var columnFields = tableReflection.getFields(clazz);
 
-        String sql = "SELECT * FROM " + tableName + " WHERE " + primaryKey + " = ?";
-        System.out.println("SQL: " + sql);
+        StringBuilder sql = new StringBuilder(SELECT);
+        for (Field field : columnFields) {
+            sql.append(field.getName()).append(", ");
+        }
+        sql.setLength(sql.length() - 2); // Remove the trailing comma and space
+        sql.append(FROM).append(tableName).append(WHERE).append(primaryKey).append(" = ?");
+
+        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
         try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
 
             preparedStatement.setObject(1, id);
 
@@ -105,14 +122,14 @@ public class DbCrud<K, T> {
                         }
                         field.set(entity, value);
                     }
-                    return entity;
+                    return Optional.of(entity);
                 }
             }
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
         }
 
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -124,12 +141,16 @@ public class DbCrud<K, T> {
         var tableName = tableReflection.getTableName(clazz);
         var columnFields = tableReflection.getFields(clazz);
 
-        // TODO: use a StringBuilder and join the column names
-        String sql = "SELECT * FROM " + tableName;
-        System.out.println("SQL: " + sql);
+        StringBuilder sql = new StringBuilder(SELECT);
+        for (Field field : columnFields) {
+            sql.append(field.getName()).append(", ");
+        }
+        sql.setLength(sql.length() - 2); // Remove the trailing comma and space
+        sql.append(FROM).append(tableName);
+        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
         try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             List<T> results = new ArrayList<>();
@@ -162,11 +183,11 @@ public class DbCrud<K, T> {
      * @return the primary key of the saved entity.
      */
     @SuppressWarnings("unchecked")
-    public K save(T entity) {
+    public Optional<K> save(T entity) {
         var tableName = tableReflection.getTableName(clazz);
         var columnFields = tableReflection.getColumnNames(clazz);
 
-        StringBuilder sql = new StringBuilder("INSERT INTO ");
+        StringBuilder sql = new StringBuilder(INSERT);
         sql.append(tableName).append(" (");
 
         StringBuilder placeholders = new StringBuilder();
@@ -175,12 +196,11 @@ public class DbCrud<K, T> {
             placeholders.append("?, ");
         }
 
-        // Remove the trailing comma and space
-        sql.setLength(sql.length() - 2);
+        sql.setLength(sql.length() - 2); // Remove the trailing comma and space
         placeholders.setLength(placeholders.length() - 2);
 
         sql.append(") VALUES (").append(placeholders).append(")");
-        System.out.println("SQL: " + sql);
+        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement =
@@ -196,14 +216,14 @@ public class DbCrud<K, T> {
 
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                 if (resultSet.next()) {
-                    return (K) resultSet.getObject(1);
+                    return Optional.of((K) resultSet.getObject(1));
                 }
             }
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
         }
 
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -217,17 +237,16 @@ public class DbCrud<K, T> {
         var primaryKey = tableReflection.getPrimaryKey(clazz);
         var primaryKeyValue = tableReflection.getPrimaryKeyValue(entity);
 
-        StringBuilder sql = new StringBuilder("UPDATE ");
-        sql.append(tableName).append(" SET ");
+        StringBuilder sql = new StringBuilder(UPDATE);
+        sql.append(tableName).append(SET);
 
         for (Field field : columnFields) {
             sql.append(field.getName()).append(" = ?, ");
         }
 
-        // Remove the trailing comma and space
-        sql.setLength(sql.length() - 2);
-        sql.append(" WHERE ").append(primaryKey).append(" = ?");
-        System.out.println("SQL: " + sql);
+        sql.setLength(sql.length() - 2); // Remove the trailing comma and space
+        sql.append(WHERE).append(primaryKey).append(" = ?");
+        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
@@ -265,11 +284,12 @@ public class DbCrud<K, T> {
         var tableName = tableReflection.getTableName(clazz);
         var primaryKey = tableReflection.getPrimaryKey(clazz);
 
-        String sql = "DELETE FROM " + tableName + " WHERE " + primaryKey + " = ?";
-        System.out.println("SQL: " + sql);
+        StringBuilder sql = new StringBuilder(DELETE);
+        sql.append(tableName).append(WHERE).append(primaryKey).append(" = ?");
+        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
         try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
 
             preparedStatement.setObject(1, id);
             preparedStatement.executeUpdate();

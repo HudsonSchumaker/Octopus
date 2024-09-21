@@ -27,8 +27,12 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public Long count() {
+        return productRepository.count();
+    }
+
     public Product getById(BigInteger id) {
-        return productRepository.findById(id);
+        return productRepository.findById(id).orElse(null);
     }
 
     public List<Product> list() {
@@ -36,25 +40,32 @@ public class ProductService {
     }
 
     public BigInteger save(Product product) {
-       return productRepository.save(product);
+       return productRepository.save(product).orElse(null);
     }
 
     public Product update(BigInteger id, Product newProduct) {
-        var oldProduct = productRepository.findById(id);
+        var oldProduct = productRepository.findById(id).orElse(null);
+        if (oldProduct == null) {
+            return null;
+        }
+
         oldProduct.setName(newProduct.getName());
         oldProduct.setDescription(newProduct.getDescription());
         oldProduct.setPrice(newProduct.getPrice());
 
         productRepository.update(oldProduct);
-
-        return productRepository.findById(id);
+        return productRepository.findById(id).orElse(null);
     }
 
     public Product patch(BigInteger id, Map<String, Object> patch) {
-        var oldProduct = productRepository.findById(id);
+        var oldProduct = productRepository.findById(id).orElse(null);
+        if (oldProduct == null) {
+            return null;
+        }
+
         PatchHelper.applyPatch(oldProduct, patch);
         productRepository.update(oldProduct);
-        return productRepository.findById(id);
+        return productRepository.findById(id).orElse(null);
     }
 
     public void delete(Product product) {

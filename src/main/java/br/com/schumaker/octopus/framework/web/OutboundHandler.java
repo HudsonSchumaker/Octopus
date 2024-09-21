@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpExchange;
 
 import java.io.OutputStream;
 import java.util.Map;
+import java.util.Optional;
 
 import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
 import static br.com.schumaker.octopus.framework.web.http.Http.CONTENT_TYPE;
@@ -39,12 +40,9 @@ final class OutboundHandler {
         if (returnType.equals(String.class)) {
             this.sendResponse(exchange, httpCode, contentType, (String) result);
         } else if (returnType.equals(ResponseView.class)) {
-
-            // TODO: Check content type and transform the body to the correct type
             var resultBody = objectMapper.writeValueAsString(((ResponseView<?>) result).getBody());
             this.processResponseHeaders(exchange, (ResponseView<?>) result);
-
-            this.sendResponse(exchange, httpCode,contentType, resultBody);
+            this.sendResponse(exchange, httpCode,contentType, resultBody.equals("null") ? "" : resultBody);
         } else {
             this.sendResponse(exchange, httpCode, contentType, result.toString());
         }
@@ -98,6 +96,7 @@ final class OutboundHandler {
         exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, HEAD, OPTIONS");
         exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
 
+        response = Optional.ofNullable(response).orElse("");
         exchange.sendResponseHeaders(httpCode, response.getBytes().length);
         try (OutputStream os = exchange.getResponseBody()) {
             os.write(response.getBytes());

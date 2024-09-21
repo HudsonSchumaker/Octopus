@@ -61,11 +61,20 @@ public class ProductController {
         return ResponseView.ok().body(listDTO).headers("info", name).build();
     }
 
+    @Get("/count")
+    public ResponseView<Long> count() {
+        var count = service.count();
+        return ResponseView.ok().body(count).build();
+    }
+
     @Get("/{id}")
     public ResponseView<ProductView> getById(@PathVariable("id") int key) {
         var product = service.getById(BigInteger.valueOf(key));
-        var productView = mapper.from(product);
+        if (product == null) {
+            return ResponseView.notFound().build();
+        }
 
+        var productView = mapper.from(product);
         return ResponseView.ok()
                 .body(productView)
                 .build();
@@ -103,6 +112,10 @@ public class ProductController {
         Mapper<ProductDTO, Product> mapper = new Mapper<>();
         var product = mapper.map(dto, Product.class);
         var updated = service.update(BigInteger.valueOf(id), product);
+
+        if (updated == null) {
+            return ResponseView.notFound().build();
+        }
 
         return ResponseView.ok()
                 .body(new ProductView(
