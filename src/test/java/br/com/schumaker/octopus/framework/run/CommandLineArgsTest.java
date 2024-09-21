@@ -6,6 +6,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+/**
+ * CommandLineArgsTest.
+ * Test class for CommandLineArgs.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class CommandLineArgsTest {
     private CommandLineArgs commandLineArgs;
 

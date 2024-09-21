@@ -4,6 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * The EnvironmentTest class.
+ * This class is responsible for testing the Environment class.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class EnvironmentTest {
 
     @Test

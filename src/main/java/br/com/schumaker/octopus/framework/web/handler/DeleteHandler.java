@@ -1,7 +1,6 @@
 package br.com.schumaker.octopus.framework.web.handler;
 
 import br.com.schumaker.octopus.framework.annotations.controller.Delete;
-import br.com.schumaker.octopus.framework.annotations.controller.Get;
 import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.web.http.Http;
@@ -11,7 +10,6 @@ import br.com.schumaker.octopus.framework.web.http.HttpResponse;
 
 import static br.com.schumaker.octopus.framework.web.handler.AbstractRequestHandler.container;
 import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_DELETE;
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_GET;
 
 /**
  * The DeleteHandler class.

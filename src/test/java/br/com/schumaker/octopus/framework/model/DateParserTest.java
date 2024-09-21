@@ -10,6 +10,13 @@ import java.time.ZoneId;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The DateParserTest class.
+ * This class is responsible for testing the DateParser class.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class DateParserTest {
 
     @Test

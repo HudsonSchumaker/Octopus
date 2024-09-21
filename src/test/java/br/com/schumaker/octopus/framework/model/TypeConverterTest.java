@@ -10,6 +10,13 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The TypeConverterTest class.
+ * This class is responsible for testing the TypeConverter class.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 public class TypeConverterTest {
 
     @Test
