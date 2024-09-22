@@ -4,6 +4,8 @@ import br.com.schumaker.octopus.framework.exception.OctopusException;
 
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static br.com.schumaker.octopus.framework.ioc.AppProperties.APP_PROPERTIES_FILE_NAME;
 
@@ -17,6 +19,7 @@ import static br.com.schumaker.octopus.framework.ioc.AppProperties.APP_PROPERTIE
  * @version 1.0.0
  */
 public final class PropertiesReader {
+    private static final Pattern ENV_PATTERN = Pattern.compile("\\$\\{([^}]+)}");
 
     /**
      * Loads properties from a properties file based on the specified environment.
@@ -40,10 +43,30 @@ public final class PropertiesReader {
             }
 
             properties.load(inputStream);
+
+            // Resolve placeholders with environment variables
+            properties.forEach((key, value) -> {
+                String resolvedValue = resolvePlaceholders((String) value);
+                properties.setProperty((String) key, resolvedValue);
+            });
+
         } catch (Exception ex) {
            throw new OctopusException(ex.getMessage());
         }
 
         return properties;
+    }
+
+    public static String resolvePlaceholders(String value) {
+        Matcher matcher = ENV_PATTERN.matcher(value);
+        StringBuilder buffer = new StringBuilder();
+
+        while (matcher.find()) {
+            String envVar = matcher.group(1);
+            String envValue = System.getenv(envVar);
+            matcher.appendReplacement(buffer, envValue != null ? envValue : "");
+        }
+        matcher.appendTail(buffer);
+        return buffer.toString();
     }
 }
