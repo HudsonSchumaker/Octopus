@@ -9,6 +9,7 @@ import br.com.schumaker.octopus.framework.annotations.validations.NotEmpty;
 import br.com.schumaker.octopus.framework.annotations.validations.NotNull;
 import br.com.schumaker.octopus.framework.annotations.validations.Past;
 import br.com.schumaker.octopus.framework.annotations.validations.Range;
+import br.com.schumaker.octopus.framework.annotations.validations.Regex;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -53,6 +54,7 @@ public final class ValidationReflection {
         validationStrategies.put(Range.class, new RangeValidation());
         validationStrategies.put(Past.class, new PastValidation());
         validationStrategies.put(Future.class, new FutureValidation());
+        validationStrategies.put(Regex.class, new RegexValidation());
     }
 
     public static ValidationReflection getInstance() {

@@ -51,6 +51,9 @@ public class ValidationReflectionTest {
         @Future("Not in the future")
         private LocalDateTime futureDateTimeField;
 
+        @Regex(value = "^(\\d{4}[- ]?){3}\\d{4}$", message = "Invalid credit card number")
+        private String creditCardField;
+
         // Getters and setters
         public void setNotNullField(String notNullField) { this.notNullField = notNullField; }
         public void setNotBlankField(String notBlankField) { this.notBlankField = notBlankField; }
@@ -63,6 +66,7 @@ public class ValidationReflectionTest {
         public void setFutureField(LocalDate futureField) { this.futureField = futureField; }
         public void setPastDateTimeField(LocalDateTime pastDateTimeField) { this.pastDateTimeField = pastDateTimeField; }
         public void setFutureDateTimeField(LocalDateTime futureDateTimeField) { this.futureDateTimeField = futureDateTimeField; }
+        public void setCreditCardField(String creditCardField) { this.creditCardField = creditCardField; }
     }
 
     @Test
@@ -281,5 +285,33 @@ public class ValidationReflectionTest {
 
         // Assert
         assertTrue(exception.getMessage().contains("Not in the future"));
+    }
+
+    @Test
+    public void testRegexValidation() {
+        // Arrange
+        TestClass testClass = new TestClass();
+        testClass.setNotNullField("notNull");
+        testClass.setNotBlankField("notBlank");
+        testClass.setNotEmptyField("notEmpty");
+        testClass.setEmailField("jhonny@mail.com");
+        testClass.setMinField(15);
+        testClass.setMaxField(64);
+        testClass.setRangeField(8);
+        testClass.setPastField(LocalDate.now().minusDays(1));
+        testClass.setFutureField(LocalDate.now().plusDays(1));
+        testClass.setCreditCardField("1234-5678-1234-5678");
+
+        // Act & Assert
+        assertDoesNotThrow(() -> ValidationReflection.getInstance().validate(testClass));
+
+        // Arrange with invalid credit card number
+        testClass.setCreditCardField("1234-5678-1234-567");
+
+        // Act
+        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+
+        // Assert
+        assertTrue(exception.getMessage().contains("Invalid credit card number"));
     }
 }
