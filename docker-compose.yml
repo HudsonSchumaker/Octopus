@@ -5,9 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: octopus-app:0.21.0
+    image: octopus-app:0.22.0
+    environment:
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n"
     ports:
       - "80:80"
+      - "5005:5005"
     depends_on:
       - db
     networks:
