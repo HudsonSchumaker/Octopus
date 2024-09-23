@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "br.com.schumaker"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 application {
     mainClass.set("br.com.schumaker.octopus.Main")

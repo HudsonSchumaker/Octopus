@@ -61,11 +61,11 @@ public final class GetHandler implements RequestHandler {
                 var methodReturnType = method.getReturnType();
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
             } catch (Exception ex) {
-                throw new OctopusException("Error invoking method", ex);
+                throw new OctopusException("Error invoking method.", ex);
             }
         } else {
             var httpCode = Http.HTTP_404;
-            var response = "Controller not found!";
+            var response = "Controller not found.";
             return new HttpResponse(String.class, response, httpCode, Http.APPLICATION_JSON, request.exchange());
         }
     }

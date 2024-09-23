@@ -107,15 +107,22 @@ public class DbCrud<K, T> {
         sql.append(tableName);
         System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        Connection connection = null;
+        try {
+            connection = DbConnection.getConnection();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            if (resultSet.next()) {
-                return resultSet.getLong(1);
+                if (resultSet.next()) {
+                    return resultSet.getLong(1);
+                }
             }
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
+        } finally {
+            if (connection != null) {
+                DbConnection.releaseConnection(connection);
+            }
         }
 
         return 0L;
@@ -138,32 +145,38 @@ public class DbCrud<K, T> {
         }
         sql.setLength(sql.length() - 2); // Remove the trailing comma and space
         sql.append(FROM).append(tableName).append(WHERE).append(primaryKey).append(" = ?");
-
         System.out.println("SQL: " + sql); // Debug statement to print the SQL value
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
 
-            preparedStatement.setObject(1, id);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    T entity = clazz.getDeclaredConstructor().newInstance();
-                    for (Field field : columnFields) {
-                        field.setAccessible(true);
-                        Object value = resultSet.getObject(field.getName());
+        Connection connection = null;
+        try {
+            connection = DbConnection.getConnection();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
+                preparedStatement.setObject(1, id);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        T entity = clazz.getDeclaredConstructor().newInstance();
+                        for (Field field : columnFields) {
+                            field.setAccessible(true);
+                            Object value = resultSet.getObject(field.getName());
 
-                        if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
-                            value = java.math.BigInteger.valueOf((Long) value);
+                            if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
+                                value = java.math.BigInteger.valueOf((Long) value);
+                            }
+                            field.set(entity, value);
                         }
-                        field.set(entity, value);
+                        return Optional.of(entity);
                     }
-                    return Optional.of(entity);
                 }
             }
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
+        } finally {
+            if (connection != null) {
+                DbConnection.releaseConnection(connection);
+            }
         }
-
         return Optional.empty();
+
     }
 
     /**
@@ -188,8 +201,7 @@ public class DbCrud<K, T> {
         sql.setLength(sql.length() - 2); // Remove the trailing comma and space
         sql.append(FROM).append(tableName);
 
-        // Add sorting
-        Sort sort = pageable.sort();
+        Sort sort = pageable.sort(); // Add sorting
         if (sort != null && !sort.orders().isEmpty()) {
             sql.append(ORDER_BY);
             for (Sort.Order order : sort.orders()) {
@@ -198,47 +210,49 @@ public class DbCrud<K, T> {
             sql.setLength(sql.length() - 2); // Remove the trailing comma and space
         }
 
-        // Add pagination
-        sql.append(LIMIT).append(pageable.pageSize());
+        sql.append(LIMIT).append(pageable.pageSize());  // Add pagination
         sql.append(OFFSET).append(pageable.pageNumber() * pageable.pageSize());
         System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
-        List<T> results = new ArrayList<>();
         long totalElements = 0;
+        Connection connection = null;
+        List<T> results = new ArrayList<>();
+        try {
+            connection = DbConnection.getConnection();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    T entity = clazz.getDeclaredConstructor().newInstance();
+                    for (Field field : columnFields) {
+                        field.setAccessible(true);
+                        Object value = resultSet.getObject(field.getName());
 
-            while (resultSet.next()) {
-                T entity = clazz.getDeclaredConstructor().newInstance();
+                        if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
+                            value = java.math.BigInteger.valueOf((Long) value);
+                        }
 
-                for (Field field : columnFields) {
-                    field.setAccessible(true);
-                    Object value = resultSet.getObject(field.getName());
-
-                    if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
-                        value = java.math.BigInteger.valueOf((Long) value);
+                        field.set(entity, value);
                     }
-
-                    field.set(entity, value);
+                    results.add(entity);
                 }
-                results.add(entity);
-            }
 
-            // Count total elements
-            String countSql = SELECT_COUNT + tableName;
-            System.out.println("SQL: " + countSql); // Debug statement to print the SQL value
-            try (PreparedStatement countStatement = connection.prepareStatement(countSql);
-                 ResultSet countResultSet = countStatement.executeQuery()) {
-                if (countResultSet.next()) {
-                    totalElements = countResultSet.getLong(1);
+                String countSql = SELECT_COUNT + tableName;  // Count total elements
+                System.out.println("SQL: " + countSql); // Debug statement to print the SQL value
+                try (PreparedStatement countStatement = connection.prepareStatement(countSql);
+                     ResultSet countResultSet = countStatement.executeQuery()) {
+                    if (countResultSet.next()) {
+                        totalElements = countResultSet.getLong(1);
+                    }
                 }
             }
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
+        } finally {
+            if (connection != null) {
+                DbConnection.releaseConnection(connection);
+            }
         }
-
         return new PageImpl<>(results, pageable.pageNumber(), pageable.pageSize(), totalElements);
     }
 
@@ -268,24 +282,31 @@ public class DbCrud<K, T> {
         sql.append(VALUES).append(placeholders).append(")");
         System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement =
-                     connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
+        Connection connection = null;
+        try {
+            connection = DbConnection.getConnection();
+            try (PreparedStatement preparedStatement =
+                         connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
 
-            int index = 1; // index of the prepared statement parameter starting at 1
-            for (Field field : tableReflection.getColumnFields(clazz)) {
-                field.setAccessible(true);
-                preparedStatement.setObject(index++, field.get(entity));
-            }
+                int index = 1; // index of the prepared statement parameter starting at 1
+                for (Field field : tableReflection.getColumnFields(clazz)) {
+                    field.setAccessible(true);
+                    preparedStatement.setObject(index++, field.get(entity));
+                }
 
-            preparedStatement.executeUpdate();
-            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    return Optional.of((K) resultSet.getObject(1));
+                preparedStatement.executeUpdate();
+                try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                    if (resultSet.next()) {
+                        return Optional.of((K) resultSet.getObject(1));
+                    }
                 }
             }
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
+        } finally {
+            if (connection != null) {
+                DbConnection.releaseConnection(connection);
+            }
         }
 
         return Optional.empty();
@@ -313,19 +334,25 @@ public class DbCrud<K, T> {
         sql.append(WHERE).append(primaryKey).append(" = ?");
         System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
+        Connection connection = null;
+        try {
+            connection = DbConnection.getConnection();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
+                int index = 1; // index of the prepared statement parameter starting at 1
+                for (Field field : columnFields) {
+                    field.setAccessible(true);
+                    preparedStatement.setObject(index++, field.get(entity));
+                }
 
-            int index = 1; // index of the prepared statement parameter starting at 1
-            for (Field field : columnFields) {
-                field.setAccessible(true);
-                preparedStatement.setObject(index++, field.get(entity));
+                preparedStatement.setObject(index, primaryKeyValue);
+                preparedStatement.executeUpdate();
             }
-
-            preparedStatement.setObject(index, primaryKeyValue);
-            preparedStatement.executeUpdate();
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
+        } finally {
+            if (connection != null) {
+                DbConnection.releaseConnection(connection);
+            }
         }
     }
 
@@ -353,13 +380,19 @@ public class DbCrud<K, T> {
         sql.append(tableName).append(WHERE).append(primaryKey).append(" = ?");
         System.out.println("SQL: " + sql); // Debug statement to print the SQL value
 
-        try (Connection connection = DbConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
-
-            preparedStatement.setObject(1, id);
-            preparedStatement.executeUpdate();
+        Connection connection = null;
+        try {
+            connection = DbConnection.getConnection();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
+                preparedStatement.setObject(1, id);
+                preparedStatement.executeUpdate();
+            }
         } catch (Exception ex) {
             throw new OctopusException(ex.getMessage(), ex);
+        } finally {
+            if (connection != null) {
+                DbConnection.releaseConnection(connection);
+            }
         }
     }
 }

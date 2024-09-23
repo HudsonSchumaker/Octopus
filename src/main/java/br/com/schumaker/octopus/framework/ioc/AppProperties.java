@@ -11,7 +11,7 @@ package br.com.schumaker.octopus.framework.ioc;
 public class AppProperties {
     // Framework properties
     public static final String FMK_NAME = "Octopus";
-    public static final String FMK_VERSION = "0.23.0";
+    public static final String FMK_VERSION = "0.23.2";
     public static final String FMK_AUTHOR = "Hudson Schumaker";
 
     // Application properties
@@ -24,6 +24,7 @@ public class AppProperties {
     public static final String DB_URL = "oc.db.url";
     public static final String DB_USER = "oc.db.user";
     public static final String DB_PASSWORD = "oc.db.password";
+    public static final String DB_MAX_POOL_SIZE = "oc.db.max.pool.size";
 
     // JWT properties
     public static final String JWT_SECRET = "oc.jwt.secret";
