@@ -57,6 +57,12 @@ public final class PropertiesReader {
         return properties;
     }
 
+    /**
+     * Resolves placeholders in the specified value with environment variables.
+     *
+     * @param value the value to resolve.
+     * @return the resolved value.
+     */
     public static String resolvePlaceholders(String value) {
         Matcher matcher = ENV_PATTERN.matcher(value);
         StringBuilder buffer = new StringBuilder();

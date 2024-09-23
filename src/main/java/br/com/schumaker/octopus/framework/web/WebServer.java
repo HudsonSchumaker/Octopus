@@ -25,9 +25,15 @@ public final class WebServer {
      * @throws Exception if an error occurs during server initialization.
      */
     public WebServer(Integer port, String context) throws Exception {
-        server = HttpServer.create(new InetSocketAddress(port), 512);
+        server = HttpServer.create(new InetSocketAddress(port), 4096);
         server.createContext(context, new InboundHandler());
-        server.setExecutor(Executors.newFixedThreadPool(Machine.getNumberProcessors()));
+        server.setExecutor(Executors.newFixedThreadPool(Machine.getNumberProcessors() * 2));
+
+        // Register a shutdown hook to stop the server gracefully
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Shutting down the server...");
+            server.stop(0);
+        }));
     }
 
     /**

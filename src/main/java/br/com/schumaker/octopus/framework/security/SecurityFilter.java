@@ -8,6 +8,13 @@ import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpFilter;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 
+/**
+ * The SecurityFilter class.
+ * This class is responsible for processing the security filter.
+ *
+ * @author Hudson Schumaker
+ * @version 1.0.0
+ */
 @Filter
 public class SecurityFilter implements HttpFilter {
     private static final IoCContainer container = IoCContainer.getInstance();
