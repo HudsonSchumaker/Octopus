@@ -83,7 +83,7 @@ public final class PatchHandler implements RequestHandler {
             }
         } else {
             int httpCode = Http.HTTP_404;
-            String response = "Controller not found!";
+            String response = "Controller not found.";
             return new HttpResponse(String.class, response, httpCode, Http.APPLICATION_JSON, request.exchange());
         }
     }
