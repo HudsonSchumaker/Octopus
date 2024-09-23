@@ -12,4 +12,4 @@ ENV JWT_SECRET=testSecret
 EXPOSE 80 5005
 
 # Run the application
-CMD ["java", "-jar", "build/libs/Octopus-1.0-SNAPSHOT.jar", "-env=local"]
+CMD ["java", "-jar", "build/libs/Octopus-1.0.0.jar", "-env=local"]
