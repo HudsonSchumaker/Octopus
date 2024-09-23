@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.run;
 
-import br.com.schumaker.octopus.framework.annotations.*;
+import br.com.schumaker.octopus.framework.annotations.OctopusApp;
 import br.com.schumaker.octopus.framework.annotations.bean.Component;
 import br.com.schumaker.octopus.framework.annotations.bean.Configuration;
 import br.com.schumaker.octopus.framework.annotations.bean.Service;
@@ -10,11 +10,13 @@ import br.com.schumaker.octopus.framework.annotations.exception.GlobalExceptionH
 import br.com.schumaker.octopus.framework.exception.ExceptionCodes;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.AppProperties;
+import br.com.schumaker.octopus.framework.jdbc.SimpleConnectionPool;
 import br.com.schumaker.octopus.framework.jdbc.SqlExecutor;
 import br.com.schumaker.octopus.framework.web.WebServer;
 import br.com.schumaker.octopus.framework.ioc.Environment;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
@@ -26,21 +28,10 @@ import java.util.List;
  * @version 1.0.0
  */
 public final class Octopus {
-    private static final WebServer webServer;
     private static final IoCContainer container = IoCContainer.getInstance();
     private static final Environment environment = Environment.getInstance();
     private static final CommandLineArgs commandLineArgs = CommandLineArgs.getInstance();
-
-    /*
-     * Initializes the web server.
-     */
-    static {
-        try {
-            webServer = new WebServer(environment.getServerPort(), environment.getServerContext());
-        } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage(), ExceptionCodes.WEB_SERVER_INIT_ERROR.getCode());
-        }
-    }
+    private static WebServer webServer;
 
     /**
      * Runs the Octopus framework with the specified application class and command-line arguments.
@@ -55,8 +46,19 @@ public final class Octopus {
         printBanner();
         executeSqlScripts();
         createManagedClasses(clazz);
+        startWebServer();
+    }
 
-        webServer.start();
+    /**
+     * Starts the web server.
+     */
+    private static void startWebServer() {
+        try {
+            webServer = new WebServer(environment.getServerPort(), environment.getServerContext());
+            webServer.start();
+        } catch (Exception ex) {
+            throw new OctopusException(ex.getMessage(), ExceptionCodes.WEB_SERVER_INIT_ERROR.getCode());
+        }
     }
 
     /**
@@ -69,35 +71,34 @@ public final class Octopus {
         OctopusApp app = clazz.getAnnotation(OctopusApp.class);
         var packageName = app.root();
 
-        int totalTasks = 6; // Total number of registration tasks
+        int totalTasks = 6;
         ProgressBar progressBar = new ProgressBar(totalTasks, 50);
 
-        List<Class<?>> globalExceptionHandler = ClassScanner.getClassesWithAnnotation(packageName, GlobalExceptionHandler.class);
-        container.registerGlobalExceptionHandler(globalExceptionHandler);
-        progressBar.update(1, "GlobalExceptionHandler");
-
-        List<Class<?>> configurationClasses = ClassScanner.getClassesWithAnnotation(packageName, Configuration.class);
-        container.registerConfiguration(configurationClasses);
-        progressBar.update(1, "Configuration");
-
-        List<Class<?>> componentClasses = ClassScanner.getClassesWithAnnotation(packageName, Component.class);
-        container.registerComponent(componentClasses);
-        progressBar.update(1, "Component");
-
-        List<Class<?>> repositoryClasses = ClassScanner.getClassesWithAnnotation(packageName, Repository.class);
-        // TODO: change for interface
-        // container.registerRepository(repositoryClasses);
-        progressBar.update(1, "Repository");
-
-        List<Class<?>> serviceClasses = ClassScanner.getClassesWithAnnotation(packageName, Service.class);
-        container.registerService(serviceClasses);
-        progressBar.update(1, "Service");
-
-        List<Class<?>> controllerClasses = ClassScanner.getClassesWithAnnotation(packageName, Controller.class);
-        container.registerController(controllerClasses);
-        progressBar.update(1, "Controller");
+        registerClassesWithAnnotation(packageName, GlobalExceptionHandler.class, container::registerGlobalExceptionHandler, progressBar, "GlobalExceptionHandler");
+        registerClassesWithAnnotation(packageName, Configuration.class, container::registerConfiguration, progressBar, "Configuration");
+        registerClassesWithAnnotation(packageName, Component.class, container::registerComponent, progressBar, "Component");
+        registerClassesWithAnnotation(packageName, Repository.class, classes -> {}, progressBar, "Repository");
+        registerClassesWithAnnotation(packageName, Service.class, container::registerService, progressBar, "Service");
+        registerClassesWithAnnotation(packageName, Controller.class, container::registerController, progressBar, "Controller");
 
         progressBar.complete();
+    }
+
+    /**
+     * Registers classes with the specified annotation with the IoC container.
+     *
+     * @param packageName the package name to scan for classes.
+     * @param annotation the annotation to search for.
+     * @param registrar the class registrar to register the classes with.
+     * @param progressBar the progress bar to update.
+     * @param taskName the name of the task being executed.
+     * @param <T> the type of the annotation.
+     * @throws Exception if an error occurs during class registration.
+     */
+    private static <T> void registerClassesWithAnnotation(String packageName, Class<? extends Annotation> annotation, ClassRegistrar<T> registrar, ProgressBar progressBar, String taskName) throws Exception {
+        List<Class<?>> classes = ClassScanner.getClassesWithAnnotation(packageName, annotation);
+        registrar.register(classes);
+        progressBar.update(1, taskName);
     }
 
     /**
@@ -117,8 +118,14 @@ public final class Octopus {
      * Executes the DDL scripts to create the database schema.
      */
     private static void executeSqlScripts() {
-        SqlExecutor.executeFromFile("/schema.sql"); // Execute DDL
-        SqlExecutor.executeFromFile("/data.sql");   // Execute DML
+        if (SimpleConnectionPool.getInstance().testConnection()) {
+            System.out.println("SQL: Connection pool is ready.");
+        }
+
+        SqlExecutor.executeFromFile("/schema.sql");
+        System.out.println("SQL: schema.sql executed.");
+        SqlExecutor.executeFromFile("/data.sql");
+        System.out.println("SQL: data.sql executed.");
     }
 
     /**
@@ -137,11 +144,15 @@ public final class Octopus {
                    \\:\\/:/  /     \\:\\  \\        \\/__/         \\:\\/:/  /         \\/__/     \\:\\/:/  /     \\:\\/:/  / \s
                     \\::/  /       \\:\\__\\                      \\::/  /                     \\::/  /       \\::/  /  \s
                      \\/__/         \\/__/                       \\/__/                       \\/__/         \\/__/   \s
-                
                 """);
         System.out.print(AppProperties.FMK_NAME + ", ");
         System.out.print("Version: " + AppProperties.FMK_VERSION + ", ");
         System.out.print("Server Port: " + environment.getServerPort() + ", ");
         System.out.println("Environment: " + (commandLineArgs.getArg("-env") == null ? "default" : commandLineArgs.getArg("-env")));
+    }
+
+    @FunctionalInterface
+    private interface ClassRegistrar<T> {
+        void register(List<Class<?>> classes) throws Exception;
     }
 }
