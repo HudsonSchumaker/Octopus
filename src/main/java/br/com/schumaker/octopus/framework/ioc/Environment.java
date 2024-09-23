@@ -3,6 +3,7 @@ package br.com.schumaker.octopus.framework.ioc;
 import br.com.schumaker.octopus.framework.io.PropertiesReader;
 import java.util.Properties;
 
+import static br.com.schumaker.octopus.framework.ioc.AppProperties.DB_MAX_POOL_SIZE;
 import static br.com.schumaker.octopus.framework.ioc.AppProperties.DEFAULT_VALUE_NAME;
 import static br.com.schumaker.octopus.framework.ioc.AppProperties.SERVER_CONTEXT;
 import static br.com.schumaker.octopus.framework.ioc.AppProperties.SERVER_PORT;
@@ -21,6 +22,7 @@ public class Environment {
     private static final String SERVER_PORT_DEFAULT = "8080";
     private static final String SERVER_CONTEXT_DEFAULT = "/";
     private static final String JWT_EXPIRATION_DEFAULT = "3600";
+    private static final String DB_MX_CONNECTIONS_DEFAULT = "8";
 
     private static final Environment INSTANCE = new Environment();
     private final Properties properties;
@@ -29,6 +31,7 @@ public class Environment {
     private Environment() {
         properties = PropertiesReader.loadProperties(environment);
         properties.putIfAbsent(DEFAULT_VALUE_NAME, DEFAULT_VALUE_VALUE);
+        properties.putIfAbsent(DB_MAX_POOL_SIZE, DB_MX_CONNECTIONS_DEFAULT);
     }
 
     /**
