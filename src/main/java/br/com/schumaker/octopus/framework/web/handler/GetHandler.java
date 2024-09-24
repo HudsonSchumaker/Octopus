@@ -47,6 +47,8 @@ public final class GetHandler implements RequestHandler {
                     continue;
                 }
 
+                // TODO: Add support for RequestParam
+
                 if (parameters.get(i).getType().equals(HttpRequestHeader.class)) {
                     arguments[i] = new HttpRequestHeader(request.getRequestHeaders());
                 }
