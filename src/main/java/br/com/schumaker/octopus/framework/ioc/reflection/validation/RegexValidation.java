@@ -1,6 +1,7 @@
 package br.com.schumaker.octopus.framework.ioc.reflection.validation;
 
 import br.com.schumaker.octopus.framework.annotations.validations.Regex;
+import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 
 import java.lang.reflect.Field;

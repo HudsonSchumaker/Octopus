@@ -27,7 +27,6 @@ import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_PATCH;
 public final class PatchHandler implements RequestHandler {
     private final IoCContainer container = IoCContainer.getInstance();
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final ValidationReflection validationReflection = ValidationReflection.getInstance();
 
     /**
      * Process the HTTP_PATCH request.
