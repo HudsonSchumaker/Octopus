@@ -38,7 +38,7 @@ public final class SimpleConnectionPool {
                 connectionPool.add(createConnection());
             }
         } catch (SQLException | ClassNotFoundException ex) {
-            throw new OctopusException("Error initializing connection pool.", ex);
+            throw new OctopusException("Error initializing connection pool: " + ex.getMessage(), ex);
         }
 
     }
