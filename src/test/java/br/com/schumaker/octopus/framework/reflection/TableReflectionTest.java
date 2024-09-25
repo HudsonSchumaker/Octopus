@@ -4,6 +4,7 @@ import br.com.schumaker.octopus.framework.annotations.db.Column;
 import br.com.schumaker.octopus.framework.annotations.db.Pk;
 import br.com.schumaker.octopus.framework.annotations.db.Table;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.octopus.framework.ioc.reflection.TableReflection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

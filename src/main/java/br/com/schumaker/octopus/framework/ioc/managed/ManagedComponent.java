@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.ioc.managed;
 
-import br.com.schumaker.octopus.framework.reflection.ClassReflection;
+import br.com.schumaker.octopus.framework.ioc.reflection.ClassReflection;
 
 /**
  * The ManagedComponent class represents a managed component within the IoC container.

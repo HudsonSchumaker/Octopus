@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.reflection;
+package br.com.schumaker.octopus.framework.ioc.reflection;
 
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;

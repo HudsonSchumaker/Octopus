@@ -2,6 +2,7 @@ package br.com.schumaker.octopus.framework.reflection.validation;
 
 import br.com.schumaker.octopus.framework.annotations.validations.*;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.octopus.framework.ioc.reflection.validation.ValidationReflection;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static br.com.schumaker.octopus.framework.reflection.validation.FutureValidation.FUTURE_VALIDATION_MESSAGE;
+import static br.com.schumaker.octopus.framework.ioc.reflection.validation.FutureValidation.FUTURE_VALIDATION_MESSAGE;
 
 /**
  * The @Future annotation is used to mark a field as a future date.

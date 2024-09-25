@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.reflection.validation;
+package br.com.schumaker.octopus.framework.ioc.reflection.validation;
 
 import br.com.schumaker.octopus.framework.annotations.validations.Email;
 import br.com.schumaker.octopus.framework.annotations.validations.Future;

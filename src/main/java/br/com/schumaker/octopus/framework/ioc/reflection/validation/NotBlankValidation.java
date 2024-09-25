@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.reflection.validation;
+package br.com.schumaker.octopus.framework.ioc.reflection.validation;
 
 import br.com.schumaker.octopus.framework.annotations.validations.NotBlank;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;

@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.reflection;
+package br.com.schumaker.octopus.framework.ioc.reflection;
 
 import br.com.schumaker.octopus.framework.annotations.exception.ExceptionHandler;
 import br.com.schumaker.octopus.framework.model.Pair;

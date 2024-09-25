@@ -6,7 +6,7 @@ import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
 import br.com.schumaker.octopus.framework.model.TypeConverter;
-import br.com.schumaker.octopus.framework.reflection.validation.ValidationReflection;
+import br.com.schumaker.octopus.framework.ioc.reflection.validation.ValidationReflection;
 import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;
@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.List;
 
 /**
  * The PutHandler class.

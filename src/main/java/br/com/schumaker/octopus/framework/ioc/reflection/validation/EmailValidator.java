@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.reflection.validation;
+package br.com.schumaker.octopus.framework.ioc.reflection.validation;
 
 import java.util.regex.Pattern;
 

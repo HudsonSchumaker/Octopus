@@ -8,7 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import static br.com.schumaker.octopus.framework.reflection.validation.PastValidation.PAST_VALIDATION_MESSAGE;
+import static br.com.schumaker.octopus.framework.ioc.reflection.validation.PastValidation.PAST_VALIDATION_MESSAGE;
 
 /**
  * The @Past annotation is used to mark a field as a past date.

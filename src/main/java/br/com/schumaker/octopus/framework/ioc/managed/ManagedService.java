@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.ioc.managed;
 
-import br.com.schumaker.octopus.framework.reflection.ClassReflection;
+import br.com.schumaker.octopus.framework.ioc.reflection.ClassReflection;
 
 /**
  * The ManagedService class represents a managed service within the IoC container.

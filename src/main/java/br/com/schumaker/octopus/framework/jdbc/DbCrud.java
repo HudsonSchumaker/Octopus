@@ -2,7 +2,7 @@ package br.com.schumaker.octopus.framework.jdbc;
 
 import br.com.schumaker.octopus.framework.annotations.db.Table;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.reflection.TableReflection;
+import br.com.schumaker.octopus.framework.ioc.reflection.TableReflection;
 import br.com.schumaker.octopus.framework.web.view.Page;
 import br.com.schumaker.octopus.framework.web.view.PageImpl;
 import br.com.schumaker.octopus.framework.web.view.PageRequest;

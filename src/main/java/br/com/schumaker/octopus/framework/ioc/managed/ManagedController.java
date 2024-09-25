@@ -1,7 +1,7 @@
 package br.com.schumaker.octopus.framework.ioc.managed;
 
-import br.com.schumaker.octopus.framework.reflection.ControllerReflection;
-import br.com.schumaker.octopus.framework.reflection.ClassReflection;
+import br.com.schumaker.octopus.framework.ioc.reflection.ControllerReflection;
+import br.com.schumaker.octopus.framework.ioc.reflection.ClassReflection;
 import br.com.schumaker.octopus.framework.model.Triple;
 import br.com.schumaker.octopus.framework.web.http.Http;
 
