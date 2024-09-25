@@ -5,7 +5,6 @@ import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.annotations.controller.Payload;
 import br.com.schumaker.octopus.framework.exception.OctopusException;
 import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.ioc.reflection.validation.ValidationReflection;
 import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpRequest;
 import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;
