@@ -37,5 +37,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface QueryParam {
-    String value() default "q";
+    String value();
+    boolean required() default true;
+    String defaultValue() default "";
 }
