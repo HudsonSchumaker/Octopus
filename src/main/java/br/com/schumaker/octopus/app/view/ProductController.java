@@ -121,7 +121,7 @@ public class ProductController {
     }
 
     @Put("/{id}")
-    public ResponseView<ProductView> update(@PathVariable("id") int id, @Payload @Validate ProductDTO dto) throws IOException {
+    public ResponseView<ProductView> update(@PathVariable("id") int id, @Payload @Validate ProductDTO dto) {
         Mapper<ProductDTO, Product> mapper = new Mapper<>();
         var product = mapper.map(dto, Product.class);
         var updated = service.update(BigInteger.valueOf(id), product);
