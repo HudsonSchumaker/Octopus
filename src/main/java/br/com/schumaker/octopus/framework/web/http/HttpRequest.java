@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -64,5 +65,27 @@ public record HttpRequest (String fullUrl, HttpExchange exchange) {
             }
         }
         return requestBody.toString();
+    }
+
+    /**
+     * Parses the query parameters from the full URL.
+     *
+     * @return a map of query parameters.
+     */
+    public Map<String, String> getQueryParams() {
+        Map<String, String> queryParams = new HashMap<>();
+
+        if (fullUrl.contains("?")) {
+            String query = fullUrl.substring(fullUrl.indexOf("?") + 1);
+            String[] pairs = query.split("&");
+            for (String pair : pairs) {
+                String[] keyValue = pair.split("=");
+                String key = URLDecoder.decode(keyValue[0], StandardCharsets.UTF_8);
+                String value = keyValue.length > 1 ? URLDecoder.decode(keyValue[1], StandardCharsets.UTF_8) : "";
+                queryParams.put(key, value);
+            }
+        }
+
+        return queryParams;
     }
 }

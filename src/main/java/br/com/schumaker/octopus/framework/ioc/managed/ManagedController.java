@@ -70,13 +70,14 @@ public final class ManagedController {
 
     public boolean pathMatches(String pattern, String path) {
         var patternParts = splitAndFilter(pattern);
-        var pathParts = splitAndFilter(path);
+        var actualPath = extractPath(path);
+        var pathParts = splitAndFilter(actualPath);
 
         if (patternParts.size() != pathParts.size()) {
             return false;
         }
 
-        for (int i = 0; i < patternParts.size(); i++) {
+        for (short i = 0; i < patternParts.size(); i++) {
             if (!isPathVariable(patternParts.get(i)) && !patternParts.get(i).equals(pathParts.get(i))) {
                 return false;
             }
@@ -90,7 +91,7 @@ public final class ManagedController {
         var pathParts = splitAndFilter(path);
 
         List<Object> variables = new ArrayList<>();
-        for (int i = 0; i < patternParts.size(); i++) {
+        for (short i = 0; i < patternParts.size(); i++) {
             if (isPathVariable(patternParts.get(i))) {
                 variables.add(pathParts.get(i));
             }
@@ -103,6 +104,12 @@ public final class ManagedController {
         return Arrays.stream(input.split("/"))
                 .filter(part -> !part.isEmpty())
                 .toList();
+    }
+
+    private String extractPath(String fullPath) {
+        // Split by "?" and return the part before the query string
+        int queryIndex = fullPath.indexOf("?");
+        return queryIndex > -1 ? fullPath.substring(0, queryIndex) : fullPath;
     }
 
     private boolean isPathVariable(String part) {

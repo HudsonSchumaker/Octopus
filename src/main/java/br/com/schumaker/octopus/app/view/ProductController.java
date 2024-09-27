@@ -11,10 +11,10 @@ import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.annotations.controller.Payload;
 import br.com.schumaker.octopus.framework.annotations.controller.Post;
 import br.com.schumaker.octopus.framework.annotations.controller.Put;
+import br.com.schumaker.octopus.framework.annotations.controller.QueryParam;
 import br.com.schumaker.octopus.framework.annotations.controller.Secured;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.model.Mapper;
-import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;
 import br.com.schumaker.octopus.framework.web.view.Page;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
@@ -93,6 +93,18 @@ public class ProductController {
                 .build();
     }
 
+    @Get("/search")
+    public ResponseView<List<ProductView>> search(@QueryParam(value = "name", required = false, defaultValue = "Guest") String name) {
+        var product = service.getById(BigInteger.valueOf(1L));
+        return ResponseView.ok()
+                .body(new ProductView(
+                        product.getId(),
+                        product.getName(),
+                        product.getDescription(),
+                        product.getPrice()))
+                .build();
+    }
+
     @Post
     public ResponseView<ProductView> create(@Payload @Validate ProductDTO dto) {
         Mapper<ProductDTO, Product> mapper = new Mapper<>();
@@ -109,7 +121,7 @@ public class ProductController {
     }
 
     @Put("/{id}")
-    public ResponseView<ProductView> update(@PathVariable("id") int id, @Payload @Validate ProductDTO dto) throws IOException {
+    public ResponseView<ProductView> update(@PathVariable("id") int id, @Payload @Validate ProductDTO dto) {
         Mapper<ProductDTO, Product> mapper = new Mapper<>();
         var product = mapper.map(dto, Product.class);
         var updated = service.update(BigInteger.valueOf(id), product);
