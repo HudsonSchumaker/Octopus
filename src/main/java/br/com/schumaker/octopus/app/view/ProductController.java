@@ -11,10 +11,10 @@ import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
 import br.com.schumaker.octopus.framework.annotations.controller.Payload;
 import br.com.schumaker.octopus.framework.annotations.controller.Post;
 import br.com.schumaker.octopus.framework.annotations.controller.Put;
+import br.com.schumaker.octopus.framework.annotations.controller.QueryParam;
 import br.com.schumaker.octopus.framework.annotations.controller.Secured;
 import br.com.schumaker.octopus.framework.annotations.validations.Validate;
 import br.com.schumaker.octopus.framework.model.Mapper;
-import br.com.schumaker.octopus.framework.web.http.Http;
 import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;
 import br.com.schumaker.octopus.framework.web.view.Page;
 import br.com.schumaker.octopus.framework.web.view.ResponseView;
@@ -84,6 +84,18 @@ public class ProductController {
     @Get("/info/{id}/{name}") // TODO: fix type
     public ResponseView<ProductView> getInfo(@PathVariable("id") int id, @PathVariable("name") String name) {
         var product = service.getById(BigInteger.valueOf(id));
+        return ResponseView.ok()
+                .body(new ProductView(
+                        product.getId(),
+                        product.getName(),
+                        product.getDescription(),
+                        product.getPrice()))
+                .build();
+    }
+
+    @Get("/search")
+    public ResponseView<List<ProductView>> search(@QueryParam(value = "name", required = false, defaultValue = "Guest") String name) {
+        var product = service.getById(BigInteger.valueOf(1L));
         return ResponseView.ok()
                 .body(new ProductView(
                         product.getId(),
