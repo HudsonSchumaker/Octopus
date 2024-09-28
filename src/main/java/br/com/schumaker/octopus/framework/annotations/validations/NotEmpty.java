@@ -41,7 +41,7 @@ import static br.com.schumaker.octopus.framework.ioc.reflection.validation.NotEm
  * @see Payload
  *
  * @author Hudson Schumaker
- * @since 1.0.0
+ * @version 1.0.0
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

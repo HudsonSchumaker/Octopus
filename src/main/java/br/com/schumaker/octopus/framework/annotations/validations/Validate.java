@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * @see Payload
  *
  * @author Hudson Schumaker
- * @since 1.0.0
+ * @version 1.0.0
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
