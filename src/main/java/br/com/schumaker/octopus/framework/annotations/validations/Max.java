@@ -33,6 +33,7 @@ import static br.com.schumaker.octopus.framework.ioc.reflection.validation.MaxVa
  * @see Past
  * @see Range
  * @see Email
+ * @see Regex
  * @see Future
  * @see NotNull
  * @see NotBlank

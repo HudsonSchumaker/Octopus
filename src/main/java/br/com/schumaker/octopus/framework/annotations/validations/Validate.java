@@ -35,6 +35,7 @@ import java.lang.annotation.Target;
  * @see Past
  * @see Range
  * @see Email
+ * @see Regex
  * @see Future
  * @see NotNull
  * @see NotBlank

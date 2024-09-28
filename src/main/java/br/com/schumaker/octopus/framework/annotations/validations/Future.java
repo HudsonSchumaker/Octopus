@@ -34,6 +34,7 @@ import static br.com.schumaker.octopus.framework.ioc.reflection.validation.Futur
  * @see Past
  * @see Range
  * @see Email
+ * @see Regex
  * @see NotNull
  * @see Payload
  * @see NotBlank

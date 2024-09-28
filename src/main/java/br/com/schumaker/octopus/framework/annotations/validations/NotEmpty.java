@@ -34,6 +34,7 @@ import static br.com.schumaker.octopus.framework.ioc.reflection.validation.NotEm
  * @see Past
  * @see Range
  * @see Email
+ * @see Regex
  * @see Future
  * @see NotNull
  * @see NotBlank

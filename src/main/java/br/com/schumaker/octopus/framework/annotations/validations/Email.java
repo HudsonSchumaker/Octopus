@@ -33,7 +33,6 @@ import static br.com.schumaker.octopus.framework.ioc.reflection.validation.Email
  * @see Min
  * @see Past
  * @see Range
- * @see Email
  * @see Future
  * @see NotNull
  * @see NotBlank
