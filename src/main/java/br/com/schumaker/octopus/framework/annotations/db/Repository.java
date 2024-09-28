@@ -1,6 +1,6 @@
 package br.com.schumaker.octopus.framework.annotations.db;
 
-import br.com.schumaker.octopus.framework.jdbc.DbCrud;
+import br.com.schumaker.octopus.framework.jdbc.SqlCrud;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  *
- * @see DbCrud
+ * @see SqlCrud
  *
  * @author Hudson Schumaker
  * @version 1.0.0

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The DbCrud class provides generic CRUD (Create, Read, Update, Delete) operations for database entities.
+ * The SqlCrud class provides generic CRUD (Create, Read, Update, Delete) operations for database entities.
  * It uses reflection to dynamically map entity fields to database columns and vice versa.
  * The class is parameterized with a primary key type K and an entity type T.
  *
@@ -68,7 +68,7 @@ import java.util.Optional;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class DbCrud<K, T> {
+public class SqlCrud<K, T> {
     private final TableReflection tableReflection = TableReflection.getInstance();
     private final Class<K> pk;
     private final Class<T> clazz;
@@ -91,7 +91,7 @@ public class DbCrud<K, T> {
     public static final int DEFAULT_PAGE_NUMBER = 0;
 
     @SuppressWarnings("unchecked")
-    public DbCrud() {
+    public SqlCrud() {
         this.pk = (Class<K>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
