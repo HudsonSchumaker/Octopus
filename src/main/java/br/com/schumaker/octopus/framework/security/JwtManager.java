@@ -17,7 +17,7 @@ import java.util.Optional;
 
 /**
  * The JwtService class provides methods to generate and validate JWT tokens.
- * It uses the secret key, issuer, and expiration time defined in the environment properties.
+ * It uses the secret key, issuer and expiration time defined in the environment properties.
  *
  * @see Environment
  * @see AppProperties
