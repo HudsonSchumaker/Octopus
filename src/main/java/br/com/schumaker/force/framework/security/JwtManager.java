@@ -1,7 +1,7 @@
-package br.com.schumaker.octopus.framework.security;
+package br.com.schumaker.force.framework.security;
 
-import br.com.schumaker.octopus.framework.ioc.AppProperties;
-import br.com.schumaker.octopus.framework.ioc.Environment;
+import br.com.schumaker.force.framework.ioc.AppProperties;
+import br.com.schumaker.force.framework.ioc.Environment;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

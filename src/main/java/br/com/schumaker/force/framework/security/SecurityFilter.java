@@ -1,12 +1,12 @@
-package br.com.schumaker.octopus.framework.security;
+package br.com.schumaker.force.framework.security;
 
-import br.com.schumaker.octopus.framework.annotations.bean.Filter;
-import br.com.schumaker.octopus.framework.annotations.controller.Secured;
-import br.com.schumaker.octopus.framework.exception.OctopusSecurityException;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.web.http.Http;
-import br.com.schumaker.octopus.framework.web.http.HttpFilter;
-import br.com.schumaker.octopus.framework.web.http.HttpRequest;
+import br.com.schumaker.force.framework.annotations.bean.Filter;
+import br.com.schumaker.force.framework.annotations.controller.Secured;
+import br.com.schumaker.force.framework.exception.ForceSecurityException;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.web.http.Http;
+import br.com.schumaker.force.framework.web.http.HttpFilter;
+import br.com.schumaker.force.framework.web.http.HttpRequest;
 
 /**
  * The SecurityFilter class.
@@ -37,10 +37,10 @@ public class SecurityFilter implements HttpFilter {
                 try {
                     var claims = JwtManager.validateToken(token);
                     if (claims == null) {
-                        throw new OctopusSecurityException(security.value(), Http.HTTP_401);
+                        throw new ForceSecurityException(security.value(), Http.HTTP_401);
                     }
                } catch (Exception e) {
-                   throw new OctopusSecurityException(security.value(), Http.HTTP_401);
+                   throw new ForceSecurityException(security.value(), Http.HTTP_401);
                }
             }
         }
