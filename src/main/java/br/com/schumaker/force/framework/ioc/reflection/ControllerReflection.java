@@ -1,16 +1,16 @@
-package br.com.schumaker.octopus.framework.ioc.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.controller.Controller;
-import br.com.schumaker.octopus.framework.annotations.controller.Delete;
-import br.com.schumaker.octopus.framework.annotations.controller.Get;
-import br.com.schumaker.octopus.framework.annotations.controller.Head;
-import br.com.schumaker.octopus.framework.annotations.controller.Options;
-import br.com.schumaker.octopus.framework.annotations.controller.Patch;
-import br.com.schumaker.octopus.framework.annotations.controller.Post;
-import br.com.schumaker.octopus.framework.annotations.controller.Put;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.model.Triple;
-import br.com.schumaker.octopus.framework.web.http.HttpVerb;
+import br.com.schumaker.force.framework.annotations.controller.Controller;
+import br.com.schumaker.force.framework.annotations.controller.Delete;
+import br.com.schumaker.force.framework.annotations.controller.Get;
+import br.com.schumaker.force.framework.annotations.controller.Head;
+import br.com.schumaker.force.framework.annotations.controller.Options;
+import br.com.schumaker.force.framework.annotations.controller.Patch;
+import br.com.schumaker.force.framework.annotations.controller.Post;
+import br.com.schumaker.force.framework.annotations.controller.Put;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.model.Triple;
+import br.com.schumaker.force.framework.web.http.HttpVerb;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -104,7 +104,7 @@ public final class ControllerReflection {
      * Retrieves the value of the specified route mapping annotation.
      *
      * @param routeMapping the route mapping annotation.
-     * @throws OctopusException if an error occurs while retrieving the annotation value.
+     * @throws ForceException if an error occurs while retrieving the annotation value.
      * @return the value of the route mapping annotation.
      */
     private static String getAnnotationValue(Annotation routeMapping) {
@@ -112,7 +112,7 @@ public final class ControllerReflection {
             Method valueMethod = routeMapping.annotationType().getMethod("value");
             return (String) valueMethod.invoke(routeMapping);
         } catch (Exception e) {
-            throw new OctopusException("Failed to retrieve annotation value.", e);
+            throw new ForceException("Failed to retrieve annotation value.", e);
         }
     }
 }

@@ -1,7 +1,7 @@
-package br.com.schumaker.octopus.framework.ioc.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
@@ -32,7 +32,7 @@ public final class ConstructorReflection {
      *
      * @param constructor the constructor to use for instantiation.
      * @return the instantiated object.
-     * @throws OctopusException if an error occurs during instantiation.
+     * @throws ForceException if an error occurs during instantiation.
      */
     public Object instantiateWithInjectedBeans(Constructor<?> constructor) {
         List<Object> parameters = new ArrayList<>();
@@ -53,7 +53,7 @@ public final class ConstructorReflection {
      * @param constructor the constructor to use for instantiation.
      * @param args the arguments to pass to the constructor.
      * @return the instantiated object.
-     * @throws OctopusException if an error occurs during instantiation.
+     * @throws ForceException if an error occurs during instantiation.
      */
     private Object instantiate(Constructor<?> constructor, Object... args) {
         try {
@@ -72,9 +72,9 @@ public final class ConstructorReflection {
                 }
             }
 
-            throw new OctopusException("Bean(s) missing for injection in constructor parameters: " + missingTypes);
+            throw new ForceException("Bean(s) missing for injection in constructor parameters: " + missingTypes);
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 
@@ -83,13 +83,13 @@ public final class ConstructorReflection {
      *
      * @param constructor the constructor.
      * @return a list of parameters.
-     * @throws OctopusException if an error occurs during retrieval.
+     * @throws ForceException if an error occurs during retrieval.
      */
     private List<Parameter> getParameters(Constructor<?> constructor) {
         try {
             return Arrays.stream(constructor.getParameters()).toList();
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 }

@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.framework.ioc.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.bean.Value;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.Environment;
-import br.com.schumaker.octopus.framework.model.TypeConverter;
+import br.com.schumaker.force.framework.annotations.bean.Value;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.Environment;
+import br.com.schumaker.force.framework.model.TypeConverter;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
@@ -32,7 +32,7 @@ public final class ValueReflection {
      *
      * @param instance the instance whose fields are to be injected.
      * @return the instance with injected field values.
-     * @throws OctopusException if an error occurs during field injection.
+     * @throws ForceException if an error occurs during field injection.
      */
     public Object injectFieldValue(Object instance) {
         try {
@@ -51,7 +51,7 @@ public final class ValueReflection {
             }
             return instance;
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 
@@ -61,7 +61,7 @@ public final class ValueReflection {
      *
      * @param parameter the parameter whose value is to be injected.
      * @return the injected parameter value.
-     * @throws OctopusException if an error occurs during parameter injection.
+     * @throws ForceException if an error occurs during parameter injection.
      */
     public Object injectParameterValue(Parameter parameter) {
         try {
@@ -77,7 +77,7 @@ public final class ValueReflection {
             }
             return null;
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 }

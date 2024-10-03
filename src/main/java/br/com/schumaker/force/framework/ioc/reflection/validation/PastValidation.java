@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.framework.ioc.reflection.validation;
+package br.com.schumaker.force.framework.ioc.reflection.validation;
 
-import br.com.schumaker.octopus.framework.annotations.validations.Past;
-import br.com.schumaker.octopus.framework.annotations.validations.Validate;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.web.http.Http;
+import br.com.schumaker.force.framework.annotations.validations.Past;
+import br.com.schumaker.force.framework.annotations.validations.Validate;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.web.http.Http;
 
 import java.lang.reflect.Field;
 import java.time.Instant;
@@ -30,10 +30,10 @@ public class PastValidation implements Validation {
      *
      * @param object the object to be validated.
      * @param field the field to be validated.
-     * @throws OctopusException if the field is not in the past.
+     * @throws ForceException if the field is not in the past.
      */
     @Override
-    public void validate(Object object, Field field) throws OctopusException {
+    public void validate(Object object, Field field) throws ForceException {
         try {
             field.setAccessible(true);
             Past pastAnnotation = field.getAnnotation(Past.class);
@@ -44,7 +44,7 @@ public class PastValidation implements Validation {
                         .anyMatch(type -> type.isInstance(fieldValue));
 
                 if (!isValidType) {
-                    throw new OctopusException("Field " + field.getName() + " is not of a valid type for @Past annotation");
+                    throw new ForceException("Field " + field.getName() + " is not of a valid type for @Past annotation");
                 }
 
                 boolean isPast = false;
@@ -59,13 +59,13 @@ public class PastValidation implements Validation {
                 if (!isPast) {
                     var message = pastAnnotation.value();
                     if (message.equals(PAST_VALIDATION_MESSAGE)) {
-                        throw new OctopusException(String.format(message, field.getName()), Http.HTTP_400);
+                        throw new ForceException(String.format(message, field.getName()), Http.HTTP_400);
                     }
-                    throw new OctopusException(message);
+                    throw new ForceException(message);
                 }
             }
         } catch (IllegalAccessException e) {
-            throw new OctopusException("Failed to validate: " + field.getName(), e);
+            throw new ForceException("Failed to validate: " + field.getName(), e);
         }
     }
 }

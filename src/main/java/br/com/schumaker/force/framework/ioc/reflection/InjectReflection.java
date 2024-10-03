@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.framework.ioc.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.bean.Inject;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.annotations.bean.Inject;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
 
 /**
  * The InjectReflection class provides utility methods for injecting dependencies into fields annotated with @Inject.
@@ -26,7 +26,7 @@ public final class InjectReflection {
      * Fields annotated with @Inject are set with the appropriate bean instances.
      *
      * @param instance the instance whose fields are to be injected.
-     * @throws OctopusException if an error occurs during field injection.
+     * @throws ForceException if an error occurs during field injection.
      */
     public void injectFieldBean(Object instance) {
         try {
@@ -42,7 +42,7 @@ public final class InjectReflection {
                 }
             }
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 }

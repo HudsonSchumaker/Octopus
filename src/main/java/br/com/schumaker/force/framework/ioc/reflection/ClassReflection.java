@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.framework.ioc.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.bean.Inject;
-import br.com.schumaker.octopus.framework.annotations.bean.Value;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.annotations.bean.Inject;
+import br.com.schumaker.force.framework.annotations.bean.Value;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
@@ -39,7 +39,7 @@ public final class ClassReflection {
      *
      * @param clazz the class to instantiate.
      * @return the instantiated object.
-     * @throws OctopusException if an error occurs during instantiation.
+     * @throws ForceException if an error occurs during instantiation.
      */
     public Object instantiate(Class<?> clazz) {
         try {
@@ -74,7 +74,7 @@ public final class ClassReflection {
                 return handleFieldInjectionAndValueAnnotation(instance);
             }
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 
@@ -113,7 +113,7 @@ public final class ClassReflection {
                     .findFirst();
 
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 
@@ -122,13 +122,13 @@ public final class ClassReflection {
      *
      * @param clazz the class.
      * @return the first available constructor.
-     * @throws OctopusException if an error occurs during retrieval.
+     * @throws ForceException if an error occurs during retrieval.
      */
     private Constructor<?> getFirstAvailableConstructor(Class<?> clazz) {
         try {
             return clazz.getDeclaredConstructors()[0];
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 
@@ -137,13 +137,13 @@ public final class ClassReflection {
      *
      * @param clazz the class.
      * @return a list of constructors.
-     * @throws OctopusException if an error occurs during retrieval.
+     * @throws ForceException if an error occurs during retrieval.
      */
     private List<Constructor<?>> getConstructors(Class<?> clazz) {
         try {
             return Arrays.stream(clazz.getDeclaredConstructors()).toList();
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 
@@ -152,13 +152,13 @@ public final class ClassReflection {
      *
      * @param constructor the constructor.
      * @return a list of parameters.
-     * @throws OctopusException if an error occurs during retrieval.
+     * @throws ForceException if an error occurs during retrieval.
      */
     private List<Parameter> getParameters(Constructor<?> constructor) {
         try {
             return Arrays.stream(constructor.getParameters()).toList();
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 }

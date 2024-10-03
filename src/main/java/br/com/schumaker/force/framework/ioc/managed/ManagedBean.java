@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.ioc.managed;
+package br.com.schumaker.force.framework.ioc.managed;
 
 /**
  * The ManagedBean class represents a managed bean within the IoC container.

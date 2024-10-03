@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.framework.ioc.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.bean.Bean;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.ioc.managed.ManagedBean;
+import br.com.schumaker.force.framework.annotations.bean.Bean;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.ioc.managed.ManagedBean;
 
 /**
  * The MethodReflection class provides utility methods for handling methods annotated with @Bean.
@@ -26,7 +26,7 @@ public final class MethodReflection {
      * Instantiates beans for methods annotated with @Bean in the specified instance and registers them with the IoC container.
      *
      * @param instance the instance whose methods are to be processed.
-     * @throws OctopusException if an error occurs during bean instantiation.
+     * @throws ForceException if an error occurs during bean instantiation.
      */
     public void instantiateBean(Object instance) {
         try {
@@ -39,7 +39,7 @@ public final class MethodReflection {
                 }
             }
         } catch (Exception e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 }

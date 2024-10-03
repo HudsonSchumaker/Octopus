@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.framework.ioc.reflection.validation;
+package br.com.schumaker.force.framework.ioc.reflection.validation;
 
-import br.com.schumaker.octopus.framework.annotations.validations.Min;
-import br.com.schumaker.octopus.framework.annotations.validations.Validate;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.web.http.Http;
+import br.com.schumaker.force.framework.annotations.validations.Min;
+import br.com.schumaker.force.framework.annotations.validations.Validate;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.web.http.Http;
 
 import java.lang.reflect.Field;
 
@@ -25,10 +25,10 @@ public final class MinValidation implements Validation {
      *
      * @param object the object to validate.
      * @param field the field to validate.
-     * @throws OctopusException if the field is below the minimum value.
+     * @throws ForceException if the field is below the minimum value.
      */
     @Override
-    public void validate(Object object, Field field) throws OctopusException {
+    public void validate(Object object, Field field) throws ForceException {
         try {
             field.setAccessible(true);
             double minValue = field.getAnnotation(Min.class).value();
@@ -38,13 +38,13 @@ public final class MinValidation implements Validation {
                 if (value < minValue) {
                     var message = field.getAnnotation(Min.class).message();
                     if (message.equals(MIN_VALIDATION_MESSAGE)) {
-                        throw new OctopusException(String.format(message, field.getName(), minValue), Http.HTTP_400);
+                        throw new ForceException(String.format(message, field.getName(), minValue), Http.HTTP_400);
                     }
-                    throw new OctopusException(message);
+                    throw new ForceException(message);
                 }
             }
         } catch (IllegalAccessException e) {
-            throw new OctopusException("Failed to validate: " + field.getName(), e);
+            throw new ForceException("Failed to validate: " + field.getName(), e);
         }
     }
 }

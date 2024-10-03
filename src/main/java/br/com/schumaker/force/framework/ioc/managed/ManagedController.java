@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.framework.ioc.managed;
+package br.com.schumaker.force.framework.ioc.managed;
 
-import br.com.schumaker.octopus.framework.ioc.reflection.ControllerReflection;
-import br.com.schumaker.octopus.framework.ioc.reflection.ClassReflection;
-import br.com.schumaker.octopus.framework.model.Triple;
-import br.com.schumaker.octopus.framework.web.http.Http;
+import br.com.schumaker.force.framework.ioc.reflection.ControllerReflection;
+import br.com.schumaker.force.framework.ioc.reflection.ClassReflection;
+import br.com.schumaker.force.framework.model.Triple;
+import br.com.schumaker.force.framework.web.http.Http;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

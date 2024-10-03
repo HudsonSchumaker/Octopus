@@ -1,7 +1,7 @@
-package br.com.schumaker.octopus.framework.web.handler;
+package br.com.schumaker.force.framework.web.handler;
 
-import br.com.schumaker.octopus.framework.web.http.HttpRequest;
-import br.com.schumaker.octopus.framework.web.http.HttpResponse;
+import br.com.schumaker.force.framework.web.http.HttpRequest;
+import br.com.schumaker.force.framework.web.http.HttpResponse;
 
 /**
  * The OptionsHandler class.

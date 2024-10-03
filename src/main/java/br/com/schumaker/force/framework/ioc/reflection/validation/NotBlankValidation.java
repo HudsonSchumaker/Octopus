@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.framework.ioc.reflection.validation;
+package br.com.schumaker.force.framework.ioc.reflection.validation;
 
-import br.com.schumaker.octopus.framework.annotations.validations.NotBlank;
-import br.com.schumaker.octopus.framework.annotations.validations.Validate;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.web.http.Http;
+import br.com.schumaker.force.framework.annotations.validations.NotBlank;
+import br.com.schumaker.force.framework.annotations.validations.Validate;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.web.http.Http;
 
 import java.lang.reflect.Field;
 
@@ -25,10 +25,10 @@ public final class NotBlankValidation implements Validation {
      *
      * @param object the object to validate.
      * @param field the field to validate.
-     * @throws OctopusException if the field is blank.
+     * @throws ForceException if the field is blank.
      */
     @Override
-    public void validate(Object object, Field field) throws OctopusException {
+    public void validate(Object object, Field field) throws ForceException {
         try {
             field.setAccessible(true);
             Object fieldValue = field.get(object);
@@ -36,13 +36,13 @@ public final class NotBlankValidation implements Validation {
                 if (value.isBlank()) {
                     var message = field.getAnnotation(NotBlank.class).value();
                     if (message.equals(NOT_BLANK_VALIDATION_MESSAGE)) {
-                        throw new OctopusException(String.format(message, field.getName()), Http.HTTP_400);
+                        throw new ForceException(String.format(message, field.getName()), Http.HTTP_400);
                     }
-                    throw new OctopusException(message);
+                    throw new ForceException(message);
                 }
             }
         } catch (IllegalAccessException e) {
-            throw new OctopusException(e.getMessage());
+            throw new ForceException(e.getMessage());
         }
     }
 }

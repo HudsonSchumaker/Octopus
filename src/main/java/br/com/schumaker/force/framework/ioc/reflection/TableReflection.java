@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.framework.ioc.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.db.Column;
-import br.com.schumaker.octopus.framework.annotations.db.Pk;
-import br.com.schumaker.octopus.framework.annotations.db.Table;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.annotations.db.Column;
+import br.com.schumaker.force.framework.annotations.db.Pk;
+import br.com.schumaker.force.framework.annotations.db.Table;
+import br.com.schumaker.force.framework.exception.ForceException;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public final class TableReflection {
      *
      * @param clazz the class to inspect.
      * @return the table name.
-     * @throws OctopusException if the @Table annotation is not found.
+     * @throws ForceException if the @Table annotation is not found.
      */
     public String getTableName(Class<?> clazz) {
         var tableAnnotation = clazz.getAnnotation(Table.class);
@@ -43,7 +43,7 @@ public final class TableReflection {
                 return name;
             }
         }
-        throw new OctopusException("Table annotation not found.");
+        throw new ForceException("Table annotation not found.");
     }
 
     /**
@@ -51,7 +51,7 @@ public final class TableReflection {
      *
      * @param clazz the class to inspect.
      * @return the primary key.
-     * @throws OctopusException if the primary key is not found.
+     * @throws ForceException if the primary key is not found.
      */
     public String getPrimaryKey(Class<?> clazz) {
         var fields = getFields(clazz);
@@ -66,7 +66,7 @@ public final class TableReflection {
                 }
             }
         }
-        throw new OctopusException("Primary key not found.");
+        throw new ForceException("Primary key not found.");
     }
 
     /**
@@ -84,7 +84,7 @@ public final class TableReflection {
                 try {
                     return field.get(entity);
                 } catch (IllegalAccessException e) {
-                    throw new OctopusException(e.getMessage(), e);
+                    throw new ForceException(e.getMessage(), e);
                 }
             }
         }
