@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.web.view;
+package br.com.schumaker.force.framework.web.view;
 
 import java.util.List;
 

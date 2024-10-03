@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.framework.ioc.reflection.validation;
+package br.com.schumaker.force.framework.ioc.reflection.validation;
 
-import br.com.schumaker.octopus.framework.annotations.validations.Regex;
-import br.com.schumaker.octopus.framework.annotations.validations.Validate;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.annotations.validations.Regex;
+import br.com.schumaker.force.framework.annotations.validations.Validate;
+import br.com.schumaker.force.framework.exception.ForceException;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
@@ -20,17 +20,17 @@ import java.util.regex.Pattern;
 public class RegexValidation implements Validation {
 
     @Override
-    public void validate(Object object, Field field) throws OctopusException {
+    public void validate(Object object, Field field) throws ForceException {
         Regex regex = field.getAnnotation(Regex.class);
         if (regex != null) {
             try {
                 field.setAccessible(true);
                 Object value = field.get(object);
                 if (value != null && !Pattern.matches(regex.value(), value.toString())) {
-                    throw new OctopusException(regex.message());
+                    throw new ForceException(regex.message());
                 }
             } catch (IllegalAccessException e) {
-                throw new OctopusException("Failed to access field value", e);
+                throw new ForceException("Failed to access field value", e);
             }
         }
     }

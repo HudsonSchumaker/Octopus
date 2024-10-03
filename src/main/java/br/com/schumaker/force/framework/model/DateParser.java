@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.model;
+package br.com.schumaker.force.framework.model;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.exception.ForceException;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -38,13 +38,13 @@ public final class DateParser {
      *
      * @param dateStr the date string to be parsed.
      * @return the parsed Instant.
-     * @throws OctopusException if the date string does not match any supported format.
+     * @throws ForceException if the date string does not match any supported format.
      */
     public static Instant parseToInstant(String dateStr) {
         try {
             return Instant.parse(dateStr);
         } catch (DateTimeParseException e) {
-            throw new OctopusException("Invalid date format: " + dateStr);
+            throw new ForceException("Invalid date format: " + dateStr);
         }
     }
 
@@ -53,7 +53,7 @@ public final class DateParser {
      *
      * @param dateStr the date string to be parsed.
      * @return the parsed LocalDate.
-     * @throws OctopusException if the date string does not match any supported format.
+     * @throws ForceException if the date string does not match any supported format.
      */
     public static LocalDate parseToLocalDate(String dateStr) {
         for (DateTimeFormatter formatter : DATE_FORMATTERS) {
@@ -67,7 +67,7 @@ public final class DateParser {
                 // Continue to the next formatter
             }
         }
-        throw new OctopusException("Invalid date format: " + dateStr);
+        throw new ForceException("Invalid date format: " + dateStr);
     }
 
     /**
@@ -75,7 +75,7 @@ public final class DateParser {
      *
      * @param dateStr the date string to be parsed.
      * @return the parsed LocalDateTime.
-     * @throws OctopusException if the date string does not match any supported format.
+     * @throws ForceException if the date string does not match any supported format.
      */
     public static LocalDateTime parseToLocalDateTime(String dateStr) {
         for (DateTimeFormatter formatter : DATE_FORMATTERS) {
@@ -89,6 +89,6 @@ public final class DateParser {
                 // Continue to the next formatter
             }
         }
-        throw new OctopusException("Invalid date format: " + dateStr);
+        throw new ForceException("Invalid date format: " + dateStr);
     }
 }

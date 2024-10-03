@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.model;
+package br.com.schumaker.force.framework.model;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.exception.ForceException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +37,7 @@ public class MapperTest {
         Mapper<Source, Target> mapper = new Mapper<>();
 
         // Act & Assert
-        assertThrows(OctopusException.class, () -> {
+        assertThrows(ForceException.class, () -> {
             mapper.map(source, null);
         });
     }

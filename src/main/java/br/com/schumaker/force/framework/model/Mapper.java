@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.model;
+package br.com.schumaker.force.framework.model;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.exception.ForceException;
 
 import java.lang.reflect.Field;
 
@@ -48,7 +48,7 @@ import java.lang.reflect.Field;
  * }
  * </pre>
  *
- * @see OctopusException
+ * @see ForceException
  *
  * @author Hudson Schumaker
  * @version 1.0.0
@@ -61,7 +61,7 @@ public class Mapper <S, T> {
      * @param source the source object.
      * @param targetClass the class of the target object.
      * @return the target object with fields mapped from the source object.
-     * @throws OctopusException if an error occurs during mapping.
+     * @throws ForceException if an error occurs during mapping.
      */
     public T map(S source, Class<T> targetClass) {
         try {
@@ -82,7 +82,7 @@ public class Mapper <S, T> {
             }
             return target;
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage());
+            throw new ForceException(ex.getMessage());
         }
     }
 }

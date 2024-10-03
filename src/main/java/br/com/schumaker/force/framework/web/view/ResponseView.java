@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.web.view;
+package br.com.schumaker.force.framework.web.view;
 
-import br.com.schumaker.octopus.framework.web.http.Http;
+import br.com.schumaker.force.framework.web.http.Http;
 
 import java.util.HashMap;
 import java.util.Map;

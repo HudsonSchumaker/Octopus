@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.framework.model;
+package br.com.schumaker.force.framework.model;
 
 /**
  * A generic record that holds a trio of values.
- * Project: Octopus Framework
+ * Project: Force Framework
  *
  * @param <F> the type of the first value.
  * @param <S> the type of the second value.

@@ -1,15 +1,15 @@
-package br.com.schumaker.octopus.framework.web.handler;
+package br.com.schumaker.force.framework.web.handler;
 
-import br.com.schumaker.octopus.framework.annotations.controller.Delete;
-import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.web.http.Http;
-import br.com.schumaker.octopus.framework.web.http.HttpRequest;
-import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;
-import br.com.schumaker.octopus.framework.web.http.HttpResponse;
+import br.com.schumaker.force.framework.annotations.controller.Delete;
+import br.com.schumaker.force.framework.annotations.controller.PathVariable;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.web.http.Http;
+import br.com.schumaker.force.framework.web.http.HttpRequest;
+import br.com.schumaker.force.framework.web.http.HttpRequestHeader;
+import br.com.schumaker.force.framework.web.http.HttpResponse;
 
-import static br.com.schumaker.octopus.framework.web.handler.AbstractRequestHandler.container;
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_DELETE;
+import static br.com.schumaker.force.framework.web.handler.AbstractRequestHandler.container;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_DELETE;
 
 /**
  * The DeleteHandler class.
@@ -60,7 +60,7 @@ public final class DeleteHandler implements RequestHandler {
                 var methodReturnType = method.getReturnType();
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
             } catch (Exception ex) {
-                throw new OctopusException("Error invoking method.", ex);
+                throw new ForceException("Error invoking method.", ex);
             }
         } else {
             var httpCode = Http.HTTP_404;

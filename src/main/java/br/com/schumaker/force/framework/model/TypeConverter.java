@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.model;
+package br.com.schumaker.force.framework.model;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

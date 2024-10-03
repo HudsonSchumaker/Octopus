@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.jdbc;
+package br.com.schumaker.force.framework.jdbc;
 
 import java.util.List;
 
