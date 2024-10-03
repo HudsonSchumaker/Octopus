@@ -1,20 +1,20 @@
-package br.com.schumaker.octopus.framework.web.handler;
+package br.com.schumaker.force.framework.web.handler;
 
-import br.com.schumaker.octopus.framework.annotations.controller.Patch;
-import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
-import br.com.schumaker.octopus.framework.annotations.controller.Payload;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.web.http.Http;
-import br.com.schumaker.octopus.framework.web.http.HttpRequest;
-import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;
-import br.com.schumaker.octopus.framework.web.http.HttpResponse;
+import br.com.schumaker.force.framework.annotations.controller.Patch;
+import br.com.schumaker.force.framework.annotations.controller.PathVariable;
+import br.com.schumaker.force.framework.annotations.controller.Payload;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.web.http.Http;
+import br.com.schumaker.force.framework.web.http.HttpRequest;
+import br.com.schumaker.force.framework.web.http.HttpRequestHeader;
+import br.com.schumaker.force.framework.web.http.HttpResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_PATCH;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_PATCH;
 
 /**
  * The PatchHandler class.
@@ -77,7 +77,7 @@ public final class PatchHandler implements RequestHandler {
                 Object result = method.invoke(controller.getInstance(), arguments);
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
             } catch (Exception ex) {
-                throw new OctopusException("Error invoking method.", ex);
+                throw new ForceException("Error invoking method.", ex);
             }
         } else {
             int httpCode = Http.HTTP_404;
@@ -97,7 +97,7 @@ public final class PatchHandler implements RequestHandler {
             String requestBody = request.readRequestBody();
             return objectMapper.readValue(requestBody, new TypeReference<Map<String, Object>>() {});
         } catch (Exception ex) {
-            throw new OctopusException("Error reading patch message from request body.", ex);
+            throw new ForceException("Error reading patch message from request body.", ex);
         }
     }
 }

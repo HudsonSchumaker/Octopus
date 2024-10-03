@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.model;
+package br.com.schumaker.force.framework.model;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.exception.ForceException;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -30,7 +30,7 @@ public final class PatchHelper {
                 field.setAccessible(true);
                 field.set(entity, value);
             } catch (NoSuchFieldException | IllegalAccessException ex) {
-                throw new OctopusException("Error applying patch to entity.", ex);
+                throw new ForceException("Error applying patch to entity.", ex);
             }
         });
     }

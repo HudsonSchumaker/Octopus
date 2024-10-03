@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.web.http;
+package br.com.schumaker.force.framework.web.http;
 
 import java.util.Map;
 

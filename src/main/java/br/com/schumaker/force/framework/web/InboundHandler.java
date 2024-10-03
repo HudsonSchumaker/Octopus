@@ -1,20 +1,20 @@
-package br.com.schumaker.octopus.framework.web;
+package br.com.schumaker.force.framework.web;
 
-import br.com.schumaker.octopus.framework.exception.GlobalExceptionHandler;
-import br.com.schumaker.octopus.framework.model.Pair;
-import br.com.schumaker.octopus.framework.security.SecurityFilter;
-import br.com.schumaker.octopus.framework.web.handler.DeleteHandler;
-import br.com.schumaker.octopus.framework.web.handler.GetHandler;
-import br.com.schumaker.octopus.framework.web.handler.HeaderHandler;
-import br.com.schumaker.octopus.framework.web.handler.OptionsHandler;
-import br.com.schumaker.octopus.framework.web.handler.PatchHandler;
-import br.com.schumaker.octopus.framework.web.handler.PostHandler;
-import br.com.schumaker.octopus.framework.web.handler.PutHandler;
-import br.com.schumaker.octopus.framework.web.handler.RequestHandler;
-import br.com.schumaker.octopus.framework.web.http.Http;
-import br.com.schumaker.octopus.framework.web.http.HttpFilter;
-import br.com.schumaker.octopus.framework.web.http.HttpRequest;
-import br.com.schumaker.octopus.framework.web.http.HttpResponse;
+import br.com.schumaker.force.framework.exception.GlobalExceptionHandler;
+import br.com.schumaker.force.framework.model.Pair;
+import br.com.schumaker.force.framework.security.SecurityFilter;
+import br.com.schumaker.force.framework.web.handler.DeleteHandler;
+import br.com.schumaker.force.framework.web.handler.GetHandler;
+import br.com.schumaker.force.framework.web.handler.HeaderHandler;
+import br.com.schumaker.force.framework.web.handler.OptionsHandler;
+import br.com.schumaker.force.framework.web.handler.PatchHandler;
+import br.com.schumaker.force.framework.web.handler.PostHandler;
+import br.com.schumaker.force.framework.web.handler.PutHandler;
+import br.com.schumaker.force.framework.web.handler.RequestHandler;
+import br.com.schumaker.force.framework.web.http.Http;
+import br.com.schumaker.force.framework.web.http.HttpFilter;
+import br.com.schumaker.force.framework.web.http.HttpRequest;
+import br.com.schumaker.force.framework.web.http.HttpResponse;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -23,13 +23,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_DELETE;
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_GET;
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_HEADER;
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_OPTIONS;
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_PATCH;
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_POST;
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_PUT;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_DELETE;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_GET;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_HEADER;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_OPTIONS;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_PATCH;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_POST;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_PUT;
 
 /**
  * The Handler class implements the HttpHandler interface to handle HTTP requests.

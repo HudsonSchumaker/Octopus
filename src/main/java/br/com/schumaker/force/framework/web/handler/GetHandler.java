@@ -1,16 +1,16 @@
-package br.com.schumaker.octopus.framework.web.handler;
+package br.com.schumaker.force.framework.web.handler;
 
-import br.com.schumaker.octopus.framework.annotations.controller.Get;
-import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
-import br.com.schumaker.octopus.framework.annotations.controller.QueryParam;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.web.http.Http;
-import br.com.schumaker.octopus.framework.web.http.HttpRequest;
-import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;
-import br.com.schumaker.octopus.framework.web.http.HttpResponse;
+import br.com.schumaker.force.framework.annotations.controller.Get;
+import br.com.schumaker.force.framework.annotations.controller.PathVariable;
+import br.com.schumaker.force.framework.annotations.controller.QueryParam;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.web.http.Http;
+import br.com.schumaker.force.framework.web.http.HttpRequest;
+import br.com.schumaker.force.framework.web.http.HttpRequestHeader;
+import br.com.schumaker.force.framework.web.http.HttpResponse;
 
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_GET;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_GET;
 
 /**
  * The GetHandler class.
@@ -57,7 +57,7 @@ public final class GetHandler implements RequestHandler {
 
                     String value = queryParameters.getOrDefault(paramName, defaultValue);
                     if (required && value.isEmpty()) {
-                        throw new OctopusException("Missing required query parameter: " + paramName);
+                        throw new ForceException("Missing required query parameter: " + paramName);
                     }
 
                     arguments[i] = AbstractRequestHandler.convertToType(value, parameters.get(i).getType());
@@ -78,7 +78,7 @@ public final class GetHandler implements RequestHandler {
                 var methodReturnType = method.getReturnType();
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
             } catch (Exception ex) {
-                throw new OctopusException("Error invoking method.", ex);
+                throw new ForceException("Error invoking method.", ex);
             }
         } else {
             var httpCode = Http.HTTP_404;

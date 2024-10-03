@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.web.http;
+package br.com.schumaker.force.framework.web.http;
 
-import br.com.schumaker.octopus.framework.model.Pair;
+import br.com.schumaker.force.framework.model.Pair;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.BufferedReader;

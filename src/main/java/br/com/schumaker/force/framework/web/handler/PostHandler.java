@@ -1,10 +1,10 @@
-package br.com.schumaker.octopus.framework.web.handler;
+package br.com.schumaker.force.framework.web.handler;
 
-import br.com.schumaker.octopus.framework.annotations.controller.Post;
-import br.com.schumaker.octopus.framework.web.http.HttpRequest;
-import br.com.schumaker.octopus.framework.web.http.HttpResponse;
+import br.com.schumaker.force.framework.annotations.controller.Post;
+import br.com.schumaker.force.framework.web.http.HttpRequest;
+import br.com.schumaker.force.framework.web.http.HttpResponse;
 
-import static br.com.schumaker.octopus.framework.web.http.Http.HTTP_POST;
+import static br.com.schumaker.force.framework.web.http.Http.HTTP_POST;
 
 /**
  * The PostHandler class.

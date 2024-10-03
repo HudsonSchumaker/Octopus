@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.web.http;
+package br.com.schumaker.force.framework.web.http;
 
-import br.com.schumaker.octopus.framework.web.handler.RequestHandler;
+import br.com.schumaker.force.framework.web.handler.RequestHandler;
 import com.sun.net.httpserver.HttpExchange;
 
 /**
