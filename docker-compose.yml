@@ -1,5 +1,5 @@
 #
-# This is a sample docker-compose file that can be used to run the Octopus application.
+# This is a sample docker-compose file that can be used to run the Force application.
 #
 
 services:
@@ -7,7 +7,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: octopus-app:0.25.0
+    image: force-app:0.26.0
     environment:
       JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n"
     ports:
