@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.framework.exception;
+package br.com.schumaker.force.framework.exception;
 
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.model.Pair;
-import br.com.schumaker.octopus.framework.web.http.Http;
-import br.com.schumaker.octopus.framework.web.view.ResponseView;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.model.Pair;
+import br.com.schumaker.force.framework.web.http.Http;
+import br.com.schumaker.force.framework.web.view.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -61,8 +61,8 @@ public class GlobalExceptionHandler {
             }
         }
 
-        if (exception instanceof OctopusException) {
-            sendResponse(exchange, exception, ((OctopusException) exception).getStatusCode());
+        if (exception instanceof ForceException) {
+            sendResponse(exchange, exception, ((ForceException) exception).getStatusCode());
             return;
         }
         sendResponse(exchange, exception, Http.HTTP_500);

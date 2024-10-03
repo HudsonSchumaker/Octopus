@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.exception;
+package br.com.schumaker.force.framework.exception;
 
 /**
  * The ExceptionCodes enum defines a set of error codes for various exceptions that can occur within the application.

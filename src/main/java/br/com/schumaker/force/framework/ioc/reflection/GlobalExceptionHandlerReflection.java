@@ -1,7 +1,7 @@
-package br.com.schumaker.octopus.framework.ioc.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.exception.ExceptionHandler;
-import br.com.schumaker.octopus.framework.model.Pair;
+import br.com.schumaker.force.framework.annotations.exception.ExceptionHandler;
+import br.com.schumaker.force.framework.model.Pair;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

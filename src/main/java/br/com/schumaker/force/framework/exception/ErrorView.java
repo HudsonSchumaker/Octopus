@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.exception;
+package br.com.schumaker.force.framework.exception;
 
 /**
  * The ErrorView record represents an error view with a message and a code.
