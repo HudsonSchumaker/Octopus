@@ -2,6 +2,8 @@ package br.com.schumaker.force.framework.hardware;
 
 import br.com.schumaker.force.framework.exception.ForceException;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
 import java.net.InetAddress;
 
 /**
@@ -15,6 +17,7 @@ import java.net.InetAddress;
  * @version 1.0.0
  */
 public final class Machine {
+    private static final OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
 
     /**
      * Returns the number of available processors of the machine.
@@ -51,6 +54,26 @@ public final class Machine {
         } catch (Exception ex) {
             throw new ForceException(ex.getMessage());
         }
+    }
+
+    /**
+     * Returns the total memory of the machine.
+     *
+     * @return the total memory of the machine.
+     */
+    public static long getTotalMemory() {
+        return ((com.sun.management.OperatingSystemMXBean) osBean).getTotalMemorySize();
+    }
+
+    /**
+     * Returns the used memory of the machine.
+     *
+     * @return the used memory of the machine.
+     */
+    public static long getUsedMemory() {
+        long totalMemory = ((com.sun.management.OperatingSystemMXBean) osBean).getTotalMemorySize();
+        long freeMemory = ((com.sun.management.OperatingSystemMXBean) osBean).getFreeMemorySize();
+        return totalMemory - freeMemory;
     }
 
     /**

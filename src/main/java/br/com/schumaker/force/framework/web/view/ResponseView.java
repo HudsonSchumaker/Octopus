@@ -10,6 +10,21 @@ import java.util.Map;
  * This class contains the HTTP status code, the response body, and the response headers.
  *
  * @param <T> the type of the response body.
+ * Example usage:
+ * <pre>
+ * {@code
+ * // Creating a ResponseView with a 200 OK status and a response body
+ * ResponseView<String> response = new ResponseView<>(200, "Success");
+ *
+ * // Creating a ResponseView with a 404 Not Found status
+ * ResponseView<String> notFoundResponse = ResponseView.notFound().build();
+ *
+ * // Creating a ResponseView with custom headers
+ * Map<String, String> headers = new HashMap<>();
+ * headers.put("Content-Type", "application/json");
+ * ResponseView<String> responseWithHeaders = new ResponseView<>(200, "Success", headers);
+ * }
+ * </pre>
  *
  * @author Hudson Schumaker
  * @version 1.0.0

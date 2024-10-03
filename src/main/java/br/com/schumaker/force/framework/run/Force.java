@@ -28,6 +28,7 @@ import java.util.List;
  * @version 1.0.0
  */
 public final class Force {
+    private static final String HEALTH_PACKAGE = "br.com.schumaker.force.framework.web.health";
     private static final IoCContainer container = IoCContainer.getInstance();
     private static final Environment environment = Environment.getInstance();
     private static final CommandLineArgs commandLineArgs = CommandLineArgs.getInstance();
@@ -71,15 +72,19 @@ public final class Force {
         ForceApp app = clazz.getAnnotation(ForceApp.class);
         var packageName = app.root();
 
-        int totalTasks = 6;
+        int totalTasks = 8;
         ProgressBar progressBar = new ProgressBar(totalTasks, 50);
 
         registerClassesWithAnnotation(packageName, GlobalExceptionHandler.class, container::registerGlobalExceptionHandler, progressBar, "GlobalExceptionHandler");
-        registerClassesWithAnnotation(packageName, Configuration.class, container::registerConfiguration, progressBar, "Configuration");
-        registerClassesWithAnnotation(packageName, Component.class, container::registerComponent, progressBar, "Component");
-        registerClassesWithAnnotation(packageName, Repository.class, classes -> {}, progressBar, "Repository");
-        registerClassesWithAnnotation(packageName, Service.class, container::registerService, progressBar, "Service");
-        registerClassesWithAnnotation(packageName, Controller.class, container::registerController, progressBar, "Controller");
+        registerClassesWithAnnotation(packageName, Configuration.class, container::registerConfiguration, progressBar, "Configurations");
+        registerClassesWithAnnotation(packageName, Component.class, container::registerComponent, progressBar, "Components");
+        registerClassesWithAnnotation(packageName, Repository.class, classes -> {}, progressBar, "Repositories");
+        registerClassesWithAnnotation(packageName, Service.class, container::registerService, progressBar, "Services");
+        registerClassesWithAnnotation(packageName, Controller.class, container::registerController, progressBar, "Controllers");
+
+        // health package
+        registerClassesWithAnnotation(HEALTH_PACKAGE, Service.class, container::registerService, progressBar, "HealthService");
+        registerClassesWithAnnotation(HEALTH_PACKAGE, Controller.class, container::registerController, progressBar, "HealthController");
 
         progressBar.complete();
     }
