@@ -19,7 +19,7 @@ import br.com.schumaker.force.framework.web.view.ResponseView;
 @Controller("/token")
 public class TokenController {
 
-    @Post("/create/{subject}")
+    @Post("/generate/{subject}")
     public ResponseView<String> create(@PathVariable("subject") String subject) {
         return ResponseView.created()
                 .body(JwtManager.generateToken(subject))
