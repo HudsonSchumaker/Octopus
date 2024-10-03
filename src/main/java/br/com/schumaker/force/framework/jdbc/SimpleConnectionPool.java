@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.framework.jdbc;
+package br.com.schumaker.force.framework.jdbc;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.AppProperties;
-import br.com.schumaker.octopus.framework.ioc.Environment;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.AppProperties;
+import br.com.schumaker.force.framework.ioc.Environment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,7 +38,7 @@ public final class SimpleConnectionPool {
                 connectionPool.add(createConnection());
             }
         } catch (SQLException | ClassNotFoundException ex) {
-            throw new OctopusException("Error initializing connection pool: " + ex.getMessage(), ex);
+            throw new ForceException("Error initializing connection pool: " + ex.getMessage(), ex);
         }
 
     }
@@ -73,7 +73,7 @@ public final class SimpleConnectionPool {
         try {
             return connectionPool.take();
         } catch (InterruptedException | IllegalStateException ex) {
-            throw new OctopusException("Error getting connection from pool.", ex);
+            throw new ForceException("Error getting connection from pool.", ex);
         }
     }
 
@@ -88,7 +88,7 @@ public final class SimpleConnectionPool {
                 connectionPool.put(connection);
             }
         } catch (InterruptedException | SQLException ex) {
-            throw new OctopusException("Error releasing connection back to pool.", ex);
+            throw new ForceException("Error releasing connection back to pool.", ex);
         }
     }
 

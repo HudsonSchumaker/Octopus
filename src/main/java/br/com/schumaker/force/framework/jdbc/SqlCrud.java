@@ -1,12 +1,12 @@
-package br.com.schumaker.octopus.framework.jdbc;
+package br.com.schumaker.force.framework.jdbc;
 
-import br.com.schumaker.octopus.framework.annotations.db.Table;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.reflection.TableReflection;
-import br.com.schumaker.octopus.framework.web.view.Page;
-import br.com.schumaker.octopus.framework.web.view.PageImpl;
-import br.com.schumaker.octopus.framework.web.view.PageRequest;
-import br.com.schumaker.octopus.framework.web.view.Pageable;
+import br.com.schumaker.force.framework.annotations.db.Table;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.reflection.TableReflection;
+import br.com.schumaker.force.framework.web.view.Page;
+import br.com.schumaker.force.framework.web.view.PageImpl;
+import br.com.schumaker.force.framework.web.view.PageRequest;
+import br.com.schumaker.force.framework.web.view.Pageable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -118,7 +118,7 @@ public class SqlCrud<K, T> {
                 }
             }
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage(), ex);
+            throw new ForceException(ex.getMessage(), ex);
         } finally {
             if (connection != null) {
                 DbConnection.releaseConnection(connection);
@@ -169,7 +169,7 @@ public class SqlCrud<K, T> {
                 }
             }
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage(), ex);
+            throw new ForceException(ex.getMessage(), ex);
         } finally {
             if (connection != null) {
                 DbConnection.releaseConnection(connection);
@@ -247,7 +247,7 @@ public class SqlCrud<K, T> {
                 }
             }
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage(), ex);
+            throw new ForceException(ex.getMessage(), ex);
         } finally {
             if (connection != null) {
                 DbConnection.releaseConnection(connection);
@@ -302,7 +302,7 @@ public class SqlCrud<K, T> {
                 }
             }
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage(), ex);
+            throw new ForceException(ex.getMessage(), ex);
         } finally {
             if (connection != null) {
                 DbConnection.releaseConnection(connection);
@@ -348,7 +348,7 @@ public class SqlCrud<K, T> {
                 preparedStatement.executeUpdate();
             }
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage(), ex);
+            throw new ForceException(ex.getMessage(), ex);
         } finally {
             if (connection != null) {
                 DbConnection.releaseConnection(connection);
@@ -388,7 +388,7 @@ public class SqlCrud<K, T> {
                 preparedStatement.executeUpdate();
             }
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage(), ex);
+            throw new ForceException(ex.getMessage(), ex);
         } finally {
             if (connection != null) {
                 DbConnection.releaseConnection(connection);

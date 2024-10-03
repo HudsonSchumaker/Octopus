@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.framework.jdbc;
+package br.com.schumaker.force.framework.jdbc;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.AppProperties;
-import br.com.schumaker.octopus.framework.ioc.Environment;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.AppProperties;
+import br.com.schumaker.force.framework.ioc.Environment;
 
 import java.sql.Connection;
 
@@ -25,7 +25,7 @@ public final class DbConnection {
      * Establishes and returns a connection to the database using the configured properties.
      *
      * @return a Connection object to the database.
-     * @throws OctopusException if an error occurs while establishing the connection.
+     * @throws ForceException if an error occurs while establishing the connection.
      */
     public static Connection getConnection() {
         return simpleConnectionPool.getConnection();

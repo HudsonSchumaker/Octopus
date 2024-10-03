@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.jdbc;
+package br.com.schumaker.force.framework.jdbc;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.exception.ForceException;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -45,7 +45,7 @@ public final class SqlExecutor {
                 }
             }
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage(), ex);
+            throw new ForceException(ex.getMessage(), ex);
         }
     }
 }
