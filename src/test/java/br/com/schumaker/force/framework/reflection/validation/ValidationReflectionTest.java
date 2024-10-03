@@ -1,7 +1,7 @@
 package br.com.schumaker.force.framework.reflection.validation;
 
-import br.com.schumaker.force.framework.annotations.validations.*;
 import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.annotations.validations.*;
 import br.com.schumaker.force.framework.ioc.reflection.validation.ValidationReflection;
 import org.junit.jupiter.api.Test;
 

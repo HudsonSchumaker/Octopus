@@ -1,8 +1,8 @@
 package br.com.schumaker.force.app.model;
 
 import br.com.schumaker.force.app.view.ProductDTO;
-import br.com.schumaker.force.framework.annotations.bean.Component;
-import br.com.schumaker.force.framework.annotations.bean.Inject;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Component;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Inject;
 import br.com.schumaker.force.framework.model.Mapper;
 import br.com.schumaker.force.framework.web.http.HttpRestTemplate;
 

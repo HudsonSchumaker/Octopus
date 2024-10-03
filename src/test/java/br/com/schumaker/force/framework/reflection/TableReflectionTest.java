@@ -1,8 +1,8 @@
 package br.com.schumaker.force.framework.reflection;
 
-import br.com.schumaker.force.framework.annotations.db.Column;
-import br.com.schumaker.force.framework.annotations.db.Pk;
-import br.com.schumaker.force.framework.annotations.db.Table;
+import br.com.schumaker.force.framework.ioc.annotations.db.Column;
+import br.com.schumaker.force.framework.ioc.annotations.db.Pk;
+import br.com.schumaker.force.framework.ioc.annotations.db.Table;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.reflection.TableReflection;
 import org.junit.jupiter.api.BeforeEach;

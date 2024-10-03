@@ -2,9 +2,9 @@ package br.com.schumaker.force.app.config;
 
 import br.com.schumaker.force.app.model.Product;
 import br.com.schumaker.force.app.view.ProductDTO;
-import br.com.schumaker.force.framework.annotations.bean.Bean;
-import br.com.schumaker.force.framework.annotations.bean.Configuration;
-import br.com.schumaker.force.framework.annotations.bean.Value;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Bean;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Configuration;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Value;
 import br.com.schumaker.force.framework.model.Mapper;
 import br.com.schumaker.force.framework.web.http.HttpRestTemplate;
 

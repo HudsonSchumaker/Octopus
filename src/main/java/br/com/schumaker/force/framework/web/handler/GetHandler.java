@@ -1,8 +1,8 @@
 package br.com.schumaker.force.framework.web.handler;
 
-import br.com.schumaker.force.framework.annotations.controller.Get;
-import br.com.schumaker.force.framework.annotations.controller.PathVariable;
-import br.com.schumaker.force.framework.annotations.controller.QueryParam;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Get;
+import br.com.schumaker.force.framework.ioc.annotations.controller.PathVariable;
+import br.com.schumaker.force.framework.ioc.annotations.controller.QueryParam;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.IoCContainer;
 import br.com.schumaker.force.framework.web.http.Http;

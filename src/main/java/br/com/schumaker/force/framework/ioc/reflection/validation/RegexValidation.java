@@ -1,7 +1,7 @@
 package br.com.schumaker.force.framework.ioc.reflection.validation;
 
-import br.com.schumaker.force.framework.annotations.validations.Regex;
-import br.com.schumaker.force.framework.annotations.validations.Validate;
+import br.com.schumaker.force.framework.ioc.annotations.validations.Regex;
+import br.com.schumaker.force.framework.ioc.annotations.validations.Validate;
 import br.com.schumaker.force.framework.exception.ForceException;
 
 import java.lang.reflect.Field;

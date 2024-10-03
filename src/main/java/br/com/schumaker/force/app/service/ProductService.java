@@ -2,7 +2,7 @@ package br.com.schumaker.force.app.service;
 
 import br.com.schumaker.force.app.model.Product;
 import br.com.schumaker.force.app.model.db.ProductRepository;
-import br.com.schumaker.force.framework.annotations.bean.Service;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Service;
 import br.com.schumaker.force.framework.model.PatchHelper;
 import br.com.schumaker.force.framework.web.view.Page;
 

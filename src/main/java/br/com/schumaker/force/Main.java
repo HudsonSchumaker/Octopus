@@ -1,6 +1,6 @@
 package br.com.schumaker.force;
 
-import br.com.schumaker.force.framework.annotations.ForceApp;
+import br.com.schumaker.force.framework.ioc.annotations.ForceApp;
 import br.com.schumaker.force.framework.run.Force;
 
 /**

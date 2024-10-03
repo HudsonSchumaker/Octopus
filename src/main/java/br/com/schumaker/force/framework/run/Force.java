@@ -1,12 +1,12 @@
 package br.com.schumaker.force.framework.run;
 
-import br.com.schumaker.force.framework.annotations.ForceApp;
-import br.com.schumaker.force.framework.annotations.bean.Component;
-import br.com.schumaker.force.framework.annotations.bean.Configuration;
-import br.com.schumaker.force.framework.annotations.bean.Service;
-import br.com.schumaker.force.framework.annotations.controller.Controller;
-import br.com.schumaker.force.framework.annotations.db.Repository;
-import br.com.schumaker.force.framework.annotations.exception.GlobalExceptionHandler;
+import br.com.schumaker.force.framework.ioc.annotations.ForceApp;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Component;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Configuration;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Service;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Controller;
+import br.com.schumaker.force.framework.ioc.annotations.db.Repository;
+import br.com.schumaker.force.framework.ioc.annotations.exception.GlobalExceptionHandler;
 import br.com.schumaker.force.framework.exception.ExceptionCodes;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.AppProperties;

@@ -1,8 +1,8 @@
 package br.com.schumaker.force.app.view;
 
-import br.com.schumaker.force.framework.annotations.controller.Controller;
-import br.com.schumaker.force.framework.annotations.controller.PathVariable;
-import br.com.schumaker.force.framework.annotations.controller.Post;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Controller;
+import br.com.schumaker.force.framework.ioc.annotations.controller.PathVariable;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Post;
 import br.com.schumaker.force.framework.security.JwtManager;
 import br.com.schumaker.force.framework.web.view.ResponseView;
 

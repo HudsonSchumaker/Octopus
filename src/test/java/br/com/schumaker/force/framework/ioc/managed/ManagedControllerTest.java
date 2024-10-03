@@ -1,7 +1,7 @@
 package br.com.schumaker.force.framework.ioc.managed;
 
-import br.com.schumaker.force.framework.annotations.controller.Controller;
-import br.com.schumaker.force.framework.annotations.controller.Get;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Controller;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Get;
 import br.com.schumaker.force.framework.model.Triple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

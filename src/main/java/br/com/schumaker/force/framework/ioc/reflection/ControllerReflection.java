@@ -1,13 +1,13 @@
 package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.force.framework.annotations.controller.Controller;
-import br.com.schumaker.force.framework.annotations.controller.Delete;
-import br.com.schumaker.force.framework.annotations.controller.Get;
-import br.com.schumaker.force.framework.annotations.controller.Head;
-import br.com.schumaker.force.framework.annotations.controller.Options;
-import br.com.schumaker.force.framework.annotations.controller.Patch;
-import br.com.schumaker.force.framework.annotations.controller.Post;
-import br.com.schumaker.force.framework.annotations.controller.Put;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Controller;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Delete;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Get;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Head;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Options;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Patch;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Post;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Put;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.model.Triple;
 import br.com.schumaker.force.framework.web.http.HttpVerb;

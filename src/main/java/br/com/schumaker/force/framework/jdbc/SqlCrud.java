@@ -1,6 +1,6 @@
 package br.com.schumaker.force.framework.jdbc;
 
-import br.com.schumaker.force.framework.annotations.db.Table;
+import br.com.schumaker.force.framework.ioc.annotations.db.Table;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.reflection.TableReflection;
 import br.com.schumaker.force.framework.web.view.Page;

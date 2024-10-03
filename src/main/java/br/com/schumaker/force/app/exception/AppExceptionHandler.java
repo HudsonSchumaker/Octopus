@@ -1,7 +1,7 @@
 package br.com.schumaker.force.app.exception;
 
-import br.com.schumaker.force.framework.annotations.exception.ExceptionHandler;
-import br.com.schumaker.force.framework.annotations.exception.GlobalExceptionHandler;
+import br.com.schumaker.force.framework.ioc.annotations.exception.ExceptionHandler;
+import br.com.schumaker.force.framework.ioc.annotations.exception.GlobalExceptionHandler;
 import br.com.schumaker.force.framework.exception.ErrorView;
 import br.com.schumaker.force.framework.web.view.ResponseView;
 

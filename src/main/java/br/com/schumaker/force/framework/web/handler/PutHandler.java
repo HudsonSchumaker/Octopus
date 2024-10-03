@@ -1,6 +1,6 @@
 package br.com.schumaker.force.framework.web.handler;
 
-import br.com.schumaker.force.framework.annotations.controller.Put;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Put;
 import br.com.schumaker.force.framework.web.http.HttpRequest;
 import br.com.schumaker.force.framework.web.http.HttpResponse;
 

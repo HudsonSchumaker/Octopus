@@ -1,7 +1,7 @@
 package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.force.framework.annotations.bean.Inject;
-import br.com.schumaker.force.framework.annotations.bean.Value;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Inject;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Value;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.IoCContainer;
 

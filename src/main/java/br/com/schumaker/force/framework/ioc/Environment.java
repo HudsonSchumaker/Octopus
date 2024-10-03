@@ -1,6 +1,5 @@
 package br.com.schumaker.force.framework.ioc;
 
-import br.com.schumaker.force.framework.io.PropertiesReader;
 import java.util.Properties;
 
 import static br.com.schumaker.force.framework.ioc.AppProperties.DB_MAX_POOL_SIZE;

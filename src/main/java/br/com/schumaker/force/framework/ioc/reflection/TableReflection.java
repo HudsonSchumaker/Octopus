@@ -1,8 +1,8 @@
 package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.force.framework.annotations.db.Column;
-import br.com.schumaker.force.framework.annotations.db.Pk;
-import br.com.schumaker.force.framework.annotations.db.Table;
+import br.com.schumaker.force.framework.ioc.annotations.db.Column;
+import br.com.schumaker.force.framework.ioc.annotations.db.Pk;
+import br.com.schumaker.force.framework.ioc.annotations.db.Table;
 import br.com.schumaker.force.framework.exception.ForceException;
 
 import java.lang.reflect.Field;

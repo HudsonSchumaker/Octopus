@@ -1,7 +1,7 @@
 package br.com.schumaker.force.framework.web.handler;
 
-import br.com.schumaker.force.framework.annotations.controller.Delete;
-import br.com.schumaker.force.framework.annotations.controller.PathVariable;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Delete;
+import br.com.schumaker.force.framework.ioc.annotations.controller.PathVariable;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.web.http.Http;
 import br.com.schumaker.force.framework.web.http.HttpRequest;

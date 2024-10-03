@@ -1,7 +1,7 @@
 package br.com.schumaker.force.app.model.db;
 
 import br.com.schumaker.force.app.model.Product;
-import br.com.schumaker.force.framework.annotations.db.Repository;
+import br.com.schumaker.force.framework.ioc.annotations.db.Repository;
 import br.com.schumaker.force.framework.jdbc.SqlCrud;
 
 import java.math.BigInteger;

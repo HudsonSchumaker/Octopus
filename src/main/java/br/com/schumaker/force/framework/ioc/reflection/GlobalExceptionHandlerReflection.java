@@ -1,6 +1,6 @@
 package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.force.framework.annotations.exception.ExceptionHandler;
+import br.com.schumaker.force.framework.ioc.annotations.exception.ExceptionHandler;
 import br.com.schumaker.force.framework.model.Pair;
 
 import java.lang.reflect.Method;

@@ -1,7 +1,7 @@
 package br.com.schumaker.force.framework.security;
 
-import br.com.schumaker.force.framework.annotations.bean.Filter;
-import br.com.schumaker.force.framework.annotations.controller.Secured;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Filter;
+import br.com.schumaker.force.framework.ioc.annotations.controller.Secured;
 import br.com.schumaker.force.framework.exception.ForceSecurityException;
 import br.com.schumaker.force.framework.ioc.IoCContainer;
 import br.com.schumaker.force.framework.web.http.Http;

@@ -1,6 +1,6 @@
 package br.com.schumaker.force.framework.ioc.reflection;
 
-import br.com.schumaker.force.framework.annotations.bean.Bean;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Bean;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.IoCContainer;
 import br.com.schumaker.force.framework.ioc.managed.ManagedBean;

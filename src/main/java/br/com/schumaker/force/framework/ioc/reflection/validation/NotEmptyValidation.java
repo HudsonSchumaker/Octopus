@@ -1,7 +1,7 @@
 package br.com.schumaker.force.framework.ioc.reflection.validation;
 
-import br.com.schumaker.force.framework.annotations.validations.NotEmpty;
-import br.com.schumaker.force.framework.annotations.validations.Validate;
+import br.com.schumaker.force.framework.ioc.annotations.validations.NotEmpty;
+import br.com.schumaker.force.framework.ioc.annotations.validations.Validate;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.web.http.Http;
 
