@@ -1,10 +1,10 @@
-package br.com.schumaker.octopus.framework.reflection;
+package br.com.schumaker.force.framework.reflection;
 
-import br.com.schumaker.octopus.framework.annotations.db.Column;
-import br.com.schumaker.octopus.framework.annotations.db.Pk;
-import br.com.schumaker.octopus.framework.annotations.db.Table;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.reflection.TableReflection;
+import br.com.schumaker.force.framework.annotations.db.Column;
+import br.com.schumaker.force.framework.annotations.db.Pk;
+import br.com.schumaker.force.framework.annotations.db.Table;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.reflection.TableReflection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -64,7 +64,7 @@ public class TableReflectionTest {
         }
 
         // Act & Assert
-        assertThrows(OctopusException.class, () -> tableReflection.getTableName(NoTableAnnotation.class));
+        assertThrows(ForceException.class, () -> tableReflection.getTableName(NoTableAnnotation.class));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class TableReflectionTest {
         }
 
         // Act & Assert
-        assertThrows(OctopusException.class, () -> tableReflection.getPrimaryKey(NoPrimaryKey.class));
+        assertThrows(ForceException.class, () -> tableReflection.getPrimaryKey(NoPrimaryKey.class));
     }
 
     @Test

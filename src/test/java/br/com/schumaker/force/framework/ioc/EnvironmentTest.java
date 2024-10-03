@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.ioc;
+package br.com.schumaker.force.framework.ioc;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ public class EnvironmentTest {
         Environment env = Environment.getInstance();
 
         // Act
-        String result = env.getKey("oc.server.port");
+        String result = env.getKey("force.server.port");
 
         // Assert
         assertEquals("8080", result);

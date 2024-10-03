@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.security;
+package br.com.schumaker.force.framework.security;
 
 import static org.junit.jupiter.api.Assertions.*;
 

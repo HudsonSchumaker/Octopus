@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.model;
+package br.com.schumaker.force.framework.model;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.exception.ForceException;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -90,6 +90,6 @@ public class DateParserTest {
         String invalidDateStr = "invalid-date";
 
         // Act & Assert
-        assertThrows(OctopusException.class, () -> DateParser.parseToLocalDate(invalidDateStr));
+        assertThrows(ForceException.class, () -> DateParser.parseToLocalDate(invalidDateStr));
     }
 }

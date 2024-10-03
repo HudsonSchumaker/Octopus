@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.reflection.validation;
+package br.com.schumaker.force.framework.reflection.validation;
 
-import br.com.schumaker.octopus.framework.ioc.reflection.validation.EmailValidator;
+import br.com.schumaker.force.framework.ioc.reflection.validation.EmailValidator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

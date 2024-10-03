@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.model;
+package br.com.schumaker.force.framework.model;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

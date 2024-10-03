@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.io;
+package br.com.schumaker.force.framework.io;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -24,11 +24,11 @@ public class PropertiesReaderTest {
 
         // Act & Assert
         assertNotNull(properties);
-        assertEquals("testIssuer", properties.getProperty("oc.app.name"));
-        assertEquals("8080", properties.getProperty("oc.server.port"));
-        assertEquals("/", properties.getProperty("oc.server.context"));
-        assertEquals("testSecretKey", properties.getProperty("oc.jwt.secret"));
-        assertEquals("7200", properties.getProperty("oc.jwt.expiration"));
+        assertEquals("testIssuer", properties.getProperty("force.app.name"));
+        assertEquals("8080", properties.getProperty("force.server.port"));
+        assertEquals("/", properties.getProperty("force.server.context"));
+        assertEquals("testSecretKey", properties.getProperty("force.jwt.secret"));
+        assertEquals("7200", properties.getProperty("force.jwt.expiration"));
         assertEquals("beer", properties.getProperty("product.name"));
     }
 
@@ -39,7 +39,7 @@ public class PropertiesReaderTest {
 
         // Act & Assert
         assertNotNull(properties);
-        assertEquals("testSecretKey", properties.getProperty("oc.jwt.secret"));
+        assertEquals("testSecretKey", properties.getProperty("force.jwt.secret"));
     }
 
     @Test

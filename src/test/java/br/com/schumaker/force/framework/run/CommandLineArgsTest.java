@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.run;
+package br.com.schumaker.force.framework.run;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

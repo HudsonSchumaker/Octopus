@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.framework.reflection.validation;
+package br.com.schumaker.force.framework.reflection.validation;
 
-import br.com.schumaker.octopus.framework.annotations.validations.*;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.reflection.validation.ValidationReflection;
+import br.com.schumaker.force.framework.annotations.validations.*;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.reflection.validation.ValidationReflection;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -77,7 +77,7 @@ public class ValidationReflectionTest {
         testClass.setNotNullField(null);
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Field notNullField cannot be null."));
@@ -97,7 +97,7 @@ public class ValidationReflectionTest {
         testClass.setNotBlankField(" ");
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Field notBlankField cannot be blank."));
@@ -117,7 +117,7 @@ public class ValidationReflectionTest {
         testClass.setNotEmptyField("");
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Field notEmptyField cannot be empty."));
@@ -137,7 +137,7 @@ public class ValidationReflectionTest {
         testClass.setEmailField("invalid-email");
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Field emailField is not a valid email address."));
@@ -157,7 +157,7 @@ public class ValidationReflectionTest {
         testClass.setMinField(5);
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Field minField is below min value of 10.0."));
@@ -177,7 +177,7 @@ public class ValidationReflectionTest {
         testClass.setMaxField(150);
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Field maxField exceeds max value of 100.0."));
@@ -197,7 +197,7 @@ public class ValidationReflectionTest {
         testClass.setRangeField(15);
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Field rangeField is out of range 1.0 to 10.0."));
@@ -217,7 +217,7 @@ public class ValidationReflectionTest {
         testClass.setPastField(LocalDate.now().plusDays(1));
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Field pastField must be a past date."));
@@ -238,7 +238,7 @@ public class ValidationReflectionTest {
         testClass.setFutureField(LocalDate.now().minusDays(1));
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Field futureField must be a future date."));
@@ -260,7 +260,7 @@ public class ValidationReflectionTest {
         testClass.setPastDateTimeField(LocalDateTime.now().plusDays(1));
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Not in the past"));
@@ -282,7 +282,7 @@ public class ValidationReflectionTest {
         testClass.setFutureDateTimeField(LocalDateTime.now().minusDays(1));
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Not in the future"));
@@ -310,7 +310,7 @@ public class ValidationReflectionTest {
         testClass.setCreditCardField("1234-5678-1234-567");
 
         // Act
-        OctopusException exception = assertThrows(OctopusException.class, () -> ValidationReflection.getInstance().validate(testClass));
+        ForceException exception = assertThrows(ForceException.class, () -> ValidationReflection.getInstance().validate(testClass));
 
         // Assert
         assertTrue(exception.getMessage().contains("Invalid credit card number"));

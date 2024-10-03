@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.model;
+package br.com.schumaker.force.framework.model;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.exception.ForceException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -39,7 +39,7 @@ class PatchHelperTest {
         patchMessage.put("invalidField", "New Value");
 
         // Act & Assert
-        assertThrows(OctopusException.class, () -> PatchHelper.applyPatch(entity, patchMessage));
+        assertThrows(ForceException.class, () -> PatchHelper.applyPatch(entity, patchMessage));
     }
 
     // Test entity class

@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.web.view;
+package br.com.schumaker.force.framework.web.view;
 
-import br.com.schumaker.octopus.framework.jdbc.Sort;
+import br.com.schumaker.force.framework.jdbc.Sort;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

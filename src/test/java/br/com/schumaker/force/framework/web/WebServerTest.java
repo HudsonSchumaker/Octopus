@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.web;
+package br.com.schumaker.force.framework.web;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
