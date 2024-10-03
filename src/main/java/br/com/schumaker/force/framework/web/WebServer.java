@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.web;
+package br.com.schumaker.force.framework.web;
 
-import br.com.schumaker.octopus.framework.hardware.Machine;
+import br.com.schumaker.force.framework.hardware.Machine;
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;

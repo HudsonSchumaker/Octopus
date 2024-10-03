@@ -1,12 +1,12 @@
-package br.com.schumaker.octopus.framework.ioc;
+package br.com.schumaker.force.framework.ioc;
 
-import br.com.schumaker.octopus.framework.io.PropertiesReader;
+import br.com.schumaker.force.framework.io.PropertiesReader;
 import java.util.Properties;
 
-import static br.com.schumaker.octopus.framework.ioc.AppProperties.DB_MAX_POOL_SIZE;
-import static br.com.schumaker.octopus.framework.ioc.AppProperties.DEFAULT_VALUE_NAME;
-import static br.com.schumaker.octopus.framework.ioc.AppProperties.SERVER_CONTEXT;
-import static br.com.schumaker.octopus.framework.ioc.AppProperties.SERVER_PORT;
+import static br.com.schumaker.force.framework.ioc.AppProperties.DB_MAX_POOL_SIZE;
+import static br.com.schumaker.force.framework.ioc.AppProperties.DEFAULT_VALUE_NAME;
+import static br.com.schumaker.force.framework.ioc.AppProperties.SERVER_CONTEXT;
+import static br.com.schumaker.force.framework.ioc.AppProperties.SERVER_PORT;
 
 /**
  * The Environment class represents the environment configuration within the IoC container.

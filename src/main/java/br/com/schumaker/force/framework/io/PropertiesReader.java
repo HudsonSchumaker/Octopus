@@ -1,19 +1,19 @@
-package br.com.schumaker.octopus.framework.io;
+package br.com.schumaker.force.framework.io;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.exception.ForceException;
 
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static br.com.schumaker.octopus.framework.ioc.AppProperties.APP_PROPERTIES_FILE_NAME;
+import static br.com.schumaker.force.framework.ioc.AppProperties.APP_PROPERTIES_FILE_NAME;
 
 /**
  * The PropertiesReader class is responsible for loading properties from a properties file.
  * It provides a method to load properties based on the specified environment.
  *
- * @see OctopusException
+ * @see ForceException
  *
  * @author Hudson Schumaker
  * @version 1.0.0
@@ -27,7 +27,7 @@ public final class PropertiesReader {
      *
      * @param environment the environment name (e.g., "development", "production").
      * @return the loaded properties.
-     * @throws OctopusException if an error occurs while loading the properties.
+     * @throws ForceException if an error occurs while loading the properties.
      */
     public static Properties loadProperties(String environment) {
         Properties properties = new Properties();
@@ -51,7 +51,7 @@ public final class PropertiesReader {
             });
 
         } catch (Exception ex) {
-           throw new OctopusException(ex.getMessage());
+           throw new ForceException(ex.getMessage());
         }
 
         return properties;

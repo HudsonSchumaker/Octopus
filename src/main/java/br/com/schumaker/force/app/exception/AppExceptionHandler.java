@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.app.exception;
+package br.com.schumaker.force.app.exception;
 
-import br.com.schumaker.octopus.framework.annotations.exception.ExceptionHandler;
-import br.com.schumaker.octopus.framework.annotations.exception.GlobalExceptionHandler;
-import br.com.schumaker.octopus.framework.exception.ErrorView;
-import br.com.schumaker.octopus.framework.web.view.ResponseView;
+import br.com.schumaker.force.framework.annotations.exception.ExceptionHandler;
+import br.com.schumaker.force.framework.annotations.exception.GlobalExceptionHandler;
+import br.com.schumaker.force.framework.exception.ErrorView;
+import br.com.schumaker.force.framework.web.view.ResponseView;
 
 import java.io.IOException;
 

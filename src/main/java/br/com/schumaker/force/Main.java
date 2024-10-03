@@ -1,11 +1,11 @@
-package br.com.schumaker.octopus;
+package br.com.schumaker.force;
 
-import br.com.schumaker.octopus.framework.annotations.OctopusApp;
-import br.com.schumaker.octopus.framework.run.Octopus;
+import br.com.schumaker.force.framework.annotations.ForceApp;
+import br.com.schumaker.force.framework.run.Force;
 
 /**
  * The Main class is the entry point of the application.
- * It is responsible for starting the Octopus framework.
+ * It is responsible for starting the Force framework.
  *
  * <p>
  * Example usage:
@@ -15,7 +15,7 @@ import br.com.schumaker.octopus.framework.run.Octopus;
  * {@code
  * public class Main {
  *     public static void main(String[] args) throws Exception {
- *         Octopus.run(Main.class, args);
+ *         Force.run(Main.class, args);
  *     }
  * }
  * }
@@ -24,9 +24,9 @@ import br.com.schumaker.octopus.framework.run.Octopus;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-@OctopusApp(root = "br.com.schumaker.octopus.app")
+@ForceApp(root = "br.com.schumaker.force.app")
 public class Main {
     public static void main(String[] args) throws Exception {
-        Octopus.run(Main.class, args);
+        Force.run(Main.class, args);
     }
 }

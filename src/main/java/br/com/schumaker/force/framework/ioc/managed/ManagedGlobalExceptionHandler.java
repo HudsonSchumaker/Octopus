@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.framework.ioc.managed;
+package br.com.schumaker.force.framework.ioc.managed;
 
-import br.com.schumaker.octopus.framework.ioc.reflection.ClassReflection;
-import br.com.schumaker.octopus.framework.ioc.reflection.GlobalExceptionHandlerReflection;
-import br.com.schumaker.octopus.framework.model.Pair;
+import br.com.schumaker.force.framework.ioc.reflection.ClassReflection;
+import br.com.schumaker.force.framework.ioc.reflection.GlobalExceptionHandlerReflection;
+import br.com.schumaker.force.framework.model.Pair;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

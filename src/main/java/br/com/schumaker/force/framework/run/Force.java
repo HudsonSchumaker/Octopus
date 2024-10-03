@@ -1,40 +1,40 @@
-package br.com.schumaker.octopus.framework.run;
+package br.com.schumaker.force.framework.run;
 
-import br.com.schumaker.octopus.framework.annotations.OctopusApp;
-import br.com.schumaker.octopus.framework.annotations.bean.Component;
-import br.com.schumaker.octopus.framework.annotations.bean.Configuration;
-import br.com.schumaker.octopus.framework.annotations.bean.Service;
-import br.com.schumaker.octopus.framework.annotations.controller.Controller;
-import br.com.schumaker.octopus.framework.annotations.db.Repository;
-import br.com.schumaker.octopus.framework.annotations.exception.GlobalExceptionHandler;
-import br.com.schumaker.octopus.framework.exception.ExceptionCodes;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.AppProperties;
-import br.com.schumaker.octopus.framework.jdbc.SimpleConnectionPool;
-import br.com.schumaker.octopus.framework.jdbc.SqlExecutor;
-import br.com.schumaker.octopus.framework.web.WebServer;
-import br.com.schumaker.octopus.framework.ioc.Environment;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.annotations.ForceApp;
+import br.com.schumaker.force.framework.annotations.bean.Component;
+import br.com.schumaker.force.framework.annotations.bean.Configuration;
+import br.com.schumaker.force.framework.annotations.bean.Service;
+import br.com.schumaker.force.framework.annotations.controller.Controller;
+import br.com.schumaker.force.framework.annotations.db.Repository;
+import br.com.schumaker.force.framework.annotations.exception.GlobalExceptionHandler;
+import br.com.schumaker.force.framework.exception.ExceptionCodes;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.AppProperties;
+import br.com.schumaker.force.framework.jdbc.SimpleConnectionPool;
+import br.com.schumaker.force.framework.jdbc.SqlExecutor;
+import br.com.schumaker.force.framework.web.WebServer;
+import br.com.schumaker.force.framework.ioc.Environment;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
- * The Octopus class is the main entry point for the Octopus framework.
+ * The Force class is the main entry point for the Force framework.
  * It initializes the web server, handles command-line arguments, and registers various components, services, and controllers with the IoC container.
  * This class is responsible for bootstrapping the application and starting the web server.
  *
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public final class Octopus {
+public final class Force {
     private static final IoCContainer container = IoCContainer.getInstance();
     private static final Environment environment = Environment.getInstance();
     private static final CommandLineArgs commandLineArgs = CommandLineArgs.getInstance();
     private static WebServer webServer;
 
     /**
-     * Runs the Octopus framework with the specified application class and command-line arguments.
+     * Runs the Force framework with the specified application class and command-line arguments.
      * It handles command-line arguments, prints the application banner, and registers various components, services, and controllers.
      *
      * @param clazz the application class to run.
@@ -57,7 +57,7 @@ public final class Octopus {
             webServer = new WebServer(environment.getServerPort(), environment.getServerContext());
             webServer.start();
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage(), ExceptionCodes.WEB_SERVER_INIT_ERROR.getCode());
+            throw new ForceException(ex.getMessage(), ExceptionCodes.WEB_SERVER_INIT_ERROR.getCode());
         }
     }
 
@@ -68,7 +68,7 @@ public final class Octopus {
      * @throws Exception if an error occurs during the registration of components, services, and controllers.
      */
     private static void createManagedClasses(Class<?> clazz) throws Exception {
-        OctopusApp app = clazz.getAnnotation(OctopusApp.class);
+        ForceApp app = clazz.getAnnotation(ForceApp.class);
         var packageName = app.root();
 
         int totalTasks = 6;
@@ -132,19 +132,25 @@ public final class Octopus {
      * Prints the application banner to the console.
      */
     private static void printBanner() {
-        System.out.println("""
-                      ___           ___           ___           ___           ___           ___           ___    \s
-                     /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\__\\         /\\  \\   \s
-                    /::\\  \\       /::\\  \\        \\:\\  \\       /::\\  \\       /::\\  \\       /:/  /        /::\\  \\  \s
-                   /:/\\:\\  \\     /:/\\:\\  \\        \\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/  /        /:/\\ \\  \\ \s
-                  /:/  \\:\\  \\   /:/  \\:\\  \\       /::\\  \\   /:/  \\:\\  \\   /::\\~\\:\\  \\   /:/  /  ___   _\\:\\~\\ \\  \\\s
-                 /:/__/ \\:\\__\\ /:/__/ \\:\\__\\     /:/\\:\\__\\ /:/__/ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/__/  /\\__\\ /\\ \\:\\ \\ \\__\\
-                 \\:\\  \\ /:/  / \\:\\  \\  \\/__/    /:/  \\/__/ \\:\\  \\ /:/  / \\/__\\:\\/:/  / \\:\\  \\ /:/  / \\:\\ \\:\\ \\/__/
-                  \\:\\  /:/  /   \\:\\  \\         /:/  /       \\:\\  /:/  /       \\::/  /   \\:\\  /:/  /   \\:\\ \\:\\__\\ \s
-                   \\:\\/:/  /     \\:\\  \\        \\/__/         \\:\\/:/  /         \\/__/     \\:\\/:/  /     \\:\\/:/  / \s
-                    \\::/  /       \\:\\__\\                      \\::/  /                     \\::/  /       \\::/  /  \s
-                     \\/__/         \\/__/                       \\/__/                       \\/__/         \\/__/   \s
-                """);
+        System.out.println(
+                """
+                                      ,----..                                   \s
+                            ,---,.   /   /   \\  ,-.----.     ,----..      ,---,.\s
+                          ,'  .' |  /   .     : \\    /  \\   /   /   \\   ,'  .' |\s
+                        ,---.'   | .   /   ;.  \\;   :    \\ |   :     :,---.'   |\s
+                        |   |   .'.   ;   /  ` ;|   | .\\ : .   |  ;. /|   |   .'\s
+                        :   :  :  ;   |  ; \\ ; |.   : |: | .   ; /--` :   :  |-,\s
+                        :   |  |-,|   :  | ; | '|   |  \\ : ;   | ;    :   |  ;/|\s
+                        |   :  ;/|.   |  ' ' ' :|   : .  / |   : |    |   :   .'\s
+                        |   |   .''   ;  \\; /  |;   | |  \\ .   | '___ |   |  |-,\s
+                        '   :  '   \\   \\  ',  / |   | ;\\  \\'   ; : .'|'   :  ;/|\s
+                        |   |  |    ;   :    /  :   ' | \\.''   | '/  :|   |    \\\s
+                        |   :  \\     \\   \\ .'   :   : :-'  |   :    / |   :   .'\s
+                        |   | ,'      `---`     |   |.'     \\   \\ .'  |   | ,'  \s
+                        `----'                  `---'        `---`    `----'    \s
+                                                                              \s
+                """
+        );
         System.out.print(AppProperties.FMK_NAME + ", ");
         System.out.print("Version: " + AppProperties.FMK_VERSION + ", ");
         System.out.print("Server Port: " + environment.getServerPort() + ", ");

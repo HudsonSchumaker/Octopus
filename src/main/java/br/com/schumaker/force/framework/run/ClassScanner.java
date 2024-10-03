@@ -1,4 +1,4 @@
-package br.com.schumaker.octopus.framework.run;
+package br.com.schumaker.force.framework.run;
 
 import java.io.File;
 import java.lang.annotation.Annotation;

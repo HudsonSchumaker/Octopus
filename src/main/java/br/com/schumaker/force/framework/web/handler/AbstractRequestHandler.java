@@ -1,16 +1,16 @@
-package br.com.schumaker.octopus.framework.web.handler;
+package br.com.schumaker.force.framework.web.handler;
 
-import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
-import br.com.schumaker.octopus.framework.annotations.controller.Payload;
-import br.com.schumaker.octopus.framework.annotations.validations.Validate;
-import br.com.schumaker.octopus.framework.exception.OctopusException;
-import br.com.schumaker.octopus.framework.ioc.IoCContainer;
-import br.com.schumaker.octopus.framework.model.TypeConverter;
-import br.com.schumaker.octopus.framework.ioc.reflection.validation.ValidationReflection;
-import br.com.schumaker.octopus.framework.web.http.Http;
-import br.com.schumaker.octopus.framework.web.http.HttpRequest;
-import br.com.schumaker.octopus.framework.web.http.HttpRequestHeader;
-import br.com.schumaker.octopus.framework.web.http.HttpResponse;
+import br.com.schumaker.force.framework.annotations.controller.PathVariable;
+import br.com.schumaker.force.framework.annotations.controller.Payload;
+import br.com.schumaker.force.framework.annotations.validations.Validate;
+import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.model.TypeConverter;
+import br.com.schumaker.force.framework.ioc.reflection.validation.ValidationReflection;
+import br.com.schumaker.force.framework.web.http.Http;
+import br.com.schumaker.force.framework.web.http.HttpRequest;
+import br.com.schumaker.force.framework.web.http.HttpRequestHeader;
+import br.com.schumaker.force.framework.web.http.HttpResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.lang.annotation.Annotation;
@@ -79,7 +79,7 @@ public abstract class AbstractRequestHandler implements RequestHandler {
                 Object result = method.invoke(controller.getInstance(), arguments);
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
             } catch (Exception ex) {
-                throw new OctopusException("Error invoking method.", ex);
+                throw new ForceException("Error invoking method.", ex);
             }
         } else {
             int httpCode = Http.HTTP_404;
@@ -107,7 +107,7 @@ public abstract class AbstractRequestHandler implements RequestHandler {
                 arguments[index] = paramObject;
             }
         } catch (Exception ex) {
-            throw new OctopusException("Error reading request body.", ex);
+            throw new ForceException("Error reading request body.", ex);
         }
     }
 

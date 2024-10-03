@@ -1,6 +1,6 @@
-package br.com.schumaker.octopus.framework.hardware;
+package br.com.schumaker.force.framework.hardware;
 
-import br.com.schumaker.octopus.framework.exception.OctopusException;
+import br.com.schumaker.force.framework.exception.ForceException;
 
 import java.net.InetAddress;
 
@@ -9,7 +9,7 @@ import java.net.InetAddress;
  * where the application is running. It includes methods to get the number of processors, host name, IP address,
  * installation directory, operating system details, Java details, and the logged-in user_name.
  *
- * @see OctopusException
+ * @see ForceException
  *
  * @author Hudson Schumaker
  * @version 1.0.0
@@ -29,13 +29,13 @@ public final class Machine {
      * Returns the host name of the machine.
      *
      * @return the host name of the machine.
-     * @throws OctopusException if an error occurs while retrieving the host name.
+     * @throws ForceException if an error occurs while retrieving the host name.
      */
     public static String getHostName() {
         try {
             return InetAddress.getLocalHost().getHostName();
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage());
+            throw new ForceException(ex.getMessage());
         }
     }
 
@@ -43,13 +43,13 @@ public final class Machine {
      * Returns the IP address of the machine.
      *
      * @return the IP address of the machine.
-     * @throws OctopusException if an error occurs while retrieving the IP address.
+     * @throws ForceException if an error occurs while retrieving the IP address.
      */
     public static String getIp() {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (Exception ex) {
-            throw new OctopusException(ex.getMessage());
+            throw new ForceException(ex.getMessage());
         }
     }
 

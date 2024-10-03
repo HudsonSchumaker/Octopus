@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.framework.web;
+package br.com.schumaker.force.framework.web;
 
-import br.com.schumaker.octopus.framework.web.http.Http;
-import br.com.schumaker.octopus.framework.web.http.HttpResponse;
-import br.com.schumaker.octopus.framework.web.view.ResponseView;
+import br.com.schumaker.force.framework.web.http.Http;
+import br.com.schumaker.force.framework.web.http.HttpResponse;
+import br.com.schumaker.force.framework.web.view.ResponseView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -10,8 +10,8 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.Optional;
 
-import static br.com.schumaker.octopus.framework.web.http.Http.APPLICATION_JSON;
-import static br.com.schumaker.octopus.framework.web.http.Http.CONTENT_TYPE;
+import static br.com.schumaker.force.framework.web.http.Http.APPLICATION_JSON;
+import static br.com.schumaker.force.framework.web.http.Http.CONTENT_TYPE;
 
 /**
  * The OutboundHandler class.
