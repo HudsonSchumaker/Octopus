@@ -1,9 +1,9 @@
-package br.com.schumaker.octopus.app.view;
+package br.com.schumaker.force.app.view;
 
-import br.com.schumaker.octopus.app.model.Product;
-import br.com.schumaker.octopus.framework.model.ModelViewMapper;
-import br.com.schumaker.octopus.framework.web.view.Page;
-import br.com.schumaker.octopus.framework.web.view.PageImpl;
+import br.com.schumaker.force.app.model.Product;
+import br.com.schumaker.force.framework.model.ModelViewMapper;
+import br.com.schumaker.force.framework.web.view.Page;
+import br.com.schumaker.force.framework.web.view.PageImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;

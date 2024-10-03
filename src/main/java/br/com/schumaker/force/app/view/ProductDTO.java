@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.app.view;
+package br.com.schumaker.force.app.view;
 
-import br.com.schumaker.octopus.framework.annotations.validations.Max;
-import br.com.schumaker.octopus.framework.annotations.validations.NotBlank;
-import br.com.schumaker.octopus.framework.annotations.validations.NotEmpty;
+import br.com.schumaker.force.framework.annotations.validations.Max;
+import br.com.schumaker.force.framework.annotations.validations.NotBlank;
+import br.com.schumaker.force.framework.annotations.validations.NotEmpty;
 
 /**
  * The ProductDTO class.

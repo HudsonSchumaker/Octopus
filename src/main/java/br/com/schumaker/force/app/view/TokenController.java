@@ -1,10 +1,10 @@
-package br.com.schumaker.octopus.app.view;
+package br.com.schumaker.force.app.view;
 
-import br.com.schumaker.octopus.framework.annotations.controller.Controller;
-import br.com.schumaker.octopus.framework.annotations.controller.PathVariable;
-import br.com.schumaker.octopus.framework.annotations.controller.Post;
-import br.com.schumaker.octopus.framework.security.JwtManager;
-import br.com.schumaker.octopus.framework.web.view.ResponseView;
+import br.com.schumaker.force.framework.annotations.controller.Controller;
+import br.com.schumaker.force.framework.annotations.controller.PathVariable;
+import br.com.schumaker.force.framework.annotations.controller.Post;
+import br.com.schumaker.force.framework.security.JwtManager;
+import br.com.schumaker.force.framework.web.view.ResponseView;
 
 /**
  * The TokenController class.

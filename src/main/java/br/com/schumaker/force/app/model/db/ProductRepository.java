@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.app.model.db;
+package br.com.schumaker.force.app.model.db;
 
-import br.com.schumaker.octopus.app.model.Product;
-import br.com.schumaker.octopus.framework.annotations.db.Repository;
-import br.com.schumaker.octopus.framework.jdbc.SqlCrud;
+import br.com.schumaker.force.app.model.Product;
+import br.com.schumaker.force.framework.annotations.db.Repository;
+import br.com.schumaker.force.framework.jdbc.SqlCrud;
 
 import java.math.BigInteger;
 

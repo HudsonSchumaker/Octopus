@@ -1,13 +1,12 @@
-package br.com.schumaker.octopus.app.service;
+package br.com.schumaker.force.app.service;
 
-import br.com.schumaker.octopus.app.model.Product;
-import br.com.schumaker.octopus.app.model.db.ProductRepository;
-import br.com.schumaker.octopus.framework.annotations.bean.Service;
-import br.com.schumaker.octopus.framework.model.PatchHelper;
-import br.com.schumaker.octopus.framework.web.view.Page;
+import br.com.schumaker.force.app.model.Product;
+import br.com.schumaker.force.app.model.db.ProductRepository;
+import br.com.schumaker.force.framework.annotations.bean.Service;
+import br.com.schumaker.force.framework.model.PatchHelper;
+import br.com.schumaker.force.framework.web.view.Page;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -1,8 +1,8 @@
-package br.com.schumaker.octopus.app.model;
+package br.com.schumaker.force.app.model;
 
-import br.com.schumaker.octopus.framework.annotations.db.Column;
-import br.com.schumaker.octopus.framework.annotations.db.Pk;
-import br.com.schumaker.octopus.framework.annotations.db.Table;
+import br.com.schumaker.force.framework.annotations.db.Column;
+import br.com.schumaker.force.framework.annotations.db.Pk;
+import br.com.schumaker.force.framework.annotations.db.Table;
 
 import java.math.BigInteger;
 
