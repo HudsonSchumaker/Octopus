@@ -2,6 +2,7 @@ package br.com.schumaker.force.app.view;
 
 import br.com.schumaker.force.app.model.Product;
 import br.com.schumaker.force.app.service.ProductService;
+import br.com.schumaker.force.app.view.mapper.Product2ProductDTO;
 import br.com.schumaker.force.framework.ioc.annotations.bean.Value;
 import br.com.schumaker.force.framework.ioc.annotations.controller.Controller;
 import br.com.schumaker.force.framework.ioc.annotations.controller.Delete;
