@@ -61,18 +61,7 @@ public final class ClassReflection {
                         var value = this.handleParameterValueAnnotation(parameter);
                         parameters.add(value);
                     } else {
-                        var repository = iocContainer.getRepository(parameterType.getName());
-                        if (repository != null) {
-                            parameters.add(repository.getInstance());
-                            continue;
-                        }
-
-                        var service = iocContainer.getService(parameterType.getName());
-                        if (service != null) {
-                            parameters.add(service.getInstance());
-                            continue;
-                        }
-                        parameters.add(instantiate(parameterType));
+                        parameters.add(this.getManagedInstance(parameterType));
                     }
                 }
 
@@ -103,7 +92,31 @@ public final class ClassReflection {
     private Object handleFieldInjectionAndValueAnnotation(Object instance) {
         injectReflection.injectFieldBean(instance);
         return valueReflection.injectFieldValue(instance);
+    }
 
+    /**
+     * Retrieves a managed instance of a class.
+     *
+     * @param parameterType the class type.
+     * @return the managed instance.
+     */
+    private Object getManagedInstance(Class<?> parameterType) {
+        var repository = iocContainer.getRepository(parameterType.getName());
+        if (repository != null) {
+            return repository.getInstance();
+        }
+
+        var service = iocContainer.getService(parameterType.getName());
+        if (service != null) {
+            return service.getInstance();
+        }
+
+        var component = iocContainer.getComponent(parameterType.getName());
+        if (component != null) {
+            return component.getInstance();
+        }
+
+        return instantiate(parameterType);
     }
 
     /**
