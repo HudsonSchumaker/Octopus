@@ -78,7 +78,7 @@ public final class Force {
         registerClassesWithAnnotation(packageName, GlobalExceptionHandler.class, container::registerGlobalExceptionHandler, progressBar, "GlobalExceptionHandler");
         registerClassesWithAnnotation(packageName, Configuration.class, container::registerConfiguration, progressBar, "Configurations");
         registerClassesWithAnnotation(packageName, Component.class, container::registerComponent, progressBar, "Components");
-        registerClassesWithAnnotation(packageName, Repository.class, classes -> {}, progressBar, "Repositories");
+        registerClassesWithAnnotation(packageName, Repository.class, container::registerRepository, progressBar, "Repositories");
         registerClassesWithAnnotation(packageName, Service.class, container::registerService, progressBar, "Services");
         registerClassesWithAnnotation(packageName, Controller.class, container::registerController, progressBar, "Controllers");
 
