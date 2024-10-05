@@ -1,27 +1,13 @@
 package br.com.schumaker.force.framework.jdbc;
 
-import br.com.schumaker.force.framework.ioc.annotations.db.Table;
-import br.com.schumaker.force.framework.exception.ForceException;
-import br.com.schumaker.force.framework.ioc.reflection.TableReflection;
 import br.com.schumaker.force.framework.web.view.Page;
-import br.com.schumaker.force.framework.web.view.PageImpl;
-import br.com.schumaker.force.framework.web.view.PageRequest;
 import br.com.schumaker.force.framework.web.view.Pageable;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
- * The SqlCrud class provides generic CRUD (Create, Read, Update, Delete) operations for database entities.
- * It uses reflection to dynamically map entity fields to database columns and vice versa.
- * The class is parameterized with a primary key type K and an entity type T.
+ * The SqlCrud interface.
+ * It is responsible for CRUD operations.
  *
  * <p>
  * Example usage:
@@ -30,7 +16,7 @@ import java.util.Optional;
  * <pre>
  * {@code
  * @Repository
- * public class MyRepository extends DbCrud<BigInteger, MyEntity> {}
+ * public interface MyRepository extends DbCrud<Long, MyEntity> {}
  *
  * @Service
  * public class MyEntityService {
@@ -53,346 +39,89 @@ import java.util.Optional;
  *         return repository.findAll();
  *     }
  *
- *     public BigInteger save(MyEntity myEntity) {
+ *     public Long save(MyEntity myEntity) {
  *        return repository.save(myEntity).orElse(null);
  *     }
  * }}
  * </pre>
  *
- * @param <K> the type of the primary key.
- * @param <T> the type of the entity.
- *
- * @see Table
- * @see DbConnection
+ * @param <K> entity key.
+ * @param <T> entity type.
  *
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-public class SqlCrud<K, T> {
-    private final TableReflection tableReflection = TableReflection.getInstance();
-    private final Class<K> pk;
-    private final Class<T> clazz;
-
-    // SQL keywords
-    private static final String SELECT = "SELECT ";
-    private static final String UPDATE = "UPDATE ";
-    private static final String FROM = " FROM ";
-    private static final String WHERE = " WHERE ";
-    private static final String SET = " SET ";
-    private static final String INSERT = "INSERT INTO ";
-    private static final String DELETE = "DELETE FROM ";
-    private static final String VALUES = ") VALUES (";
-    private static final String LIMIT = " LIMIT ";
-    private static final String OFFSET = " OFFSET ";
-    private static final String ORDER_BY = " ORDER BY ";
-    private static final String SELECT_COUNT = "SELECT COUNT(*) FROM ";
-
-    public static final int DEFAULT_PAGE_SIZE = 16;
-    public static final int DEFAULT_PAGE_NUMBER = 0;
-
-    @SuppressWarnings("unchecked")
-    public SqlCrud() {
-        this.pk = (Class<K>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-    }
+public interface SqlCrud <K, T> {
+    /**
+     * Gets the table entity class type T.
+     *
+     * @return the class type.
+     */
+    Class<T> getEntityClass();
 
     /**
-     * Counts the number of entities of the type T in the database.
+     * Gets the table name.
      *
-     * @return the number of entities of the type T.
+     * @return the table name.
      */
-    public Long count() {
-        var tableName = tableReflection.getTableName(clazz);
-        StringBuilder sql = new StringBuilder(SELECT_COUNT);
-        sql.append(tableName);
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
-
-        Connection connection = null;
-        try {
-            connection = DbConnection.getConnection();
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
-
-                if (resultSet.next()) {
-                    return resultSet.getLong(1);
-                }
-            }
-        } catch (Exception ex) {
-            throw new ForceException(ex.getMessage(), ex);
-        } finally {
-            if (connection != null) {
-                DbConnection.releaseConnection(connection);
-            }
-        }
-
-        return 0L;
-    }
+    String getTableName();
 
     /**
-     * Finds an entity by its primary key.
+     * Counts the number of records.
      *
-     * @param id the primary key of the entity to find.
-     * @return the entity with the given primary key, or null if not found.
+     * @return the number of records.
      */
-    public Optional<T> findById(K id) {
-        var tableName = tableReflection.getTableName(clazz);
-        var primaryKey = tableReflection.getPrimaryKey(clazz);
-        var columnFields = tableReflection.getFields(clazz);
-
-        StringBuilder sql = new StringBuilder(SELECT);
-        for (Field field : columnFields) {
-            sql.append(field.getName()).append(", ");
-        }
-        sql.setLength(sql.length() - 2); // Remove the trailing comma and space
-        sql.append(FROM).append(tableName).append(WHERE).append(primaryKey).append(" = ?");
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
-
-        Connection connection = null;
-        try {
-            connection = DbConnection.getConnection();
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
-                preparedStatement.setObject(1, id);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        T entity = clazz.getDeclaredConstructor().newInstance();
-                        for (Field field : columnFields) {
-                            field.setAccessible(true);
-                            Object value = resultSet.getObject(field.getName());
-
-                            if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
-                                value = java.math.BigInteger.valueOf((Long) value);
-                            }
-                            field.set(entity, value);
-                        }
-                        return Optional.of(entity);
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            throw new ForceException(ex.getMessage(), ex);
-        } finally {
-            if (connection != null) {
-                DbConnection.releaseConnection(connection);
-            }
-        }
-        return Optional.empty();
-
-    }
+    Long count();
 
     /**
-     * Finds all entities of the type T in the database.
+     * Finds an entity by its ID.
      *
-     * @return a list of all entities of the type T.
+     * @param id the entity ID.
+     * @return an optional entity.
      */
-    public Page<T> findAll() {
-        var idColumName = tableReflection.getPrimaryKey(clazz);
-        Sort sort = new Sort(List.of(new Sort.Order(Sort.Direction.ASC, idColumName)));
-        return this.findAll(new PageRequest(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, sort));
-    }
-
-    public Page<T> findAll(Pageable pageable) {
-        var tableName = tableReflection.getTableName(clazz);
-        var columnFields = tableReflection.getFields(clazz);
-
-        StringBuilder sql = new StringBuilder(SELECT);
-        for (Field field : columnFields) {
-            sql.append(field.getName()).append(", ");
-        }
-        sql.setLength(sql.length() - 2); // Remove the trailing comma and space
-        sql.append(FROM).append(tableName);
-
-        Sort sort = pageable.sort(); // Add sorting
-        if (sort != null && !sort.orders().isEmpty()) {
-            sql.append(ORDER_BY);
-            for (Sort.Order order : sort.orders()) {
-                sql.append(order.property()).append(" ").append(order.direction()).append(", ");
-            }
-            sql.setLength(sql.length() - 2); // Remove the trailing comma and space
-        }
-
-        sql.append(LIMIT).append(pageable.pageSize());  // Add pagination
-        sql.append(OFFSET).append(pageable.pageNumber() * pageable.pageSize());
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
-
-        long totalElements = 0;
-        Connection connection = null;
-        List<T> results = new ArrayList<>();
-        try {
-            connection = DbConnection.getConnection();
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-                 ResultSet resultSet = preparedStatement.executeQuery()) {
-
-                while (resultSet.next()) {
-                    T entity = clazz.getDeclaredConstructor().newInstance();
-                    for (Field field : columnFields) {
-                        field.setAccessible(true);
-                        Object value = resultSet.getObject(field.getName());
-
-                        if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
-                            value = java.math.BigInteger.valueOf((Long) value);
-                        }
-
-                        field.set(entity, value);
-                    }
-                    results.add(entity);
-                }
-
-                String countSql = SELECT_COUNT + tableName;  // Count total elements
-                System.out.println("SQL: " + countSql); // Debug statement to print the SQL value
-                try (PreparedStatement countStatement = connection.prepareStatement(countSql);
-                     ResultSet countResultSet = countStatement.executeQuery()) {
-                    if (countResultSet.next()) {
-                        totalElements = countResultSet.getLong(1);
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            throw new ForceException(ex.getMessage(), ex);
-        } finally {
-            if (connection != null) {
-                DbConnection.releaseConnection(connection);
-            }
-        }
-        return new PageImpl<>(results, pageable.pageNumber(), pageable.pageSize(), totalElements);
-    }
+    Optional<T> findById(K id);
 
     /**
-     * Saves an entity to the database.
+     * Finds all entities.
      *
-     * @param entity the entity to save.
-     * @return the primary key of the saved entity.
+     * @return a page of entities.
      */
-    @SuppressWarnings("unchecked")
-    public Optional<K> save(T entity) {
-        var tableName = tableReflection.getTableName(clazz);
-        var columnFields = tableReflection.getColumnNames(clazz);
-
-        StringBuilder sql = new StringBuilder(INSERT);
-        sql.append(tableName).append(" (");
-
-        StringBuilder placeholders = new StringBuilder();
-        for (var columnName : columnFields) {
-            sql.append(columnName).append(", ");
-            placeholders.append("?, ");
-        }
-
-        sql.setLength(sql.length() - 2); // Remove the trailing comma and space
-        placeholders.setLength(placeholders.length() - 2);
-
-        sql.append(VALUES).append(placeholders).append(")");
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
-
-        Connection connection = null;
-        try {
-            connection = DbConnection.getConnection();
-            try (PreparedStatement preparedStatement =
-                         connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
-
-                int index = 1; // index of the prepared statement parameter starting at 1
-                for (Field field : tableReflection.getColumnFields(clazz)) {
-                    field.setAccessible(true);
-                    preparedStatement.setObject(index++, field.get(entity));
-                }
-
-                preparedStatement.executeUpdate();
-                try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                    if (resultSet.next()) {
-                        return Optional.of((K) resultSet.getObject(1));
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            throw new ForceException(ex.getMessage(), ex);
-        } finally {
-            if (connection != null) {
-                DbConnection.releaseConnection(connection);
-            }
-        }
-
-        return Optional.empty();
-    }
+    Page<T> findAll();
 
     /**
-     * Updates an entity in the database.
+     * Finds all entities.
      *
-     * @param entity the entity to update.
+     * @param pageable the pageable.
+     * @return a page of entities.
      */
-    public void update(T entity) {
-        var tableName = tableReflection.getTableName(clazz);
-        var columnFields = tableReflection.getColumnFields(clazz);
-        var primaryKey = tableReflection.getPrimaryKey(clazz);
-        var primaryKeyValue = tableReflection.getPrimaryKeyValue(entity);
-
-        StringBuilder sql = new StringBuilder(UPDATE);
-        sql.append(tableName).append(SET);
-
-        for (Field field : columnFields) {
-            sql.append(field.getName()).append(" = ?, ");
-        }
-
-        sql.setLength(sql.length() - 2); // Remove the trailing comma and space
-        sql.append(WHERE).append(primaryKey).append(" = ?");
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
-
-        Connection connection = null;
-        try {
-            connection = DbConnection.getConnection();
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
-                int index = 1; // index of the prepared statement parameter starting at 1
-                for (Field field : columnFields) {
-                    field.setAccessible(true);
-                    preparedStatement.setObject(index++, field.get(entity));
-                }
-
-                preparedStatement.setObject(index, primaryKeyValue);
-                preparedStatement.executeUpdate();
-            }
-        } catch (Exception ex) {
-            throw new ForceException(ex.getMessage(), ex);
-        } finally {
-            if (connection != null) {
-                DbConnection.releaseConnection(connection);
-            }
-        }
-    }
+    Page<T> findAll(Pageable pageable);
 
     /**
-     * Deletes an entity from the database.
+     * Saves an entity.
      *
-     * @param entity the entity to delete.
+     * @param entity the entity.
+     * @return an optional entity.
      */
-    @SuppressWarnings("unchecked")
-    public void delete(T entity) {
-        var id = tableReflection.getPrimaryKeyValue(entity);
-        this.deleteById((K) id);
-    }
+    Optional<K> save(T entity);
 
     /**
-     * Deletes an entity by its primary key.
+     * Updates an entity.
      *
-     * @param id the primary key of the entity to delete.
+     * @param entity the entity.
      */
-    public void deleteById(K id) {
-        var tableName = tableReflection.getTableName(clazz);
-        var primaryKey = tableReflection.getPrimaryKey(clazz);
+    void update(T entity);
 
-        StringBuilder sql = new StringBuilder(DELETE);
-        sql.append(tableName).append(WHERE).append(primaryKey).append(" = ?");
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
+    /**
+     * Deletes an entity.
+     *
+     * @param entity the entity.
+     */
+    void delete(T entity);
 
-        Connection connection = null;
-        try {
-            connection = DbConnection.getConnection();
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
-                preparedStatement.setObject(1, id);
-                preparedStatement.executeUpdate();
-            }
-        } catch (Exception ex) {
-            throw new ForceException(ex.getMessage(), ex);
-        } finally {
-            if (connection != null) {
-                DbConnection.releaseConnection(connection);
-            }
-        }
-    }
+    /**
+     * Deletes an entity by its ID.
+     *
+     * @param id the entity ID.
+     */
+    void deleteById(K id);
 }
