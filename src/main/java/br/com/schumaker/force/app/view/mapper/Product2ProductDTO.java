@@ -1,7 +1,7 @@
-package br.com.schumaker.force.app.view.mapper;
+package br.com.schumaker.force.app.view;
 
 import br.com.schumaker.force.app.model.Product;
-import br.com.schumaker.force.app.view.ProductDTO;
+import br.com.schumaker.force.framework.ioc.annotations.bean.Component;
 import br.com.schumaker.force.framework.model.ModelViewMapper;
 import br.com.schumaker.force.framework.web.view.Page;
 import br.com.schumaker.force.framework.web.view.PageImpl;
@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
+@Component
 public class Product2ProductDTO implements ModelViewMapper<Product, ProductDTO> {
 
     @Override
