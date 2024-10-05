@@ -61,6 +61,12 @@ public final class ClassReflection {
                         var value = this.handleParameterValueAnnotation(parameter);
                         parameters.add(value);
                     } else {
+                        var repository = iocContainer.getRepository(parameterType.getName());
+                        if (repository != null) {
+                            parameters.add(repository.getInstance());
+                            continue;
+                        }
+
                         var service = iocContainer.getService(parameterType.getName());
                         if (service != null) {
                             parameters.add(service.getInstance());

@@ -7,6 +7,7 @@ import br.com.schumaker.force.framework.model.PatchHelper;
 import br.com.schumaker.force.framework.web.view.Page;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +34,14 @@ public class ProductService {
 
     public Product getById(BigInteger id) {
         return productRepository.findById(id).orElse(null);
+    }
+
+    public Product getByName(String name) {
+        return productRepository.findByName(name).orElse(null);
+    }
+
+    public List<Product> getByPrice(Double price) {
+        return productRepository.findByPriceGreaterThan(price);
     }
 
     public Page<Product> list() {

@@ -81,15 +81,30 @@ public class ProductController {
                 .build();
     }
 
-    @Get("/info/{id}/{name}") // TODO: fix type
-    public ResponseView<ProductView> getInfo(@PathVariable("id") int id, @PathVariable("name") String name) {
-        var product = service.getById(BigInteger.valueOf(id));
+    @Get("name/{name}")
+    public ResponseView<ProductView> getByName(@PathVariable("name") String name) {
+        var product = service.getByName(name);
         return ResponseView.ok()
                 .body(new ProductView(
                         product.getId(),
                         product.getName(),
                         product.getDescription(),
                         product.getPrice()))
+                .build();
+    }
+
+    @Get("price/{price}")
+    public ResponseView<List<ProductView>> getByPrice(@PathVariable("price") Double price) {
+        var products = service.getByPrice(price);
+        var productViews = products.stream()
+                .map(product -> new ProductView(
+                        product.getId(),
+                        product.getName(),
+                        product.getDescription(),
+                        product.getPrice()))
+                .toList();
+        return ResponseView.ok()
+                .body(productViews)
                 .build();
     }
 

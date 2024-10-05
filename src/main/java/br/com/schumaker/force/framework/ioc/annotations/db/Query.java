@@ -1,16 +1,13 @@
 package br.com.schumaker.force.framework.ioc.annotations.db;
 
-import br.com.schumaker.force.framework.jdbc.SqlCrud;
-import br.com.schumaker.force.framework.jdbc.SqlCrudImpl;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The @Repository annotation is used to indicate that a class is a repository.
- * This annotation can be applied to classes to indicate that the class is a repository.
+ * The @Query annotation is used to indicate that a method is a query.
+ * This annotation can be applied to methods to indicate that the method is a query.
  *
  * <p>
  * Example usage:
@@ -20,16 +17,19 @@ import java.lang.annotation.Target;
  * {@code
  * @Repository
  * public interface MyRepository extends DbCrud<Long, MyEntity> {
- *     // Repository implementation
+ *      @Query("SELECT * FROM table_name")
+ *      public List<MyEntity> find();
  * }
  * }
  * </pre>
  *
- * @see SqlCrud
+ * @see Repository
  *
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Repository {}
+public @interface Query {
+    String value() default "SELECT * FROM 1";
+}
