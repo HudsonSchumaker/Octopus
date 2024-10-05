@@ -146,12 +146,12 @@ CREATE TABLE product (
   ```
 
 ### 7. `@Repository`
-- **Purpose**: Indicates that a class is a repository.
+- **Purpose**: Indicates that an interface is a repository.
 - **Attributes**: None.
 - **Example**:
   ```java
   @Repository
-  public class MyRepository extends DbCrud<Long, MyEntity> {
+  public interface MyRepository extends DbCrud<Long, MyEntity> {
       // Repository implementation
   }
   ```
