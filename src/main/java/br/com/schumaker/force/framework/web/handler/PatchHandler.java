@@ -5,6 +5,7 @@ import br.com.schumaker.force.framework.ioc.annotations.controller.PathVariable;
 import br.com.schumaker.force.framework.ioc.annotations.controller.Payload;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.model.ObjectMapperConfig;
 import br.com.schumaker.force.framework.web.http.Http;
 import br.com.schumaker.force.framework.web.http.HttpRequest;
 import br.com.schumaker.force.framework.web.http.HttpRequestHeader;
@@ -25,7 +26,7 @@ import static br.com.schumaker.force.framework.web.http.Http.HTTP_PATCH;
  */
 public final class PatchHandler implements RequestHandler {
     private final IoCContainer container = IoCContainer.getInstance();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = ObjectMapperConfig.getInstance();
 
     /**
      * Process the HTTP_PATCH request.

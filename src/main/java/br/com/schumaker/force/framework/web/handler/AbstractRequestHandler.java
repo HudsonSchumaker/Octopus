@@ -5,6 +5,7 @@ import br.com.schumaker.force.framework.ioc.annotations.controller.Payload;
 import br.com.schumaker.force.framework.ioc.annotations.validations.Validate;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.model.ObjectMapperConfig;
 import br.com.schumaker.force.framework.model.TypeConverter;
 import br.com.schumaker.force.framework.ioc.reflection.validation.ValidationReflection;
 import br.com.schumaker.force.framework.web.http.Http;
@@ -26,7 +27,7 @@ import java.lang.reflect.Parameter;
  */
 public abstract class AbstractRequestHandler implements RequestHandler {
     protected static final IoCContainer container = IoCContainer.getInstance();
-    protected static final ObjectMapper objectMapper = new ObjectMapper();
+    protected static final ObjectMapper objectMapper = ObjectMapperConfig.getInstance();
     protected static final ValidationReflection validationReflection = ValidationReflection.getInstance();
 
     /**

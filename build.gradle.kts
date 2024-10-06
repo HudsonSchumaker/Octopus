@@ -26,6 +26,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.mysql:mysql-connector-j:9.0.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.0")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))

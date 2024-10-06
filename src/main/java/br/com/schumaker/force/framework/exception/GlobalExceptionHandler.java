@@ -1,6 +1,7 @@
 package br.com.schumaker.force.framework.exception;
 
 import br.com.schumaker.force.framework.ioc.IoCContainer;
+import br.com.schumaker.force.framework.model.ObjectMapperConfig;
 import br.com.schumaker.force.framework.model.Pair;
 import br.com.schumaker.force.framework.web.http.Http;
 import br.com.schumaker.force.framework.web.view.ResponseView;
@@ -21,7 +22,7 @@ import com.sun.net.httpserver.HttpExchange;
 public class GlobalExceptionHandler {
     private static final GlobalExceptionHandler INSTANCE = new GlobalExceptionHandler();
     private static final IoCContainer container = IoCContainer.getInstance();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = ObjectMapperConfig.getInstance();
 
     private GlobalExceptionHandler() {}
 
