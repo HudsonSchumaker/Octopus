@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +19,10 @@ import java.util.function.Function;
  * The type parsers are stored in a static map and can be accessed using the type's class.
  *
  * @author Hudson Schumaker
- * @version 1.1.1
+ * @version 1.2.1
  */
 public final class TypeConverter {
+    private static final Map<Class<?>, Function<Object, Object>> sqlMap = new HashMap<>();
     public static final Map<Class<?>, Function<String, Object>> typeParsers = new HashMap<>();
 
     static {
@@ -49,17 +51,50 @@ public final class TypeConverter {
         typeParsers.put(LocalDate.class, DateParser::parseToLocalDate);
         typeParsers.put(LocalDateTime.class, DateParser::parseToLocalDateTime);
 
-        // Special types
+        // Other types
         typeParsers.put(byte.class, Byte::parseByte);
         typeParsers.put(boolean.class, Boolean::parseBoolean);
         typeParsers.put(char.class, value -> value.charAt(0));
         typeParsers.put(Byte.class, Byte::parseByte);
         typeParsers.put(Boolean.class, Boolean::parseBoolean);
         typeParsers.put(Character.class, value -> value.charAt(0));
+
+        // SQL types
+        sqlMap.put(LocalDateTime.class, value -> ((java.sql.Timestamp) value).toLocalDateTime());
+        sqlMap.put(LocalTime.class, value -> ((java.sql.Timestamp) value).toLocalDateTime().toLocalTime());
+        sqlMap.put(Date.class, value -> new Date(((java.sql.Timestamp) value).getTime()));
+        sqlMap.put(Instant.class, value -> ((java.sql.Timestamp) value).toInstant());
     }
 
     /**
      * The TypeConverter constructor.
      */
     private TypeConverter() {}
+
+    /**
+     * Converts the given value to the target type.
+     *
+     * @param targetType the target type
+     * @param value the value to convert
+     * @return the converted value
+     */
+    public static Object convert(Class<?> targetType, Object value) {
+        if (value == null) {
+            return null;
+        }
+
+        if (value instanceof java.sql.Timestamp) {
+            Function<Object, Object> converter = sqlMap.get(targetType);
+            if (converter != null) {
+                value = converter.apply(value);
+            }
+        }
+
+        Function<String, Object> parser = typeParsers.get(targetType);
+        if (parser != null) {
+            return parser.apply(value.toString());
+        }
+
+        return value;
+    }
 }

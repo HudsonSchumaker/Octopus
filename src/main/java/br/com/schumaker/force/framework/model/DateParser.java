@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,9 +19,11 @@ import java.util.List;
  * If the input string does not match any of the supported formats, an IllegalArgumentException is thrown.
  *
  * @author Hudson Schumaker
- * @version 1.0.1
+ * @version 1.1.2
  */
 public final class DateParser {
+
+    private DateParser() {}
 
     /**
      * The list of supported date formatters.
@@ -32,6 +35,29 @@ public final class DateParser {
             DateTimeFormatter.ofPattern("dd/MM/yyyy"),
             DateTimeFormatter.ofPattern("MM-dd-yyyy")
     );
+
+    /**
+     * Parses a date string to a Date.
+     *
+     * @param dateStr the date string to be parsed.
+     * @return the parsed Date.
+     * @throws ForceException if the date string does not match any supported format.
+     */
+    public static Date parseToDate(String dateStr) {
+        for (DateTimeFormatter formatter : DATE_FORMATTERS) {
+            try {
+                if (formatter == DateTimeFormatter.ISO_INSTANT) {
+                    return Date.from(Instant.parse(dateStr));
+                } else {
+                    LocalDateTime localDateTime = LocalDateTime.parse(dateStr, formatter);
+                    return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+                }
+            } catch (DateTimeParseException e) {
+                // Continue to the next formatter
+            }
+        }
+        throw new ForceException("Invalid date format: " + dateStr);
+    }
 
     /**
      * Parses a date string to an Instant.
