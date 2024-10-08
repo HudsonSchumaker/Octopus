@@ -24,10 +24,11 @@ import java.util.function.Function;
 public final class TypeConverter {
     private static final Map<Class<?>, Function<Object, Object>> sqlMap = new HashMap<>();
     public static final Map<Class<?>, Function<String, Object>> typeParsers = new HashMap<>();
+    public static final String DEFAULT_UUID_STRING = "00000000-0000-0000-0000-000000000000";
 
     static {
-        typeParsers.put(UUID.class, UUID::fromString);
         typeParsers.put(String.class, value -> value);
+        typeParsers.put(UUID.class, value -> value.isEmpty() ? UUID.fromString(DEFAULT_UUID_STRING) : UUID.fromString(value));
 
         // Integer types
         typeParsers.put(int.class, Integer::parseInt);

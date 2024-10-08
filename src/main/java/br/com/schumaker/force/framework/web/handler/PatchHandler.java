@@ -78,7 +78,7 @@ public final class PatchHandler implements RequestHandler {
                 Object result = method.invoke(controller.getInstance(), arguments);
                 return new HttpResponse(methodReturnType, result, httpCode, applicationType, request.exchange());
             } catch (Exception ex) {
-                throw new ForceException("Error invoking method.", ex);
+                throw new RuntimeException(ex.getMessage(), ex);
             }
         } else {
             int httpCode = Http.HTTP_404;
