@@ -1,6 +1,8 @@
 package br.com.schumaker.force.framework.jdbc;
 
 import br.com.schumaker.force.framework.exception.ForceException;
+import br.com.schumaker.force.framework.ioc.reflection.TableReflection;
+import br.com.schumaker.force.framework.model.TypeConverter;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
  * @version 1.1.0
  */
 public final class SqlExecutor {
+    private static final TableReflection tableReflection = TableReflection.getInstance();
+
     private SqlExecutor() {}
 
     /**
@@ -69,19 +73,18 @@ public final class SqlExecutor {
             try (Statement statement = connection.createStatement();
                  ResultSet resultSet = statement.executeQuery(sql)) {
 
-                var columnFields = type.getDeclaredFields();
+                var columnNames = tableReflection.getPkAndColumnNameAndField(type);
                 while (resultSet.next()) {
-                    T instance = type.getDeclaredConstructor().newInstance();
-                    for (var field : columnFields) {
-                        field.setAccessible(true);
-                        Object value = resultSet.getObject(field.getName());
+                    T entity = type.getDeclaredConstructor().newInstance();
+                    for (var field : columnNames) {
+                        Object value = resultSet.getObject(field.first());
+                        value = TypeConverter.convert(field.second().getType(), value);
 
-                        if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
-                            value = java.math.BigInteger.valueOf((Long) value);
-                        }
-                        field.set(instance, value);
+                        field.second().setAccessible(true);
+                        field.second().set(entity, value);
+                        field.second().setAccessible(false);
                     }
-                    results.add(instance);
+                    results.add(entity);
                 }
             }
         } catch (Exception ex) {
