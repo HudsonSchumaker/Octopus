@@ -5,6 +5,7 @@ import br.com.schumaker.force.framework.ioc.annotations.db.Pk;
 import br.com.schumaker.force.framework.ioc.annotations.db.Table;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.reflection.TableReflection;
+import br.com.schumaker.force.framework.model.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,80 +37,88 @@ public class TableReflectionTest {
 
     @Test
     public void testGetTableName() {
-        // Arrange
         String tableName = tableReflection.getTableName(TestEntity.class);
-
-        // Act & Assert
         assertEquals("test_table", tableName);
     }
 
     @Test
     public void testGetTableNameWithoutAnnotationValue() {
-        // Arrange
         @Table
         class TestEntityWithoutValue {
         }
 
-        // Act
         String tableName = tableReflection.getTableName(TestEntityWithoutValue.class);
-
-        // Assert
         assertEquals("testentitywithoutvalue", tableName);
     }
 
     @Test
     public void testGetTableNameThrowsException() {
-        // Arrange
         class NoTableAnnotation {
         }
 
-        // Act & Assert
         assertThrows(ForceException.class, () -> tableReflection.getTableName(NoTableAnnotation.class));
     }
 
     @Test
     public void testGetPrimaryKey() {
-        // Arrange
         String primaryKey = tableReflection.getPrimaryKey(TestEntity.class);
-
-        // Act & Assert
         assertEquals("id", primaryKey);
     }
 
     @Test
     public void testGetPrimaryKeyThrowsException() {
-        // Arrange
         class NoPrimaryKey {
         }
 
-        // Act & Assert
         assertThrows(ForceException.class, () -> tableReflection.getPrimaryKey(NoPrimaryKey.class));
     }
 
     @Test
-    public void testGetColumnNames() {
-        // Arrange
-        List<String> columnNames = tableReflection.getColumnNames(TestEntity.class);
+    public void testGetPrimaryKeyField() {
+        Field primaryKeyField = tableReflection.getPrimaryKeyField(TestEntity.class);
+        assertEquals("id", primaryKeyField.getName());
+    }
 
-        // Act & Assert
+    @Test
+    public void testGetPrimaryKeyValue() {
+        TestEntity entity = new TestEntity();
+        entity.id = 1;
+        Object primaryKeyValue = tableReflection.getPrimaryKeyValue(entity);
+        assertEquals(1, primaryKeyValue);
+    }
+
+    @Test
+    public void testGetColumnNames() {
+        List<String> columnNames = tableReflection.getColumnNames(TestEntity.class);
         assertEquals(List.of("name", "value"), columnNames);
     }
 
     @Test
-    public void testGetFields() {
-        // Arrange
-        Field[] fields = tableReflection.getFields(TestEntity.class);
+    public void testGetColumnNameAndField() {
+        List<Pair<String, Field>> columnNameAndField = tableReflection.getColumnNameAndField(TestEntity.class);
+        assertEquals(2, columnNameAndField.size());
+        assertEquals("name", columnNameAndField.get(0).first());
+        assertEquals("value", columnNameAndField.get(1).first());
+    }
 
-        // Act & Assert
-        assertEquals(3, fields.length);
+    @Test
+    public void testGetPkAndColumnNameAndField() {
+        List<Pair<String, Field>> pkAndColumnNameAndField = tableReflection.getPkAndColumnNameAndField(TestEntity.class);
+        assertEquals(3, pkAndColumnNameAndField.size());
+        assertEquals("id", pkAndColumnNameAndField.get(0).first());
+        assertEquals("name", pkAndColumnNameAndField.get(1).first());
+        assertEquals("value", pkAndColumnNameAndField.get(2).first());
     }
 
     @Test
     public void testGetColumnFields() {
-        // Arrange
         List<Field> columnFields = tableReflection.getColumnFields(TestEntity.class);
-
-        // Act & Assert
         assertEquals(2, columnFields.size());
+    }
+
+    @Test
+    public void testGetFields() {
+        Field[] fields = tableReflection.getFields(TestEntity.class);
+        assertEquals(3, fields.length);
     }
 }
