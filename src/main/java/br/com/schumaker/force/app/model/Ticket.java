@@ -4,6 +4,7 @@ import br.com.schumaker.force.framework.ioc.annotations.db.Column;
 import br.com.schumaker.force.framework.ioc.annotations.db.Pk;
 import br.com.schumaker.force.framework.ioc.annotations.db.Table;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -17,16 +18,19 @@ import java.util.UUID;
  * @author Hudson Schumaker
  * @version 1.0.0
  */
-@Table
+@Table("tickets")
 public class Ticket {
 
     @Pk
-    private UUID id;
+    private BigInteger id;
 
-    @Column
+    @Column("ticket_id")
+    private UUID ticketId;
+
+    @Column("first_name")
     private String firstName;
 
-    @Column
+    @Column("last_name")
     private String lastName;
 
     @Column
@@ -35,16 +39,17 @@ public class Ticket {
     @Column
     private String country;
 
-    @Column
+    @Column("created_at")
     private LocalDateTime createdAt;
 
-    @Column
+    @Column("updated_at")
     private LocalDateTime updatedAt;
 
     public Ticket() {}
 
-    public Ticket(UUID id, String firstName, String lastName, String email, String country, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Ticket(BigInteger id, UUID ticketId, String firstName, String lastName, String email, String country, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
+        this.ticketId = ticketId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -53,12 +58,20 @@ public class Ticket {
         this.updatedAt = updatedAt;
     }
 
-    public UUID getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(BigInteger id) {
         this.id = id;
+    }
+
+    public UUID getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(UUID ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getFirstName() {
