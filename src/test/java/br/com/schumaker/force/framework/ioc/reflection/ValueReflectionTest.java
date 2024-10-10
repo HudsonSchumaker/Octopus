@@ -1,4 +1,4 @@
-package br.com.schumaker.force.framework.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
 import br.com.schumaker.force.framework.ioc.annotations.bean.Value;
 import br.com.schumaker.force.framework.ioc.Environment;

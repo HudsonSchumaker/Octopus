@@ -1,4 +1,4 @@
-package br.com.schumaker.force.framework.reflection;
+package br.com.schumaker.force.framework.ioc.reflection;
 
 import br.com.schumaker.force.framework.ioc.annotations.db.Column;
 import br.com.schumaker.force.framework.ioc.annotations.db.Pk;
@@ -31,7 +31,7 @@ public class TableReflectionTest {
         @Column("name")
         private String name;
 
-        @Column("value")
+        @Column()
         private String value;
     }
 

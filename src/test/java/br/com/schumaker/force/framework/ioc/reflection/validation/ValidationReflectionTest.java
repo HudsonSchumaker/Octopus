@@ -1,4 +1,4 @@
-package br.com.schumaker.force.framework.reflection.validation;
+package br.com.schumaker.force.framework.ioc.reflection.validation;
 
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.annotations.validations.*;
