@@ -3,13 +3,12 @@ package br.com.schumaker.force.framework.jdbc;
 import br.com.schumaker.force.framework.ioc.annotations.db.Table;
 import br.com.schumaker.force.framework.exception.ForceException;
 import br.com.schumaker.force.framework.ioc.reflection.TableReflection;
+import br.com.schumaker.force.framework.model.TypeConverter;
 import br.com.schumaker.force.framework.web.view.Page;
 import br.com.schumaker.force.framework.web.view.PageImpl;
 import br.com.schumaker.force.framework.web.view.PageRequest;
 import br.com.schumaker.force.framework.web.view.Pageable;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * The SqlCrudImpl class provides generic implementations for CRUD (Create, Read, Update, Delete) operations for database entities.
@@ -72,7 +72,6 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
         return new SqlCrudImpl<>(keyClass, entityClass);
     }
 
-
     @Override
     public Class<T> getEntityClass() {
         return clazz;
@@ -87,7 +86,7 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
     public Long count() {
         StringBuilder sql = new StringBuilder(SELECT_COUNT);
         sql.append(tableName);
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
+        System.out.println("SQL: " + sql); // Debug
 
         Connection connection = null;
         try {
@@ -106,45 +105,45 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
                 DbConnection.releaseConnection(connection);
             }
         }
-
         return 0L;
     }
 
     @Override
     public Optional<T> findById(K id) {
         var primaryKey = tableReflection.getPrimaryKey(clazz);
-        var columnFields = tableReflection.getFields(clazz);
-
+        var columnNames = tableReflection.getPkAndColumnNameAndField(clazz);
         StringBuilder sql = new StringBuilder(SELECT);
-        for (Field field : columnFields) {
-            sql.append(field.getName()).append(", ");
+
+        for (var field : columnNames) {
+            sql.append(field.first()).append(", ");
         }
         sql.setLength(sql.length() - 2); // Remove the trailing comma and space
         sql.append(FROM).append(tableName).append(WHERE).append(primaryKey).append(" = ?");
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
+        System.out.println("SQL: " + sql); // Debug
 
         Connection connection = null;
         try {
             connection = DbConnection.getConnection();
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
                 preparedStatement.setObject(1, id);
+
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         T entity = clazz.getDeclaredConstructor().newInstance();
-                        for (Field field : columnFields) {
-                            field.setAccessible(true);
-                            Object value = resultSet.getObject(field.getName());
+                        for (var field : columnNames) {
+                            Object value = resultSet.getObject(field.first());
+                            value = TypeConverter.convert(field.second().getType(), value);
 
-                            if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
-                                value = java.math.BigInteger.valueOf((Long) value);
-                            }
-                            field.set(entity, value);
+                            field.second().setAccessible(true);
+                            field.second().set(entity, value);
+                            field.second().setAccessible(false);
                         }
                         return Optional.of(entity);
                     }
                 }
             }
         } catch (Exception ex) {
+            System.err.println("Error: " + ex.getMessage());
             throw new ForceException(ex.getMessage(), ex);
         } finally {
             if (connection != null) {
@@ -164,11 +163,11 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
 
     @Override
     public Page<T> findAll(Pageable pageable) {
-        var columnFields = tableReflection.getFields(clazz);
-
         StringBuilder sql = new StringBuilder(SELECT);
-        for (Field field : columnFields) {
-            sql.append(field.getName()).append(", ");
+        var columnNames = tableReflection.getPkAndColumnNameAndField(clazz);
+
+        for (var field : columnNames) {
+            sql.append(field.first()).append(", ");
         }
         sql.setLength(sql.length() - 2); // Remove the trailing comma and space
         sql.append(FROM).append(tableName);
@@ -184,7 +183,7 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
 
         sql.append(LIMIT).append(pageable.pageSize());  // Add pagination
         sql.append(OFFSET).append(pageable.pageNumber() * pageable.pageSize());
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
+        System.out.println("SQL: " + sql); // Debug
 
         long totalElements = 0;
         Connection connection = null;
@@ -196,21 +195,19 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
 
                 while (resultSet.next()) {
                     T entity = clazz.getDeclaredConstructor().newInstance();
-                    for (Field field : columnFields) {
-                        field.setAccessible(true);
-                        Object value = resultSet.getObject(field.getName());
+                    for (var field : columnNames) {
+                        Object value = resultSet.getObject(field.first());
+                        value = TypeConverter.convert(field.second().getType(), value);
 
-                        if (field.getType().equals(java.math.BigInteger.class) && value instanceof Long) {
-                            value = java.math.BigInteger.valueOf((Long) value);
-                        }
-
-                        field.set(entity, value);
+                        field.second().setAccessible(true);
+                        field.second().set(entity, value);
+                        field.second().setAccessible(false);
                     }
                     results.add(entity);
                 }
 
                 String countSql = SELECT_COUNT + tableName;  // Count total elements
-                System.out.println("SQL: " + countSql); // Debug statement to print the SQL value
+                System.out.println("SQL: " + countSql); // Debug
                 try (PreparedStatement countStatement = connection.prepareStatement(countSql);
                      ResultSet countResultSet = countStatement.executeQuery()) {
                     if (countResultSet.next()) {
@@ -231,14 +228,13 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
     @Override
     @SuppressWarnings("unchecked")
     public Optional<K> save(T entity) {
-        var columnFields = tableReflection.getColumnNames(clazz);
-
+        var columnNames = tableReflection.getColumnNameAndField(clazz);
         StringBuilder sql = new StringBuilder(INSERT);
         sql.append(tableName).append(" (");
 
         StringBuilder placeholders = new StringBuilder();
-        for (var columnName : columnFields) {
-            sql.append(columnName).append(", ");
+        for (var field : columnNames) {
+            sql.append(field.first()).append(", ");
             placeholders.append("?, ");
         }
 
@@ -246,7 +242,7 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
         placeholders.setLength(placeholders.length() - 2);
 
         sql.append(VALUES).append(placeholders).append(")");
-        System.out.println("SQL: " + sql); // Debug statement to print the SQL value
+        System.out.println("SQL: " + sql); // Debug
 
         Connection connection = null;
         try {
@@ -255,9 +251,14 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
                          connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS)) {
 
                 int index = 1; // index of the prepared statement parameter starting at 1
-                for (Field field : tableReflection.getColumnFields(clazz)) {
-                    field.setAccessible(true);
-                    preparedStatement.setObject(index++, field.get(entity));
+                for (var field : columnNames) {
+                    field.second().setAccessible(true);
+                    if (field.second().getType().equals(UUID.class)) {
+                        preparedStatement.setObject(index++, field.second().get(entity).toString());
+                    } else {
+                        preparedStatement.setObject(index++, field.second().get(entity));
+                    }
+                    field.second().setAccessible(false);
                 }
 
                 preparedStatement.executeUpdate();
@@ -268,6 +269,7 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
                 }
             }
         } catch (Exception ex) {
+            System.err.println("Error: " + ex.getMessage());
             throw new ForceException(ex.getMessage(), ex);
         } finally {
             if (connection != null) {
@@ -281,14 +283,14 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
     @Override
     public void update(T entity) {
         var primaryKey = tableReflection.getPrimaryKey(clazz);
-        var columnFields = tableReflection.getColumnFields(clazz);
         var primaryKeyValue = tableReflection.getPrimaryKeyValue(entity);
+        var columnNames = tableReflection.getColumnNameAndField(clazz);
 
         StringBuilder sql = new StringBuilder(UPDATE);
         sql.append(tableName).append(SET);
 
-        for (Field field : columnFields) {
-            sql.append(field.getName()).append(" = ?, ");
+        for (var field : columnNames) {
+            sql.append(field.first()).append(" = ?, ");
         }
 
         sql.setLength(sql.length() - 2); // Remove the trailing comma and space
@@ -300,9 +302,14 @@ public final class SqlCrudImpl<K, T> implements SqlCrud<K, T> {
             connection = DbConnection.getConnection();
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
                 int index = 1; // index of the prepared statement parameter starting at 1
-                for (Field field : columnFields) {
-                    field.setAccessible(true);
-                    preparedStatement.setObject(index++, field.get(entity));
+                for (var field : columnNames) {
+                    field.second().setAccessible(true);
+                    if (field.second().getType().equals(UUID.class)) {
+                        preparedStatement.setObject(index++, field.second().get(entity).toString());
+                    } else {
+                        preparedStatement.setObject(index++, field.second().get(entity));
+                    }
+                    field.second().setAccessible(false);
                 }
 
                 preparedStatement.setObject(index, primaryKeyValue);

@@ -22,12 +22,12 @@ public final class ManagedBean implements ManagedClass<ManagedBean> {
     /**
      * Creates a new ManagedBean instance using the specified configuration class and instance.
      *
-     * @param configuration the configuration class.
+     * @param bean the configuration class.
      * @param instance the instance of the configuration class.
      * @return a new ManagedBean instance.
      */
-    public static ManagedBean builder(Class<?> configuration, Object instance) {
-        var fqn = configuration.getName();
+    public static ManagedBean builder(Class<?> bean, Object instance) {
+        var fqn = bean.getName();
         return new ManagedBean(fqn, instance);
     }
 

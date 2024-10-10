@@ -15,7 +15,7 @@ import java.util.List;
  * This class is a singleton and provides a global point of access to its instance.
  *
  * @author Hudson Schumaker
- * @version 1.0.0
+ * @version 1.0.1
  */
 public final class ConstructorReflection {
     private static final ConstructorReflection INSTANCE = new ConstructorReflection();
@@ -73,8 +73,8 @@ public final class ConstructorReflection {
             }
 
             throw new ForceException("Bean(s) missing for injection in constructor parameters: " + missingTypes);
-        } catch (Exception e) {
-            throw new ForceException(e.getMessage());
+        } catch (Exception ex) {
+            throw new ForceException(ex.getMessage());
         }
     }
 
@@ -88,8 +88,8 @@ public final class ConstructorReflection {
     private List<Parameter> getParameters(Constructor<?> constructor) {
         try {
             return Arrays.stream(constructor.getParameters()).toList();
-        } catch (Exception e) {
-            throw new ForceException(e.getMessage());
+        } catch (Exception ex) {
+            throw new ForceException(ex.getMessage());
         }
     }
 }

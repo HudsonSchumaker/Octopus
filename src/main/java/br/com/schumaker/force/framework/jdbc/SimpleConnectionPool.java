@@ -22,7 +22,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @see DbConnection
  *
  * @author Hudson Schumaker
- * @version 1.0.0
+ * @version 1.0.1
  */
 public final class SimpleConnectionPool {
     private final BlockingQueue<Connection> connectionPool;
@@ -30,7 +30,7 @@ public final class SimpleConnectionPool {
     private static final SimpleConnectionPool INSTANCE = new SimpleConnectionPool();
 
     private SimpleConnectionPool() {
-        final int MAX_POOL_SIZE = Integer.parseInt(environment.getKey(AppProperties.DB_MAX_POOL_SIZE));
+        final short MAX_POOL_SIZE = Short.parseShort(environment.getKey(AppProperties.DB_MAX_POOL_SIZE));
         connectionPool = new LinkedBlockingQueue<>(MAX_POOL_SIZE);
 
         try {

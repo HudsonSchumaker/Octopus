@@ -37,8 +37,7 @@ public final class ProgressBar {
         int progressPercentage = (int) ((double) current / total * 100);
         int filledLength = (int) ((double) current / total * barLength);
 
-        String bar = "=".repeat(Math.max(0, filledLength)) +
-                " ".repeat(Math.max(0, barLength - filledLength));
+        String bar = "=".repeat(Math.max(0, filledLength)) + " ".repeat(Math.max(0, barLength - filledLength));
 
         progressBar = String.format("[%s] %d%% %s", bar, progressPercentage, message);
         display();

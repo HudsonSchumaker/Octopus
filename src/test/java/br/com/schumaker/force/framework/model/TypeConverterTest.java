@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -152,5 +153,15 @@ public class TypeConverterTest {
 
         // Act & Assert
         assertEquals(expected, TypeConverter.typeParsers.get(LocalDateTime.class).apply(value));
+    }
+
+    @Test
+    public void testUUIDConversion() {
+        // Arrange
+        String value = "123e4567-e89b-12d3-a456-426614174000";
+        UUID expected = UUID.fromString(value);
+
+        // Act & Assert
+        assertEquals(expected, TypeConverter.typeParsers.get(UUID.class).apply(value));
     }
 }

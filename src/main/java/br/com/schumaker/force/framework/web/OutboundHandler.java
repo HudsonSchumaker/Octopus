@@ -1,5 +1,6 @@
 package br.com.schumaker.force.framework.web;
 
+import br.com.schumaker.force.framework.model.ObjectMapperConfig;
 import br.com.schumaker.force.framework.web.http.Http;
 import br.com.schumaker.force.framework.web.http.HttpResponse;
 import br.com.schumaker.force.framework.web.view.ResponseView;
@@ -21,7 +22,7 @@ import static br.com.schumaker.force.framework.web.http.Http.CONTENT_TYPE;
  * @version 1.0.0
  */
 final class OutboundHandler {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = ObjectMapperConfig.getInstance();
 
     /**
      * Processes the response and sends it to the client.

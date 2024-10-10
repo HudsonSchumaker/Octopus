@@ -38,8 +38,8 @@ public final class MethodReflection {
                     IoCContainer.getInstance().registerBean(managedBean);
                 }
             }
-        } catch (Exception e) {
-            throw new ForceException(e.getMessage());
+        } catch (Exception ex) {
+            throw new ForceException(ex.getMessage());
         }
     }
 }

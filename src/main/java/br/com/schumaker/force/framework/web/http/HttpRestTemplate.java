@@ -1,5 +1,6 @@
 package br.com.schumaker.force.framework.web.http;
 
+import br.com.schumaker.force.framework.model.ObjectMapperConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public final class HttpRestTemplate {
 
     public HttpRestTemplate() {
         this.httpClient = HttpClient.newHttpClient();
-        this.objectMapper = new ObjectMapper();
+        this.objectMapper = ObjectMapperConfig.getInstance();
     }
 
     /**

@@ -1,7 +1,6 @@
 package br.com.schumaker.force.framework.ioc.annotations.db;
 
 import br.com.schumaker.force.framework.jdbc.SqlCrud;
-import br.com.schumaker.force.framework.jdbc.SqlCrudImpl;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

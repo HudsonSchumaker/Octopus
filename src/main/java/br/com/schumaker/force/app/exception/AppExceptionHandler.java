@@ -31,4 +31,10 @@ public class AppExceptionHandler {
     public ResponseView<ErrorView> methodHandlerIOException(IOException e) {
         return ResponseView.badRequest().body(new ErrorView(e.getMessage(), "#8x0008")).build();
     }
+
+    // This method will handle TicketException
+    @ExceptionHandler(TicketException.class)
+    public ResponseView<ErrorView> methodHandlerIOException(TicketException e) {
+        return ResponseView.badRequest().body(new ErrorView(e.getMessage(), "#8x0009")).build();
+    }
 }
