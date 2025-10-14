@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public final class HttpRestTemplate {
     private final HttpClient httpClient;
-    private final ObjectMapper objectMapper;
+    public final ObjectMapper objectMapper;
 
     public HttpRestTemplate() {
         this.httpClient = HttpClient.newHttpClient();
